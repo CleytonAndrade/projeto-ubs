@@ -1,75 +1,165 @@
+/* Declaração de codificação e importação de fontes do Google Fonts */
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Passion+One:wght@400;700;900&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap');
 
+/* Variáveis globais de cores */
 :root {
-    --header-bt-princ: #1E88E5;
-    --hover-bt-sec: #43A047;
+    --header-fundo: rgb(26, 44, 161);
+    --header-fundo2: rgb(90, 100, 181);
+    --cor-destaque: #193B59;
+    --cor-houver: rgb(210, 231, 248);
     --cor-fundo: #bebebe;
-    --cor-texto: #212121;  
+    --cor-texto: #212121;
+    --cor-texto2: #d9d9d9;
 }
 
+/* Reset de margem, padding e box-sizing */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
+/* Define altura total do html para usar flex no body */
 html {
     height: 100%;
 }
 
+/* Estilos gerais do corpo da página */
 body {
     font-family: "Inter", sans-serif;
     font-size: 1em;
-    background-color: var(--cor-fundo);
+    background: var(--cor-fundo);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+/* Corrige posicionamento dos marcadores das listas no conteúdo principal */
+main ul, main ol {
+    list-style-position: inside;
+    padding-left: 1em;
+}
+
+/* Cabeçalho com gradiente */
 header {
-    background-color: var(--header-bt-princ);
     text-align: center;
+    background: linear-gradient(45deg, var(--header-fundo), var(--header-fundo2));
 }
 
-header > .ubs {
-   list-style-type: none;
+/* Lista das UBS */
+header .menu {
+    display: none;
+    list-style-type: none;
 }
 
-header > ul.ubs  a {
+/* Cada item da lista */
+header .ubs li {
+    background-color: var(--cor-destaque);
+    padding: 3px;
+    margin: 5px 0;
+}
+
+/* Links dentro da header e nav */
+header .ubs a,nav a {
     text-decoration: none;
-    color: black;
-    list-style-type: square;
+    color: var(--cor-texto2);
+    padding: 2px;
+    border-radius: 10px;
+    display: inline-block;
 }
 
-header > ul.ubs  a:hover {
-    background-color: var(--hover-bt-sec);
+/* Efeito hover e acessibilidade nos links da lista */
+header .ubs li:hover,header .ubs li:focus {
+    background-color: var(--cor-houver);
+}
+
+header .ubs li:hover a,header .ubs li:focus a {
+    color: black;
     text-decoration: underline;
 }
 
+/* Estilo do menu hambúrguer e texto */
+.burguer {
+    display: flex;
+    background-color: #212121;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px;
+    color: var(--cor-texto2) ;
+}
+
+.material-symbols-outlined {
+    margin-left: 10px;
+}
+
+.burguer p {
+    color: var(--cor-texto2);
+}
+
+/* Efeitos no menu */
+.burguer:hover {
+    background-color: #193B59;
+    cursor: pointer;
+}
+
+/* Navegação simples */
+nav {
+    text-align: start;
+    margin: 10px;
+}
+
+/* Título principal */
 h1 {
     padding: 20px;
 }
 
+/* Área principal do conteúdo */
 main {
-    background-color: white;
-    margin: 10px;
+    background: white;
+    margin: 10px auto;
     padding: 10px;
     border-radius: 5px;
     flex: 1;
+    max-width: 900px;
 }
 
+/* Texto padrão */
+p {
+    color: var(--cor-texto);
+}
+
+/* Rodapé */
 footer {
-    background: var(--header-bt-princ);
-    padding: 15px 0px;
     text-align: center;
+    background: var(--cor-destaque);
 }
 
+/* Texto do rodapé */
+footer p {
+    color: white;
+    background-color: #212121a8;
+    padding: 10px;
+    font-size: 0.8em;
+}
+
+/* Links do rodapé */
 footer a {
+    padding: 10px;
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
-footer a:hover{
+/* Espaçamento entre links no rodapé */
+.linkrodape {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Efeitos nos links do rodapé */
+footer a:hover,footer a:focus {
     text-decoration: underline;
+    color: var(--cor-houver);
 }

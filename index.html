@@ -3,93 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Saúde </title>
+    <title>Portal Saúde</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
 </head>
 <body>
     <header>
         <h1>Portal Saúde</h1>
-        <h2>Conheça seu posto de saúde</h2>
-        <ul class="ubs"> 
-            <li><a href="pages/CentrodeSaúdeJoséPimentaCapelinha/ubs.html" >Centro de Saúde José Pimenta Capelinha - Centro</a></li>
-            <li><a href="pages/CentrodeSaúdeMariaLúcia/ubs.html">Centro de Saúde Maria Lúcia - Maria Lúcia</a></li>
-            <li><a href="pages/ESFJardimImperial/ubs.html">ESF Jardim Imperial - Jardim Imperial</a></li>
-            <li><a href="pages/ESFPalmital/ubs.html">ESF Palmital - Cidade Nova</a></li>
-            <li><a href="pages/ESFPlanalto/ubs.html">ESF Planalto - Acácias</a></li>
-            <li><a href="pages/ESFVilaOperária/ubs.html">ESF Vila Operária - Vila Operária</a></li>
-            <li><a href="pages/ESFVistaAlegre/ubs.html">ESF Vista Alegre - Vista Alegre</a></li>
-            <li><a href="pages/PostodeSaúdeBomJesusdoGalego/ubs.html">Posto de Saúde Bom Jesus do Galego - Zona Rural</a></li>
-            <li><a href="pages/PostodeSaúdeChapadinha/ubs.html">Posto de Saúde Chapadinha - Zona Rural</a></li>
-            <li><a href="pages/PostodeSaúdedePonteNova/ubs.html">Posto de Saúde de Ponte Nova - Zona Rural</a></li>
-            <li><a href="pages/PostodeSaúdePiedade/ubs.html">Posto de Saúde Piedade - Piedade</a></li>
-            <li><a href="pages/UBSJardimAeroporto/ubs.html">UBS Jardim Aeroporto - Jardim Aeroporto</a></li>
-        </ul>
+        <div class="burguer" onclick="clickMenu()">
+            <span class="material-symbols-outlined" >menu</span>
+            <p>Conheça seu posto de saúde</p>
+        </div>
+        <div class="menu">
+            <ul class="ubs">
+                <li><a href="pages/CentrodeSaúdeJoséPimentaCapelinha/ubs.html">Centro de Saúde José Pimenta Capelinha - Centro</a></li>
+                <li><a href="pages/CentrodeSaúdeMariaLúcia/ubs.html">Centro de Saúde Maria Lúcia - Maria Lúcia</a></li>
+                <li><a href="pages/ESFJardimImperial/ubs.html">ESF Jardim Imperial - Jardim Imperial</a></li>
+                <li><a href="pages/ESFPalmital/ubs.html">ESF Palmital - Cidade Nova</a></li>
+                <li><a href="pages/ESFPlanalto/ubs.html">ESF Planalto - Acácias</a></li>
+                <li><a href="pages/ESFVilaOperária/ubs.html">ESF Vila Operária - Vila Operária</a></li>
+                <li><a href="pages/ESFVistaAlegre/ubs.html">ESF Vista Alegre - Vista Alegre</a></li>
+                <li><a href="pages/PostodeSaúdeBomJesusdoGalego/ubs.html">Posto de Saúde Bom Jesus do Galego - Zona Rural</a></li>
+                <li><a href="pages/PostodeSaúdeChapadinha/ubs.html">Posto de Saúde Chapadinha - Zona Rural</a></li>
+                <li><a href="pages/PostodeSaúdedePonteNova/ubs.html">Posto de Saúde de Ponte Nova - Zona Rural</a></li>
+                <li><a href="pages/PostodeSaúdePiedade/ubs.html">Posto de Saúde Piedade - Piedade</a></li>
+                <li><a href="pages/UBSJardimAeroporto/ubs.html">UBS Jardim Aeroporto - Jardim Aeroporto</a></li>
+            </ul>
+        </div>
     </header>
 
     <main>
         <article class="dicas">
             <h2>Dicas de Saúde e prevenção de doenças</h2>
+
             <div class="dica01">
                 <h3>Prevenção contra dengue e combate ao Aedes aegypti</h3>
                 <p>A transmissão da dengue acontece através da picada de um mosquito Aedes Aegypti infectado com o vírus, por isso a melhor forma de se proteger contra esta doença é combatendo o mosquito.</p>
-                <li>Manter as garrafas vazias ou baldes viradas para baixo;</li>
-                <li>Não deixar entulho no quintal ou nas ruas e varrer diariamente a água parada;</li>
-                <li>Cobrir as caixas d'água, poços ou piscinas e manter as calhas de água limpas;</li>
-                <li>Colocar terra ou areia nos pratos dos vasos das planta;</li>
-                <li>Manter a lata de lixo devidamente tampada e jogar no lixo cascas de coco, latas de refrigerantes, copo plástico, garrafas, embalagens, etc;</li>
-                <li>Guardar pneus em locais cobertos, longe da chuva. Faça furos na parte de baixo ou entregue no serviço de limpeza;</li>
-                <li>Tampar os ralos pouco usados com um plástico, jogando água sanitária no cano 2 vezes por semana;</li>
-                <li>Diminuir o número de bebedouros de cães, gatos e passarinhos e manter o aquário limpo e fechado;</li>
-                <li>Colocar telas de proteção nas janelas e mosquiteiros na cama para dormir.</li>
+                <ul>
+                    <li>Manter as garrafas vazias ou baldes viradas para baixo;</li>
+                    <li>Não deixar entulho no quintal ou nas ruas e varrer diariamente a água parada;</li>
+                    <li>Cobrir as caixas d'água, poços ou piscinas e manter as calhas de água limpas;</li>
+                    <li>Colocar terra ou areia nos pratos dos vasos das planta;</li>
+                    <li>Manter a lata de lixo devidamente tampada e jogar no lixo cascas de coco, latas de refrigerantes, copo plástico, garrafas, embalagens, etc;</li>
+                    <li>Guardar pneus em locais cobertos, longe da chuva. Faça furos na parte de baixo ou entregue no serviço de limpeza;</li>
+                    <li>Tampar os ralos pouco usados com um plástico, jogando água sanitária no cano 2 vezes por semana;</li>
+                    <li>Diminuir o número de bebedouros de cães, gatos e passarinhos e manter o aquário limpo e fechado;</li>
+                    <li>Colocar telas de proteção nas janelas e mosquiteiros na cama para dormir.</li>
+                </ul>
             </div>
+
             <div class="dica02">
                 <h3>Obesidade</h3>
-                <p>A obesidade é um problema sério, pois provoca várias outras doenças, como diabetes e hipertensão, e vem se tornando cada dia mais comum na atualidade. No entanto, pode ser evitada com a adoção de hábitos saudáveis, como: </p>
-                <li>Praticar atividades físicas</li>
-                <li>Controlar o consumo de sal e açúcar</li>
-                <li>Beber pelo menos dois litros de água diariamente</li>
-                <li>Evitar o consumo em excesso de bebidas alcoólicas</li>
-                <li>Evitar o tabagismo</li>
-                <li>Limitar a ingestão de alimentos ultraprocessados</li>
-                <li>Desenvolver habilidades culinárias</li>
+                <p>A obesidade é um problema sério, pois provoca várias outras doenças, como diabetes e hipertensão, e vem se tornando cada dia mais comum na atualidade. No entanto, pode ser evitada com a adoção de hábitos saudáveis, como:</p>
+                <ul>
+                    <li>Praticar atividades físicas</li>
+                    <li>Controlar o consumo de sal e açúcar</li>
+                    <li>Beber pelo menos dois litros de água diariamente</li>
+                    <li>Evitar o consumo em excesso de bebidas alcoólicas</li>
+                    <li>Evitar o tabagismo</li>
+                    <li>Limitar a ingestão de alimentos ultraprocessados</li>
+                    <li>Desenvolver habilidades culinárias</li>
+                </ul>
             </div>
+
             <div class="dica03">
                 <h3>Diabetes</h3>
-                <p>A melhor forma de prevenir o diabetes é adotar hábitos saudáveis, como alimentação equilibrada, atividade física regular e evitar o consumo de álcool e tabaco. </p>
-        
-                <li>Consumir frutas, verduras, cereais integrais, carnes magras, e laticínios</li>
-        
-                <li>Manter o peso dentro da faixa recomendada</li>
-        
-                <li>Praticar atividade física regularmente</li>
-        
-                <li>Evitar o consumo de bebidas alcoólicas</li>
-        
-                <li>Não fumar</li>
-        
-                <li>Utilizar os medicamentos prescritos</li>
-        
-                <li>Realizar exames regulares</li>
-        
-                <li>Controlar o estresse</li>
-        
-                <li>Priorizar um sono de qualidade</li>
-        
-                <li>Manter consumo adequado de água</li>
-        
-                <li>Fazer avaliações médicas recorrentes</li>
+                <p>A melhor forma de prevenir o diabetes é adotar hábitos saudáveis, como alimentação equilibrada, atividade física regular e evitar o consumo de álcool e tabaco.</p>
+                <ul>
+                    <li>Consumir frutas, verduras, cereais integrais, carnes magras, e laticínios</li>
+                    <li>Manter o peso dentro da faixa recomendada</li>
+                    <li>Praticar atividade física regularmente</li>
+                    <li>Evitar o consumo de bebidas alcoólicas</li>
+                    <li>Não fumar</li>
+                    <li>Utilizar os medicamentos prescritos</li>
+                    <li>Realizar exames regulares</li>
+                    <li>Controlar o estresse</li>
+                    <li>Priorizar um sono de qualidade</li>
+                    <li>Manter consumo adequado de água</li>
+                    <li>Fazer avaliações médicas recorrentes</li>
+                </ul>
             </div>
         </article>
+
         <article class="noticias">
-            <h2>Noticias e Avisos</h2>
+            <h2>Notícias e Avisos</h2>
+
             <div class="noticia01">
-                <h3>Noticia</h3>
+                <h3>Notícia</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatum, dolores alias unde molestiae ipsam. Magni tempora ipsum iste odio veritatis repellat voluptate minima deleniti eos doloremque, quia, eligendi eius!</p>
             </div>
+
             <div class="noticia02">
                 <h3>Aviso 01</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatum, dolores alias unde molestiae ipsam. Magni tempora ipsum iste odio veritatis repellat voluptate minima deleniti eos doloremque, quia, eligendi eius!</p>
             </div>
+
             <div class="noticia03">
                 <h3>Aviso 02</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatum, dolores alias unde molestiae ipsam. Magni tempora ipsum iste odio veritatis repellat voluptate minima deleniti eos doloremque, quia, eligendi eius!</p>
@@ -97,15 +105,15 @@
         </article>
     </main>
 
-
-    <footer> 
+    <footer>
         <div class="linkrodape">
             <a href="#">Aviso Legal</a>
             <a href="#">Política de privacidade</a>
             <a href="#">Doações</a>
         </div>
-        <p>Copyright 2025-2025 por Cleyton Costa Andrade. Todos os direitos reservados. </p>
+        <p>Copyright 2025-2025 por Cleyton Costa Andrade. Todos os direitos reservados.</p>
     </footer>
-<script src="js/script.js"></script>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
