@@ -1,6 +1,4 @@
-const burguer = document.querySelector('.burguer');
-const menu = document.querySelector('.menu');
-
-burguer.addEventListener('click', () => {
+function clickMenu() {
+  const menu = document.getElementById('menu');
   menu.classList.toggle('ativo');
-});
+}

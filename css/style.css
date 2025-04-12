@@ -2,6 +2,7 @@
 /* === FONTE E VARIÁVEIS === */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Passion+One:wght@400;700;900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap");
 
+/* Declaração de variáveis de cor para facilitar reutilização em todo o código */
 :root {
     --cor-1: rgb(1, 55, 255);
     --cor-2: rgb(101, 184, 227);
@@ -10,51 +11,53 @@
     --cor-5: #4caf50;
     --cor-destaque: #193b59;
     --cor-destaque2: rgb(5, 14, 64);
-    --cor-houver: rgb(210, 231, 248);
+    --cor-houver: rgba(210, 231, 248, 0.403);
     --cor-texto: #212121;
     --cor-texto2: #d9d9d9;
 }
 
-/* === RESET E BASE === */
+/* Resetando margens, padding e definindo box-sizing para todos os elementos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Estilo do corpo, definindo fonte, cor de fundo e alinhamento */
 body {
     font-family: "Raleway", sans-serif;
     line-height: 1.6;
-    background-color: var(--cor-3);
-    color: var(--cor-texto);
+    background-color: var(--cor-3); /* cor de fundo do corpo */
+    color: var(--cor-texto); /* cor do texto principal */
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh; /* Garantindo que o corpo ocupe toda a altura da tela */
 }
 
-/* === CABEÇALHO === */
+/* Estilo do cabeçalho */
 header {
-    background-color: var(--cor-1);
-    color: var(--cor-texto2);
+    background-color: var(--cor-1); /* cor de fundo */
+    color: var(--cor-texto2); /* cor do texto */
     text-align: center;
     padding: 20px 0;
     width: 100%;
 }
 
+/* Estilo do título no cabeçalho */
 header h1 {
     margin-bottom: 10px;
-    text-shadow: 0 1px 3px black;
+    text-shadow: 0 1px 3px black; /* sombra para dar destaque */
     font-weight: 200;
-    color: var(--cor-4);
-    font-style: oblique;
+    color: var(--cor-4); /* cor do título */
+    font-style: oblique; /* estilo em itálico */
 }
 
-/* === TÍTULOS === */
+/* Estilo dos subtítulos */
 h2 {
     text-align: center;
 }
 
-/* === BOTÃO HAMBURGUER === */
+/* Estilo do ícone de hambúrguer para menu responsivo */
 .burguer {
     display: block;
     cursor: pointer;
@@ -66,45 +69,52 @@ h2 {
     margin-top: 10px;
 }
 
-/* === ÍCONE COM ANIMAÇÃO === */
+.burguer:hover {
+    text-decoration: underline; /* efeito de sublinhado ao passar o mouse */
+}
+
+/* Estilo dos ícones de material design */
 .material-symbols-outlined {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease; /* transição suave para transformação */
+    padding: 5px;
 }
 
-.menu.ativo .material-symbols-outlined {
-    transform: rotate(90deg);
+.material-symbols-outlined:hover {
+    background-color: var(--cor-houver); /* cor ao passar o mouse */
+    color: var(--cor-texto);
+    border-radius: 5px; /* borda arredondada */
 }
 
-/* === MENU BASE === */
+/* Estilo dos links do menu */
 .menu a {
     display: block;
-    color: var(--cor-texto2);
+    color: var(--cor-texto2); /* cor dos links */
     text-decoration: none;
     font-size: 18px;
-    padding: 10px;
+    padding: 12px 20px;
     border-radius: 5px;
     text-align: center;
 }
 
 .menu a:hover {
-    background-color: var(--cor-houver);
+    background-color: var(--cor-houver); /* efeito de hover */
     color: var(--cor-texto);
 }
 
-/* === CONTEÚDO PRINCIPAL === */
+/* Estilo da área principal da página */
 main {
     margin-top: 40px;
     padding: 0 20px;
-    flex: 1;
+    flex: 1; /* faz com que a área principal ocupe o restante da tela */
 }
 
-/* === OBJETIVOS === */
+/* Estilo das seções de objetivos e dicas */
 .objetivos {
     background-color: var(--cor-4);
     padding: 20px;
     margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* sombra para profundidade */
 }
 
 .objetivos h2 {
@@ -116,7 +126,7 @@ main {
     color: var(--cor-texto);
 }
 
-/* === DICAS DE SAÚDE === */
+/* Estilo da seção de dicas */
 .dicas {
     display: flex;
     flex-direction: column;
@@ -149,7 +159,7 @@ main {
     margin-bottom: 5px;
 }
 
-/* === NOTÍCIAS === */
+/* Estilo das notícias */
 .noticias {
     margin-top: 40px;
 }
@@ -169,14 +179,14 @@ main {
     margin-bottom: 10px;
 }
 
-/* === RODAPÉ === */
+/* Estilo do rodapé */
 footer {
     background-color: #333;
     color: var(--cor-4);
     padding: 20px;
     text-align: center;
     margin-top: 40px;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0; /* bordas arredondadas no topo */
 }
 
 footer .linkrodape {
@@ -191,7 +201,7 @@ footer a {
 }
 
 footer a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* efeito de sublinhado ao passar o mouse */
 }
 
 footer p {
@@ -199,38 +209,46 @@ footer p {
     color: var(--cor-texto2);
 }
 
-/* === RESPONSIVO: MOBILE FIRST === */
+/* === MENU RESPONSIVO === */
+/* Menu escondido por padrão (em telas pequenas) */
 .menu {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.4s ease, opacity 0.4s ease, visibility 0.4s ease; /* animações suaves */
     padding-left: 0;
 }
 
+/* Menu visível quando ativo */
 .menu.ativo {
-    max-height: 1200px;
+    max-height: 800px;
+    visibility: visible;
+    opacity: 1;
 }
 
-@media screen and (min-width: 1025px) {
+/* Estilo para telas grandes (desktop) */
+@media screen and (min-width: 1024px) {
     body {
         max-width: 1200px;
-        margin: 0 auto;
+        margin: 0 auto; /* centraliza o conteúdo */
     }
 
     header {
-        border-radius: 0 0 8px 8px;
+        border-radius: 0 0 8px 8px; /* bordas arredondadas no cabeçalho */
     }
 
+    /* Menu com grid para telas grandes */
     .menu {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(6, 1fr); /* 6 colunas */
         grid-template-rows: repeat(2, auto);
         gap: 10px;
         list-style: none;
         padding: 10px;
         max-height: none;
-        overflow: visible;
+        visibility: visible;
+        opacity: 1;
     }
 
     .menu li {
@@ -238,39 +256,41 @@ footer p {
     }
 
     .burguer {
-        display: none;
+        display: none; /* Esconde o ícone de hambúrguer em telas grandes */
     }
 
+    /* As dicas ficam em linha (flex) em telas grandes */
     .dicas {
         flex-direction: row;
         flex-wrap: wrap;
     }
 
     .dica {
-        flex: 1 1 30%;
+        flex: 1 1 30%; /* Faz as dicas ocuparem 30% da largura */
     }
 }
-@media (min-width: 768px) and (max-width: 1024px) {
+
+/* Estilo para telas médias (tablets e dispositivos móveis menores) */
+@media (min-width: 768px) and (max-width: 1023px) {
     .menu {
-        display: none;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, auto);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: max-height 0.4s ease, opacity 0.4s ease;
+        padding-left: 0;
+    }
+
+    /* Menu ativo para telas médias */
+    .menu.ativo {
+        max-height: 900px;
+        opacity: 1;
+        visibility: visible;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas */
         gap: 10px;
         list-style: none;
         padding: 10px;
-        max-height: none;
-        overflow: visible;
-        justify-items: center;
-        align-items: center;
-    }
-
-    .menu.ativo {
-      max-height: 1200px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr); /* padrão mobile */
-      gap: 10px;
-      list-style: none;
-      padding: 10px;
     }
 
     .menu li {
