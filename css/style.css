@@ -252,7 +252,7 @@ footer p {
 }
 @media (min-width: 768px) and (max-width: 1024px) {
     .menu {
-        display: grid;
+        display: none;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(3, auto);
         gap: 10px;
@@ -262,6 +262,15 @@ footer p {
         overflow: visible;
         justify-items: center;
         align-items: center;
+    }
+
+    .menu.ativo {
+      max-height: 1200px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* padrão mobile */
+      gap: 10px;
+      list-style: none;
+      padding: 10px;
     }
 
     .menu li {
