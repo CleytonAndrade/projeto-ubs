@@ -7,6 +7,7 @@
   --cor-2: rgb(101, 184, 227);
   --cor-3: rgb(227, 245, 254);
   --cor-4: #ffffff;
+  --cor-5: #4CAF50;
   --cor-destaque: #193B59;
   --cor-destaque2: rgb(5, 14, 64);
   --cor-houver: rgb(210, 231, 248);
@@ -67,15 +68,6 @@ h2 {
   margin-top: 10px;
 }
 
-.menu ul {
-  list-style: none;
-  text-align: center;
-  padding: 0;
-}
-
-.menu li {
-  margin: 10px 0;
-}
 
 .menu a {
   display: block;
@@ -84,8 +76,7 @@ h2 {
   font-size: 18px;
 }
 
-.menu a:hover,
-.menu li:hover {
+.menu a:hover {
   text-decoration: underline;
   color: var(--cor-texto) ;
   background-color: var(--cor-houver);
@@ -99,7 +90,7 @@ main {
 
 /* Artigo objetivos */
 .objetivos {
-  background-color: white;
+  background-color: var(--cor-4);
   padding: 20px;
   margin-bottom: 30px;
   border-radius: 8px;
@@ -112,7 +103,7 @@ main {
 
 .objetivos p {
   font-size: 16px;
-  color: #555;
+  color: var(--cor-texto);
 }
 
 /* Estilo para as dicas de saúde */
@@ -123,7 +114,7 @@ main {
 }
 
 .dica {
-  background-color: white;
+  background-color: var(--cor-4);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -173,11 +164,11 @@ main {
 /* Estilo para o rodapé */
 footer {
   background-color: #333;
-  color: white;
+  color: var(--cor-4);
   padding: 20px;
   text-align: center;
   margin-top: 40px;
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
 }
 
 footer .linkrodape {
@@ -185,7 +176,7 @@ footer .linkrodape {
 }
 
 footer a {
-  color: #4CAF50;
+  color: var(--cor-5);
   text-decoration: none;
   margin: 0 10px;
   font-size: 0.8em;
@@ -197,7 +188,7 @@ footer a:hover {
 
 footer p {
   font-size: 14px;
-  color: #bbb;
+  color: var(--cor-texto2);
 }
 
 /* Estilo para a responsividade em dispositivos maiores */
@@ -214,19 +205,17 @@ footer p {
    }
 
   .menu {
-      display: block;
+      display: grid;
+  }
+
+  .menu a {
+      grid-template-rows: repeat(6, 1fr);
   }
 
   .burguer {
-      display: none; /* Esconde o botão hambúrguer */
+      display: none; 
   }
 
-  .menu ul {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(6, 1fr);
-
-  }
 
   .dicas {
       flex-direction: row;
@@ -239,12 +228,7 @@ footer p {
 }
 
 @media (min-width: 600px) {
-    .menu ul {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(3, 1fr);
 
-  }
 }
 
 /* Animação do menu no mobile */
@@ -256,7 +240,7 @@ footer p {
 
 .menu.ativo {
   display: block;
-  max-height: 1000px; /* o suficiente para o conteúdo */
+  max-height: 1200px; /* o suficiente para o conteúdo */
 }
 
 /* Estilização do ícone hambúrguer */
