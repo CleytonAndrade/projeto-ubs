@@ -14,198 +14,267 @@
   --cor-texto2: #d9d9d9;
 }
 
-/* RESET BÁSICO */
+/* Reset básico de margens e preenchimentos */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-  height: 100%;
-}
-
+/* Fonte padrão */
 body {
   font-family: "Raleway", sans-serif;
-  font-size: 1em;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  line-height: 1.6;
   background-color: var(--cor-3);
   color: var(--cor-texto);
+  
 }
 
-/* HEADER E MENU */
+/* Estilos do cabeçalho */
 header {
-  text-align: center;
-  color: var(--cor-texto2);
   background-color: var(--cor-1);
-}
-
-.burguer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 5px 10px;
-  background-color: var(--cor-destaque);
   color: var(--cor-texto2);
-  cursor: pointer;
+  text-align: center;
+  padding: 20px 0;
+  width: 100v;
 }
 
-.burguer p,
-.material-symbols-outlined {
-  color: var(--cor-texto2);
-  margin-left: 10px;
-}
-
-.menu {
-  display: block;
-  list-style: none;
-}
-
-.menu.ativo {
-  display: block;
-}
-
-.ubs li {
-  background-color: var(--cor-destaque2);
-  padding: 3px;
-  margin: 5px 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.ubs a {
-  text-decoration: none;
-  color: var(--cor-texto2);
-  padding: 2px;
-  border-radius: 10px;
-  display: inline-block;
-}
-
-.ubs li:hover,
-.ubs li:focus {
-  background-color: var(--cor-houver);
-}
-
-.ubs li:hover a,
-.ubs li:focus a {
-  color: var(--cor-texto);
-  text-decoration: underline;
-}
-
-/* TÍTULOS */
-h1 {
-  padding: 20px;
-  text-shadow: 1px 1px 1px black;
-  font-weight: 900;
-  font-style: italic;
+header h1 {
+  margin-bottom: 10px;
+  text-shadow: 0px 1px 3px black;
+  font-weight: 200;
+  color: var(--cor-4);
+  font-style: oblique;
 }
 
 h2 {
   text-align: center;
-  margin: 20px;
-  text-shadow: 1px 1px 1px black;
-  font-weight: normal;
 }
 
-/* CONTEÚDO PRINCIPAL */
+.burguer {
+  display: block;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.burguer p {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.menu {
+  display: none; 
+  margin-top: 10px;
+}
+
+.menu ul {
+  list-style: none;
+  text-align: center;
+  padding: 0;
+}
+
+.menu li {
+  margin: 10px 0;
+}
+
+.menu a {
+  display: block;
+  color: var(--cor-texto2);
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.menu a:hover,
+.menu li:hover {
+  text-decoration: underline;
+  color: var(--cor-texto) ;
+  background-color: var(--cor-houver);
+}
+
+/* Estilo para o main */
 main {
-  background: white;
-  margin: 10px auto;
-  padding: 10px;
-  border-radius: 5px;
-  flex: 1;
-  
-  box-shadow: 0 0 5px 1px rgba(60, 60, 60, 0.622);
+  margin-top: 40px;
+  padding: 0 20px;
 }
 
-main p {
-  text-align: justify;
-  text-indent: 30px;
+/* Artigo objetivos */
+.objetivos {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-main ul,
-main ol {
-  list-style-position: inside;
-  padding-left: 1em;
+.objetivos h2 {
+  margin-bottom: 10px;
 }
 
-/* DICAS */
+.objetivos p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Estilo para as dicas de saúde */
 .dicas {
   display: flex;
-  overflow-x: auto;
+  flex-direction: column;
   gap: 20px;
 }
 
 .dica {
-  min-width: 100%;
-}
-
-.dicas h3 {
-  text-align: center;
-  border-radius: 25px 5px;
-  font-weight: 900;
-  background: linear-gradient(45deg, var(--cor-3), var(--cor-4));
-  color: var(--cor-destaque2);
-  padding: 10px;
-  margin: 10px;
-}
-
-.noticias {
+  background-color: white;
   padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* RODAPÉ */
+.dica img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.dica h3 {
+  margin-bottom: 10px;
+}
+
+.dica ul {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.dica ul li {
+  margin-bottom: 5px;
+}
+
+/* Estilo para notícias */
+.noticias {
+  margin-top: 40px;
+}
+
+.noticia01, .noticia02, .noticia03 {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.noticias h2 {
+  margin-bottom: 20px;
+}
+
+.noticia h3 {
+  margin-bottom: 10px;
+}
+
+/* Estilo para o rodapé */
 footer {
+  background-color: #333;
+  color: white;
+  padding: 20px;
   text-align: center;
-  background: var(--cor-destaque2);
+  margin-top: 40px;
+  border-radius: 8px;
 }
 
-footer p {
-  color: white;
-  background-color: #212121a8;
-  padding: 10px;
-  font-size: 0.8em;
+footer .linkrodape {
+  margin-bottom: 10px;
 }
 
 footer a {
-  padding: 10px;
+  color: #4CAF50;
   text-decoration: none;
-  color: white;
+  margin: 0 10px;
+  font-size: 0.8em;
 }
 
-footer a:hover,
-footer a:focus {
+footer a:hover {
   text-decoration: underline;
-  color: var(--cor-houver);
 }
 
-.linkrodape {
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+footer p {
+  font-size: 14px;
+  color: #bbb;
 }
 
-/* ACESSIBILIDADE */
-a:focus {
-  outline: 2px solid var(--cor-2);
-  outline-offset: 2px;
-}
+/* Estilo para a responsividade em dispositivos maiores */
+@media (min-width: 992px) {
+  /* Menu se torna visível em telas maiores */
 
-/* RESPONSIVIDADE: TELAS MAIORES */
-@media (min-width: 768px) {
+   body {
+    max-width: 1200px;
+    margin: 0 auto;
+   }
+
+   header {
+    border-radius: 0 0 8px 8px;
+   }
+
   .menu {
-    display: none;
+      display: block;
   }
 
   .burguer {
-    justify-content: center;
+      display: none; /* Esconde o botão hambúrguer */
+  }
+
+  .menu ul {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(6, 1fr);
+
+  }
+
+  .dicas {
+      flex-direction: row;
+      flex-wrap: wrap;
   }
 
   .dica {
-    min-width: 700px;
+      flex: 1 1 30%;
   }
 }
+
+@media (min-width: 600px) {
+    .menu ul {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+
+  }
+}
+
+/* Animação do menu no mobile */
+.menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.menu.ativo {
+  display: block;
+  max-height: 1000px; /* o suficiente para o conteúdo */
+}
+
+/* Estilização do ícone hambúrguer */
+.burguer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Ícone com transição suave */
+.material-symbols-outlined {
+  transition: transform 0.3s ease;
+}
+
+.menu.ativo .material-symbols-outlined {
+  transform: rotate(90deg);
+}
+
+
+
+

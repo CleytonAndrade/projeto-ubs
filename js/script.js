@@ -1,5 +1,5 @@
-const itens = document.querySelector(".menu");
-
 function clickMenu() {
-    itens.classList.toggle("ativo");
+    const menu = document.querySelector(".menu");
+    menu.classList.toggle("ativo");
 }
+
