@@ -45,6 +45,19 @@ header {
     width: 100%;
 }
 
+
+.superior a {
+    text-align: end;
+    text-decoration: none;
+    color: white;
+    font-size: .8em;
+}
+
+.superior a:hover{
+    text-decoration: underline;
+    color: var(--cor-5);
+}
+
 /* Estilo do título no cabeçalho */
 header h1 {
     margin-bottom: 10px;
