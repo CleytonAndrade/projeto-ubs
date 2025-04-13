@@ -21,11 +21,13 @@ header {
     padding-bottom: 8px;
 }
 
+
 /* Estilos do botão home */
 
 .nav {      
     display: flex;
-    padding-left: 8px;
+    padding: 0 8px;
+    justify-content: space-between;
 }
 .nav a {
     display: flex;

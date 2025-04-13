@@ -47,24 +47,27 @@ header {
 
 
 .superior a {
-    text-align: end;
+    display: inline-block;
     text-decoration: none;
-    color: white;
-    font-size: .8em;
+    color: var(--cor-texto2);
+    padding: 0 8px;
+    transition: transform 0.1s ease;
 }
 
-.superior a:hover{
-    text-decoration: underline;
-    color: var(--cor-5);
+.superior p {
+    font-size: 16px;
+    margin-top: 10px;
 }
 
+.superior a:active {
+    transform: scale(0.95);
+}
 /* Estilo do título no cabeçalho */
 header h1 {
     margin-bottom: 10px;
     text-shadow: 0 1px 3px black; /* sombra para dar destaque */
-    font-weight: 200;
-    color: var(--cor-4); /* cor do título */
-    font-style: oblique; /* estilo em itálico */
+    font-weight: 300;
+    font-style: italic; 
 }
 
 /* Estilo dos subtítulos */
@@ -80,14 +83,6 @@ h2 {
     transition: transform 0.1s ease;
 }
 
-.burguer p {
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-.burguer:hover {
-    text-decoration: underline; /* efeito de sublinhado ao passar o mouse */
-}
 
 /* Estilo dos ícones de material design */
 .material-symbols-outlined {
@@ -114,7 +109,8 @@ h2 {
 
 
 .menu a:hover, 
-.material-symbols-outlined:hover {
+.material-symbols-outlined:hover,
+.superior a:hover {
     background-color: var(--cor-houver); 
     color: var(--cor-texto);
     outline: 1px solid var(--cor-houver);
@@ -264,6 +260,14 @@ footer p {
 
 /* Estilo para telas grandes e desktop */
 @media screen and (min-width: 1024px) {
+    .superior {
+        display: flex;
+        padding: 0 8px;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        
+    }
     body {
         max-width: 1200px;
         margin: 0 auto; /* centraliza o conteúdo */
