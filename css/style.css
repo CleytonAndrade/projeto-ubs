@@ -181,7 +181,7 @@ main {
 
 /* Estilo do rodapé */
 footer {
-    background-color: #333;
+    background-color: var(--cor-texto);
     color: var(--cor-4);
     padding: 20px;
     text-align: center;
@@ -191,6 +191,7 @@ footer {
 
 footer .linkrodape {
     margin-bottom: 10px;
+    display: grid;
 }
 
 footer a {
@@ -268,6 +269,10 @@ footer p {
     .dica {
         flex: 1 1 30%; /* Faz as dicas ocuparem 30% da largura */
     }
+    footer .linkrodape {
+       display: inline;
+        
+    }
 }
 
 /* Estilo para telas médias (tablets e dispositivos móveis menores) */
@@ -296,5 +301,13 @@ footer p {
     .menu li {
         width: 100%;
         text-align: center;
+    }
+
+    footer .linkrodape {
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: repeat(2, 200px);
+        justify-content: center;
+        
     }
 }
