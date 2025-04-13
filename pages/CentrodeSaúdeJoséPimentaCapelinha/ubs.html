@@ -15,12 +15,237 @@
             <a href="../../index.html">Página Inicial<span class="material-symbols-outlined">home</span></a>
         </nav>
     </header>
-    
-    <main>
-        <!-- Conteúdo da unidade de saúde pode ser colocado aqui -->
-        <section>
-            <h2>Bem-vindo!</h2>
-            <p>Informações sobre serviços, horários e equipe médica serão exibidas aqui.</p>
+
+    <main id="conteudo">
+        <section class="apresentacaoubs">
+            <article>
+                <h2>Centro de Saúde José Pimenta - Capelinha/MG</h2>
+                <p>Localizado no coração da cidade, o Centro de Saúde José Pimenta é uma Unidade Básica de Saúde (UBS) comprometida com a promoção da saúde, prevenção de doenças e atendimento humanizado à população de Capelinha e região.</p>
+            </article>
+            <div id="formulario">
+                <h2>Cadastro e agendamentos</h2>
+
+                <div class="cadastro">
+                    <h3>Cadastre-se no sistema:</h3>
+                    <form action="index.php" method="post">
+                        <p>
+                            <label for="nome">Nome:</label>
+                            <input type="text" name="nome" id="nome" required>
+                        </p>
+                    
+                        <p>
+                            <label for="rua">Rua:</label>
+                            <input type="text" id="rua" name="rua" placeholder="Ex: Rua José Pimenta de Figueiredo" required>
+                        </p>
+                    
+                        <p>
+                            <label for="numero">Número:</label>
+                            <input type="text" id="numero" name="numero" placeholder="Ex: 293" required>
+                        </p>
+                    
+                        <p>
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" id="bairro" name="bairro" placeholder="Ex: Centro" required>
+                        </p>
+                    
+                        <p>
+                            <label for="cidade">Cidade:</label>
+                            <input type="text" id="cidade" name="cidade" placeholder="Ex: Capelinha" required>
+                        </p>
+                    
+                        <p>
+                            <label for="estado">Estado:</label>
+                            <input type="text" id="estado" name="estado" placeholder="Ex: MG" required>
+                        </p>
+                    
+                        <p>
+                            <label for="cep">CEP:</label>
+                            <input type="text" id="cep" name="cep" placeholder="Ex: 39680-000" pattern="\d{5}-?\d{3}" required>
+                        </p>
+                    
+                        <p>
+                            <label for="tel">Telefone:</label>
+                            <input type="tel" name="tel" id="tel" placeholder="Ex: (33) 99999-9999" required>
+                        </p>
+                    
+                        <p>
+                            <label for="nasc">Data de Nascimento:</label>
+                            <input type="date" name="nasc" id="nasc" required>
+                        </p>
+                    
+                        <p>
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" placeholder="seuemail@email.com" required>
+                        </p>
+                    
+                        <p>
+                            <input type="submit" value="Enviar">
+                        </p>
+                    </form>
+                </div>
+                
+                <div class="agendamento">
+                    <h3>Agende uma consulta:</h3>
+                    <form action="agendar.php" method="post">
+                        <h2>Agendamento de Consulta</h2>                    
+                        <p>
+                            <label for="nome">Nome completo:</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </p>
+                    
+                        <p>
+                            <label for="cpf">CPF:</label>
+                            <input type="text" id="cpf" name="cpf" placeholder="Ex: 000.000.000-00" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" required>
+                        </p>
+                    
+                        <p>
+                            <label for="especialidade">Especialidade desejada:</label>
+                            <select id="especialidade" name="especialidade" required>
+                                <option value="">-- Selecione --</option>
+                                <option value="clinico_geral">Clínico Geral</option>
+                                <option value="dentista">Dentista</option>
+                                <option value="pediatria">Pediatria</option>
+                                <option value="ginecologia">Ginecologia</option>
+                                <option value="enfermagem">Enfermagem</option>
+                            </select>
+                        </p>
+                    
+                        <p>
+                            <label for="data">Data desejada:</label>
+                            <input type="date" id="data" name="data" required>
+                        </p>
+                    
+                        <p>
+                            <label for="hora">Horário preferencial:</label>
+                            <input type="time" id="hora" name="hora" required>
+                        </p>
+                    
+                        <p>
+                            <label for="telefone">Telefone para contato:</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="Ex: (33) 99999-9999" required>
+                        </p>
+                    
+                        <p>
+                            <label for="obs">Observações:</label><br>
+                            <textarea id="obs" name="obs" rows="4" cols="40" placeholder="Descreva o motivo da consulta, sintomas, etc..."></textarea>
+                        </p>
+                    
+                        <p>
+                            <button type="submit">Confirmar Agendamento</button>
+                        </p>
+                    </form>
+                </div>
+                
+            </div>
+            <address class="enderecos">
+                <p>Endereço: Rua José Pimenta de Figueiredo, 293 - Centro</p>
+                <p>Telefone / WhatsApp: (33) 9 9193-1986</p>
+                <p>Horário de atendimento: Segunda à Sexta, das 07:00 às 17:00</p>
+            </address>
+
+            <article class="servicos">
+                <h3>Serviços Oferecidos</h3>
+                <ul>
+                    <li>
+                        Atenção Primária:
+                        <ul>
+                            <li>Saúde bucal</li>
+                            <li>Estratégia de Saúde da Família</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Imunização:
+                        <ul>
+                            <li>Para toda a população</li>
+                            <li>Grupos especiais</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Outros serviços:
+                        <ul>
+                            <li>Regulação do acesso a serviços de saúde</li>
+                            <li>Atendimento ao pré-natal, parto e nascimento</li>
+                            <li>Controle de tabagismo</li>
+                            <li>Diagnóstico por imagem</li>
+                            <li>Diagnóstico por métodos gráficos dinâmicos</li>
+                            <li>Vigilância em saúde</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Telessaúde:
+                        <ul>
+                            <li>Segunda opinião formativa</li>
+                            <li>Teleconsultoria assíncrona</li>
+                            <li>Teleconsultoria síncrona</li>
+                        </ul>
+                    </li>
+                </ul>
+            </article>
+
+            <article class="infraestrutura">
+                <h3>Infraestrutura</h3>
+                <ul>
+                    <li>
+                        Salas:
+                        <ul>
+                            <li>1 sala de clínicas básicas</li>
+                            <li>3 salas de clínicas especializadas</li>
+                            <li>1 sala de curativo</li>
+                            <li>1 sala de enfermagem</li>
+                            <li>1 sala de imunização</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Equipamentos:
+                        <ul>
+                            <li>1 Ultrassom convencional</li>
+                            <li>3 Equipamentos odontológicos</li>
+                            <li>1 Eletrocardiógrafo</li>
+                        </ul>
+                    </li>
+                </ul>
+            </article>
+
+            <article class="equipe">
+                <h3>Equipe Profissional</h3>
+                <p>A UBS conta com um time qualificado e dedicado ao cuidado integral da população:</p>
+                <h4>Médicos (6):</h4>
+                <ul>
+                    <li>Carlos Magno Ferreira - Clínico</li>
+                    <li>David Albanez Campos - Radiologia e Diagnóstico por Imagem</li>
+                    <li>Débora Sabrina Cardoso Fernandes - Estratégia de Saúde da Família</li>
+                    <li>Felipe Fernandes Malheiros - Radiologia e Diagnóstico por Imagem</li>
+                    <li>Leonar Barbosa Ferreira - Clínico</li>
+                    <li>Paulo Henrique Figueiredo Amaral - Clínico</li>
+                </ul>
+                <h4>Outros profissionais (19):</h4>
+                <ul>
+                    <li>Ana Luiza Paz Gonçalves Santos - Cirurgiã-Dentista (ESF)</li>
+                    <li>Aparecida de Fátima Gomes Costa - ACS</li>
+                    <li>Dayane Rodrigues Porto Ribeiro - Enfermeira (ESF)</li>
+                    <li>Ernane Rodrigues Fagundes - Enfermeiro</li>
+                    <li>Gercileno Dias da Silva - ACS</li>
+                    <li>Gercy Xavier Martins - Recepcionista</li>
+                    <li>Jheneffer Costa Queiros - Técnica de Enfermagem</li>
+                    <li>Jhescy Gracy Silva Gomes - Gerente de Serviços de Saúde</li>
+                    <li>Joaquim Alves dos Santos - ACS</li>
+                    <li>Jonathan Damasceno Ferreira - Agente de Combate às Epidemias</li>
+                    <li>Maria do Socorro Cordeiro Azevedo - Enfermeira (ESF)</li>
+                    <li>Maria do Socorro Rocha e Silva - Auxiliar em Saúde Bucal (ESF)</li>
+                    <li>Maria Evaristo de Souza Neta - ACS</li>
+                    <li>Maristania Francisco Jardim - Técnica de Enfermagem (ESF)</li>
+                    <li>Natalia Aparecida Ferreira dos Santos - Técnica de Enfermagem (ESF)</li>
+                    <li>Poliana da Rocha Oliveira - ACS</li>
+                    <li>Raquel Cristiane dos Santos - ACS</li>
+                    <li>Valdeci Soares Rodrigues - Técnico de Enfermagem</li>
+                    <li>Vilma Aparecida Pinheiro Alves - Técnica de Enfermagem</li>
+                </ul>
+            </article>
+
+            <aside class="fundo">
+                <h3>Compromisso com a Comunidade</h3>
+                <p>A UBS Centro de Saúde José Pimenta é referência em acolhimento, cuidado humanizado e acesso à saúde pública de qualidade. A equipe trabalha diariamente para fortalecer os vínculos com a comunidade, promovendo bem-estar e qualidade de vida.</p>
+            </aside>
         </section>
     </main>
 
