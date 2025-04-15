@@ -22,17 +22,19 @@ app.get('/', (req, res) => {
 // Conexão com o banco de dados
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT, 
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    password: process.env.DB_PASS,
     database: process.env.DB_NAME
 });
 
 
 db.connect((err) => {
-    if (err) throw err;
-    console.log('Conectado ao MySQL');
-});
+    if (err) {
+      console.error(' Erro ao conectar:', err.message);
+      return;
+    }
+    console.log(' Conectado com sucesso ao MySQL remoto!');
+  });
 
 // Rota para cadastro
 app.post('/cadastro', (req, res) => {

@@ -1,5 +1,7 @@
 # Ignorar arquivos de ambiente
 .env
+echo ".env" >> .gitignore
+
 
 # Ignorar a pasta node_modules
 /node_modules
