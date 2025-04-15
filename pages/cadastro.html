@@ -21,18 +21,38 @@
             <h3>Cadastre-se no sistema:</h3>
             <form action="" method="post">
                 <p>
-                    <label for="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" required>
+                    <label for="name">Nome completo:</label>
+                    <input type="text" name="name" id="name" required>
                 </p>
-            
+                <p>
+                    <label for="username">Usuário:</label>
+                    <input type="text" name="username" id="username" autocomplete="username" minlength="5" required>
+                </p>
+                <p>
+                    <label for="password">Senha:</label>
+                    <input type="password" name="password" id="password" autocomplete="new-password" required>
+                </p>
+                <p>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" placeholder="seuemail@email.com" autocomplete="email" required>
+                </p>
+                <p>
+                    <label for="tel">Telefone:</label>
+                    <input type="tel" name="tel" id="tel" placeholder="Ex: (33) 99999-9999" required>
+                </p>
+
+                <p>
+                    <label for="cep">CEP:</label>
+                    <input type="text" id="cep" name="cep" placeholder="Ex: 39680-000" pattern="\d{5}-?\d{3}" required>
+                </p>
                 <p>
                     <label for="rua">Rua:</label>
                     <input type="text" id="rua" name="rua" placeholder="Ex: Rua José Pimenta de Figueiredo" required>
                 </p>
             
                 <p>
-                    <label for="numero">Número:</label>
-                    <input type="text" id="numero" name="numero" placeholder="Ex: 293" required>
+                    <label for="number">Número:</label>
+                    <input type="text" id="number" name="number" placeholder="Ex: 293" required>
                 </p>
             
                 <p>
@@ -51,27 +71,12 @@
                 </p>
             
                 <p>
-                    <label for="cep">CEP:</label>
-                    <input type="text" id="cep" name="cep" placeholder="Ex: 39680-000" pattern="\d{5}-?\d{3}" required>
-                </p>
-            
-                <p>
-                    <label for="tel">Telefone:</label>
-                    <input type="tel" name="tel" id="tel" placeholder="Ex: (33) 99999-9999" required>
-                </p>
-            
-                <p>
                     <label for="nasc">Data de Nascimento:</label>
                     <input type="date" name="nasc" id="nasc" required>
                 </p>
             
                 <p>
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" placeholder="seuemail@email.com" required>
-                </p>
-            
-                <p>
-                    <input type="submit" value="Cadastrar">
+                    <input type="submit" value="Cadastrar" id="cadastrar">
                 </p>
             </form>
         </div>
@@ -88,5 +93,6 @@
         <p>Copyright 2025-2025 por Cleyton Costa Andrade. Todos os direitos reservados.</p>
     </footer>
     <script src="../js/script.js"></script>
+    <script src="../js/cadastro.js"></script>
 </body>
 </html>
