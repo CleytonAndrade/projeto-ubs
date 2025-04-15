@@ -16,10 +16,25 @@
             estado: document.querySelector("#estado").value,
             nascimento: document.querySelector("#nasc").value
         };
-        
+
+        fetch("http://localhost:3000/cadastro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dados)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erro no cadastro");
+            return response.text();
+        })
+        .then(data => {
+            alert("✅ " + data);
+            document.querySelector("form").reset();
+        })
+        .catch(error => {
+            alert("❌ Ocorreu um erro: " + error.message);
+            console.error(error);
+        });
     });
-
-    
-
-}) ();
-
+})();
