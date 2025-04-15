@@ -17,7 +17,7 @@
             nascimento: document.querySelector("#nasc").value
         };
 
-        fetch("http://localhost:3000/cadastro", {
+        fetch("/cadastro", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
