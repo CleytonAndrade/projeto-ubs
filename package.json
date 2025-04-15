@@ -1,0 +1,27 @@
+{
+  "name": "projeto-ubs",
+  "version": "1.0.0",
+  "description": "&nbsp;&nbsp;&nbsp;&nbsp;Portal Saúde tem como objetivo facilitar o acesso da população às informações sobre os postos de saúde (UBS) do município de Capelinha - MG. Aqui, o cidadão pode conhecer a localização e os serviços oferecidos por cada unidade, além de ter acesso a dicas de prevenção de doenças, hábitos saudáveis e notícias relacionadas à saúde pública. Nosso compromisso é promover informação clara, acessível e útil para todos.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CleytonAndrade/projeto-ubs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CleytonAndrade/projeto-ubs/issues"
+  },
+  "homepage": "https://github.com/CleytonAndrade/projeto-ubs#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.0"
+  }
+}
