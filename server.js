@@ -14,6 +14,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rota principal para o index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+  });
+
 // Conexão com o banco de dados
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
