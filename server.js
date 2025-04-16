@@ -17,10 +17,11 @@
     app.use((req, res, next) => {
       res.setHeader(
         "Content-Security-Policy",
-        "default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://viacep.com.br"
+        "default-src 'self'; script-src 'self' https://unpkg.com; script-src-elem 'self' https://unpkg.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://viacep.com.br"
       );
       next();
     });
+    
     
 
     // Verifica se as variáveis de ambiente essenciais estão definidas
