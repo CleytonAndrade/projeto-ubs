@@ -169,9 +169,9 @@
   
     //Rota do painel 
     app.get("/painel", verificarSessao, csrfProtection, (req, res) => {
-      res.sendFile(path.join(__dirname, "painel.html"));
+      res.sendFile("pages/painel.html", { root: path.join(__dirname, 'public') });
     });
-
+  
   
     // Rota de logout
     app.post("/logout", (req, res) => {
