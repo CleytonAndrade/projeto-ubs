@@ -87,6 +87,7 @@
   
     // Rota de cadastro
     app.post("/cadastro", async (req, res) => {
+      console.log(req.body);
       const {
         nome, usuario, senha, email,
         telefone, cep, rua, numero,
@@ -122,7 +123,7 @@
         res.status(200).send("Usuário cadastrado com sucesso!");
       } catch (error) {
         console.error("Erro no cadastro:", error);
-        res.status(500).send("Erro ao cadastrar usuário");
+        res.status(500).send("Erro ao cadastrar usuário", + error.message);
       }
     });
   

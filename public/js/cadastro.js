@@ -11,6 +11,7 @@
         const cep = cepInput.value.replace(/\D/g, "");
 
         if (cep.length !== 8) return;
+        console.log("Dados enviados:", dados);
 
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(res => res.json())
@@ -73,6 +74,9 @@
             return;
         }
 
+        console.log("Dados enviados:", dados);
+
+
         // Envio via fetch
         fetch("/cadastro", {
             method: "POST",
@@ -92,5 +96,6 @@
         .catch(err => {
             alert("❌ Ocorreu um erro: " + err.message);
         });
+        
     });
 })();
