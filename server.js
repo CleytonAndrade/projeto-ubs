@@ -186,6 +186,51 @@
         });
     });
 
+    // Rota para agendamento de consulta
+    app.post('/agendar', async (req, res) => {
+    const { nome, cpf, especialidade, data, hora, telefone, obs } = req.body;
+  
+    // Validação dos campos
+    if (!nome || !cpf || !especialidade || !data || !hora || !telefone) {
+      return res.status(400).send('Campos obrigatórios não preenchidos');
+    }
+  
+    // Validação do CPF (pode ser feito com regex ou uma biblioteca)
+    const cpfRegex = /^\d{11}$/;
+    if (!cpfRegex.test(cpf)) {
+      return res.status(400).send('CPF inválido');
+    }
+  
+    // Validação do formato da data (pode ser no formato YYYY-MM-DD)
+    const dataRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dataRegex.test(data)) {
+      return res.status(400).send('Data inválida');
+    }
+  
+    // Validação do formato da hora (HH:MM)
+    const horaRegex = /^([01]?[0-9]|2[0-3]):([0-5][0-9])$/;
+    if (!horaRegex.test(hora)) {
+      return res.status(400).send('Hora inválida');
+    }
+  
+    try {
+      // Inserir dados de agendamento no banco de dados
+      const sql = `
+        INSERT INTO agendamentos (nome, cpf, especialidade, data, hora, telefone, obs)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `;
+      
+      await pool.promise().query(sql, [nome, cpf, especialidade, data, hora, telefone, obs]);
+  
+      // Responder com sucesso
+      res.status(200).send('Agendamento realizado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao agendar:', error);
+      res.status(500).send('Erro ao realizar agendamento');
+    }
+  });
+  
+
     // Middleware global para captura de erros
     app.use((err, req, res, next) => {
         console.error('Erro inesperado:', err);

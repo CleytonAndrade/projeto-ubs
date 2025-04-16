@@ -1,0 +1,105 @@
+@import url("variaveis.css"); 
+
+main {
+    margin-top: 40px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: var(--cor-4);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal da seção de doações */
+.doacoes h3 {
+    font-size: 2em;
+    color: var(--cor-destaque2);
+    margin-bottom: 20px;
+}
+
+/* Parágrafo explicativo */
+.doacoes p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: var(--cor-texto);
+}
+
+/* Títulos das opções de doação */
+.doacoes h4 {
+    font-size: 1.5em;
+    color: var(--cor-5);
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* Lista de formas de doação */
+.doacoes ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 30px;
+}
+
+/* Estilo dos itens da lista */
+.doacoes ul li {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: var(--cor-texto);
+}
+
+/* Links de doação */
+.doacoes a {
+    color: var(--cor-5);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.doacoes a:hover {
+    text-decoration: underline;
+}
+
+/* Seção para compartilhar nas redes sociais */
+.compartilhar {
+    margin-top: 40px;
+}
+
+/* Estilo dos links para compartilhamento */
+.compartilhar a {
+    background-color: #3b5998;
+    color: var(--cor-4);
+    padding: 12px 20px;
+    margin-right: 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.2em;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+/* Efeito de hover nos links de compartilhamento */
+.compartilhar a:hover {
+    background-color: #35508f;
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    .doacoes h3 {
+        font-size: 1.6em;
+    }
+
+    .doacoes p {
+        font-size: 1.1em;
+    }
+
+    .doacoes h4 {
+        font-size: 1.3em;
+    }
+
+    .doacoes ul li {
+        font-size: 1em;
+    }
+
+    .compartilhar a {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+}
