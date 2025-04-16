@@ -98,7 +98,8 @@
       const emailRegex = /^[\w.-]+@[\w.-]+\.\w{2,6}$/;
       const telefoneRegex = /^\d{10,11}$/;
       const cepRegex = /^\d{8}$/;
-      const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+      const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
   
       if (!nome || !usuario || !senha || !email) {
         return res.status(400).send("Campos obrigatórios não preenchidos");
