@@ -40,7 +40,6 @@
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, "public")));
   
-
     app.use(session({
       secret: process.env.SESSION_SECRET,
       resave: false,
@@ -51,6 +50,20 @@
         maxAge: 24 * 60 * 60 * 1000, // 1 dia
       },
     }));
+
+    app.use(
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "https://unpkg.com"],
+            styleSrc: ["'self'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            connectSrc: ["'self'", "https://viacep.com.br"],  // Adicionando o ViaCEP
+          },
+        },
+      })
+    );
   
     // Middleware CSRF com cookie opcional
     const csrfProtection = csrf({ cookie: false });
