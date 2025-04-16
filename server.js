@@ -131,27 +131,42 @@
     // Rota de login
     app.post("/login", async (req, res) => {
       const { username, password } = req.body;
-  
-      if (!username || !password) return res.status(400).send("Usuário ou senha não preenchidos");
-  
+    
+      if (!username || !password) {
+        return res.status(400).send("Usuário ou senha não preenchidos");
+      }
+    
       try {
+        // Verifica se o usuário existe no banco de dados
         const [users] = await pool.query("SELECT * FROM usuarios WHERE usuario = ?", [username]);
-        if (users.length === 0) return res.status(401).send("Usuário não encontrado");
-  
+        if (users.length === 0) {
+          return res.status(401).send("Usuário não encontrado");
+        }
+    
         const user = users[0];
+        
+        // Verifica se a senha está correta
         const senhaConfere = await bcrypt.compare(password, user.senha);
-        if (!senhaConfere) return res.status(401).send("Senha incorreta");
-  
+        if (!senhaConfere) {
+          return res.status(401).send("Senha incorreta");
+        }
+    
+        // Cria a sessão para o usuário
         req.session.usuarioId = user.id;
         req.session.nome = user.nome;
         req.session.usuario = user.usuario;
-  
-        res.redirect("/painel");
+    
+        // Resposta de sucesso para o front-end processar
+        res.status(200).send({
+          message: "Login bem-sucedido",
+          redirectUrl: "/painel", // O front-end pode usar essa URL para redirecionar o usuário
+        });
       } catch (err) {
         console.error("Erro no login:", err);
         res.status(500).send("Erro interno no login");
       }
     });
+    
   
     // Rota de logout
     app.post("/logout", (req, res) => {
