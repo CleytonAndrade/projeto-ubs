@@ -6,7 +6,7 @@
         const password = document.querySelector("#password").value.trim();
 
         if (!username || !password) {
-            e.preventDefault(); //Impede o envio do se faltar dados
+            e.preventDefault(); 
             alert("Por favor, preencha todos os campos.");
         }
         
