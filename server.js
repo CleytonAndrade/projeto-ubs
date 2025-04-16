@@ -96,8 +96,8 @@
   
       // Validações
       const emailRegex = /^[\w.-]+@[\w.-]+\.\w{2,6}$/;
-      const telefoneRegex = /^(?:\(\d{2}\)\s?)?\d{4,5}-\d{4}$/;
-      const cepRegex = /^\d{5}-\d{3}$/;
+      const telefoneRegex = /^\d{10,11}$/;
+      const cepRegex = /^\d{8}$/;
       const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
   
       if (!nome || !usuario || !senha || !email) {

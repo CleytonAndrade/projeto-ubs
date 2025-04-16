@@ -85,16 +85,14 @@
             },
             body: JSON.stringify(dados)
         })
-        .then(res => {
-            if (!res.ok) throw new Error("Erro no cadastro");
-            return res.text();
-        })
-        .then(msg => {
-            alert("✅ " + msg);
+        .then(async res => {
+            const texto = await res.text();
+            if (!res.ok) throw new Error(texto);
+            alert("✅ " + texto);
             document.querySelector("form").reset();
         })
         .catch(err => {
-            alert("❌ Ocorreu um erro: " + err.message);
+            alert("❌ " + err.message);
         });
         
     });
