@@ -10,7 +10,7 @@
     cepInput.addEventListener("blur", () => {
         const cep = cepInput.value.replace(/\D/g, "");
         console.log("CEP:", cep); 
-        
+
         if (cep.length !== 8) return;
 
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
@@ -28,6 +28,7 @@
                 document.querySelector("#estado").value = data.uf;
             })
             .catch(() => {
+                console.error("Erro ao buscar o CEP:", err);  
                 alert("❌ Erro ao buscar o CEP.");
             });
     });
