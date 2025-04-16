@@ -9,14 +9,12 @@
     // Auto preenchimento de endereço via ViaCEP
     cepInput.addEventListener("blur", () => {
         const cep = cepInput.value.replace(/\D/g, "");
-        console.log("CEP:", cep); 
 
         if (cep.length !== 8) return;
 
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(res => res.json())
             .then(data => {
-                 
                 if (data.erro) {
                     alert("❌ CEP não encontrado.");
                     return;
@@ -28,7 +26,6 @@
                 document.querySelector("#estado").value = data.uf;
             })
             .catch((err) => {
-                  
                 alert("❌ Erro ao buscar o CEP.");
             });
     });
