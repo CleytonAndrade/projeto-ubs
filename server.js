@@ -14,6 +14,15 @@
     const app = express();
     const PORT = process.env.PORT || 3000;
   
+    app.use((req, res, next) => {
+      res.setHeader(
+        "Content-Security-Policy",
+        "default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://viacep.com.br"
+      );
+      next();
+    });
+    
+
     // Verifica se as variáveis de ambiente essenciais estão definidas
     const requiredEnv = ["DB_HOST", "DB_USER", "DB_PASS", "DB_NAME", "SESSION_SECRET"];
     const missingEnv = requiredEnv.filter(key => !process.env[key]);

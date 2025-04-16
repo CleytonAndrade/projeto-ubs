@@ -36,19 +36,20 @@
         e.preventDefault();
 
         const dados = {
-            nome: document.querySelector("#name").value,
-            usuario: document.querySelector("#username").value,
-            senha: document.querySelector("#password").value,
-            email: document.querySelector("#email").value,
-            telefone: telInput.value.replace(/\D/g, ""),
-            cep: cepInput.value.replace(/\D/g, ""),
-            rua: document.querySelector("#rua").value,
-            numero: document.querySelector("#number").value,
-            bairro: document.querySelector("#bairro").value,
-            cidade: document.querySelector("#cidade").value,
-            estado: document.querySelector("#estado").value,
-            nascimento: document.querySelector("#nasc").value
+            nome: document.querySelector("#name").value,            
+            usuario: document.querySelector("#username").value,     
+            senha: document.querySelector("#password").value,       
+            email: document.querySelector("#email").value,        
+            telefone: telInput.value.replace(/\D/g, ""),            
+            cep: cepInput.value.replace(/\D/g, ""),                 
+            rua: document.querySelector("#rua").value,              
+            numero: document.querySelector("#number").value,       
+            bairro: document.querySelector("#bairro").value,        
+            cidade: document.querySelector("#cidade").value,        
+            estado: document.querySelector("#estado").value,        
+            nascimento: document.querySelector("#nasc").value      
         };
+        
 
         // Validações básicas
         if (!dados.nome || !dados.usuario || !dados.senha || !dados.email || !dados.telefone) {
