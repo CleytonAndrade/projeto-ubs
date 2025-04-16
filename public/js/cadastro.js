@@ -15,6 +15,7 @@
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(res => res.json())
             .then(data => {
+                console.log(data); 
                 if (data.erro) {
                     alert("❌ CEP não encontrado.");
                     return;
