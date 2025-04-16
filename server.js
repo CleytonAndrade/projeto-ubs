@@ -14,7 +14,6 @@
     const app = express();
     const PORT = process.env.PORT || 3000;
   
-
     // Verifica se as variáveis de ambiente essenciais estão definidas
     const requiredEnv = ["DB_HOST", "DB_USER", "DB_PASS", "DB_NAME", "SESSION_SECRET"];
     const missingEnv = requiredEnv.filter(key => !process.env[key]);
@@ -40,21 +39,7 @@
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, "public")));
-
-  // Middleware CSP personalizada
-    app.use(
-      helmet({
-        contentSecurityPolicy: {
-          directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "https://unpkg.com"],
-            styleSrc: ["'self'", "https://fonts.googleapis.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com"],
-            connectSrc: ["'self'", "https://viacep.com.br"],
-          },
-        },
-      })
-    );
+  
 
     app.use(session({
       secret: process.env.SESSION_SECRET,
@@ -67,13 +52,6 @@
       },
     }));
   
-    app.use(cors({
-      origin: ['http://localhost:3000', 'https://projeto-ubs.onrender.com'], // Defina os domínios permitidos
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization']
-    }));
-    
-
     // Middleware CSRF com cookie opcional
     const csrfProtection = csrf({ cookie: false });
   
