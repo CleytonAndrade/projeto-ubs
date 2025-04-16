@@ -35,6 +35,7 @@
         .catch(error => {
             alert("❌ Ocorreu um erro: " + error.message);
             console.error(error);
+            console.error("Detalhes do erro:", error);
         });
     });
 })();
