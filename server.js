@@ -14,13 +14,7 @@
     const app = express();
     const PORT = process.env.PORT || 3000;
   
-    app.use((req, res, next) => {
-      res.setHeader(
-        "Content-Security-Policy",
-        "default-src 'self'; connect-src 'self' https://viacep.com.br"
-      );
-      next();
-    });
+
     
 
     // Verifica se as variáveis de ambiente essenciais estão definidas
@@ -49,6 +43,20 @@
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, "public")));
   
+    app.use(
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "https://unpkg.com"],
+            styleSrc: ["'self'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            connectSrc: ["'self'", "https://viacep.com.br"],
+          },
+        },
+      })
+    );
+
     app.use(session({
       secret: process.env.SESSION_SECRET,
       resave: false,
