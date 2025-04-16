@@ -16,7 +16,7 @@
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(res => res.json())
             .then(data => {
-                console.log(data); 
+                 
                 if (data.erro) {
                     alert("❌ CEP não encontrado.");
                     return;
@@ -28,7 +28,7 @@
                 document.querySelector("#estado").value = data.uf;
             })
             .catch((err) => {
-                console.error("Erro ao buscar o CEP:", err);  
+                  
                 alert("❌ Erro ao buscar o CEP.");
             });
     });
