@@ -28,6 +28,7 @@
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
     "mysql2": "^3.14.0",
     "vanilla-masker": "^1.2.0",
     "winston": "^3.17.0"
