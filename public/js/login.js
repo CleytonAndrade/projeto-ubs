@@ -1,43 +1,39 @@
-(function(){
+(function () {
+    const form = document.querySelector("form");
     const button = document.querySelector("#entrar");
 
-    button.addEventListener("click", async (e) => {
-        e.preventDefault(); // Evita o envio tradicional do formulário
+    form.addEventListener("submit", (e) => {
+        e.preventDefault(); // Previne o envio automático do formulário
 
         const username = document.querySelector("#username").value.trim();
         const password = document.querySelector("#password").value.trim();
 
+        // Validação dos campos
         if (!username || !password) {
             alert("Por favor, preencha todos os campos.");
             return;
         }
 
-        // Enviar os dados de login via fetch
-        const dados = {
-            usuario: username,
-            senha: password
-        };
+        // Envia os dados via fetch
+        const dados = { username, password };
 
-        try {
-            const res = await fetch("/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dados)
-            });
-
-            const texto = await res.text();
-
-            if (res.ok) {
-                alert("✅ Login realizado com sucesso!");
-                // Redireciona para a página inicial ou dashboard após login
-                window.location.href = "/";
+        fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dados)
+        })
+        .then(res => res.json()) // Espera uma resposta JSON
+        .then(data => {
+            if (data.redirectUrl) {
+                window.location.href = data.redirectUrl; // Redireciona após login
             } else {
-                alert("❌ " + texto); // Exibe mensagem de erro do servidor
+                alert(data.message); // Exibe mensagem de erro
             }
-        } catch (err) {
-            alert("❌ Erro ao tentar fazer login: " + err.message);
-        }
+        })
+        .catch(err => {
+            alert("Erro: " + err.message);
+        });
     });
 })();
