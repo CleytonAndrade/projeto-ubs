@@ -37,37 +37,55 @@ db.connect((err) => {
 });
 
 // Rota para cadastro
-app.post('/cadastro', (req, res) => {
+app.post('/cadastro', async (req, res) => {
     const {
         nome, usuario, senha, email,
         telefone, cep, rua, numero,
         bairro, cidade, estado, nascimento
     } = req.body;
 
-    // Validação de campos obrigatórios antes da execução da query
+    // Validação de campos obrigatórios
     if (!nome || !usuario || !senha || !email) {
         return res.status(400).send('Campos obrigatórios não preenchidos');
     }
 
+    // Validação do formato do email
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).send('Email inválido');
+    }
+
+    // Validação do formato do telefone
+    const telefoneRegex = /^[0-9]{10,11}$/;
+    if (!telefoneRegex.test(telefone)) {
+        return res.status(400).send('Telefone inválido');
+    }
+
     console.log('Dados recebidos:', req.body);
 
-    // Gerar o hash da senha
-    const hashedPassword = bcrypt.hashSync(senha, 10); // 10 é o número de "salt rounds"
-
-    const sql = `
-        INSERT INTO usuarios (nome, usuario, senha, email, telefone, cep, rua, numero, bairro, cidade, estado, nascimento)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    // Envio da query para o banco de dados
-    db.query(sql, [nome, usuario, hashedPassword, email, telefone, cep, rua, numero, bairro, cidade, estado, nascimento], (err, result) => {
-        if (err) {
-            console.error('Erro ao executar a query:', err);
-            return res.status(500).send('Erro ao cadastrar usuário');
+    try {
+        // Verificar se o email ou usuário já existem no banco de dados
+        const [rows] = await db.promise().query('SELECT * FROM usuarios WHERE usuario = ? OR email = ?', [usuario, email]);
+        if (rows.length > 0) {
+            return res.status(400).send('Usuário ou email já cadastrado');
         }
 
+        // Gerar o hash da senha
+        const hashedPassword = await bcrypt.hash(senha, 10); // 10 é o número de "salt rounds"
+
+        const sql = `
+            INSERT INTO usuarios (nome, usuario, senha, email, telefone, cep, rua, numero, bairro, cidade, estado, nascimento)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        // Enviar os dados para o banco de dados
+        await db.promise().query(sql, [nome, usuario, hashedPassword, email, telefone, cep, rua, numero, bairro, cidade, estado, nascimento]);
+
         res.status(200).send('Usuário cadastrado com sucesso!');
-    });
+    } catch (error) {
+        console.error('Erro ao cadastrar usuário:', error);
+        res.status(500).send('Erro ao cadastrar usuário');
+    }
 });
 
 // Iniciar servidor
