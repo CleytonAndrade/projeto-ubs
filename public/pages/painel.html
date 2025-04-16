@@ -3,39 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Painel do Usuário</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style2.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home"/>
-    <script src="https://unpkg.com/vanilla-masker/build/vanilla-masker.min.js"></script>
 </head>
 <body>
     <header>
         <h1>Cadastro</h1>
         <nav class="nav" >           
             <a href="/">Página Inicial<span class="material-symbols-outlined">home</span></a>
+            <a href="/logout" id="logout">Sair</a>
         </nav>
     </header>
     
     <main id="main">
-        <div class="login-container">
-            <h2>Login</h2>
-            <form action="/login" method="POST">
-              <p>
-                  <label for="username">Usuário:</label>
-                  <input type="text" id="username" name="username" autocomplete="username" required>
-              </p>
-        
-              <p>
-                  <label for="password">Senha:</label>
-                  <input type="password" id="password" name="password" autocomplete="current-password" required>
-              </p>
-        
-              <input type="submit" value="Entrar" id="entrar">
-            </form>
-            
+        <div class="painel-container">
+            <h2>Informações do Usuário</h2>
+            <div id="user-info">
+                <h3>Bem-vindo, <span id="user-name"></span>!</h3>
+                <p><strong>Nome:</strong> <span id="user-full-name"></span></p>
+                <p><strong>Usuário:</strong> <span id="user-username"></span></p>
+                <p><strong>Email:</strong> <span id="user-email"></span></p>
+                <p><strong>Telefone:</strong> <span id="user-telefone"></span></p>
+                <p><strong>Endereço:</strong> <span id="user-endereco"></span></p>
+                <p><strong>Data de Nascimento:</strong> <span id="user-nascimento"></span></p>
+            </div>
+            <div id="actions">
+                <button id="update-profile">Atualizar Perfil</button>
+            </div>
         </div>
-        <p>Não possui uma conta? <a href="cadastro.html">Cadastre-se!</a></p>
     </main>
 
     <footer>
@@ -48,6 +45,6 @@
         <p>© 2025 por Cleyton Costa Andrade. Licenciado sob a <a href="https://opensource.org/licenses/MIT" target="_blank">Licença MIT</a>.</p>
     </footer>
     <script src="../js/script.js"></script>
-    <script src="../js/login.js"></script>
+    <script src="../js/painel.js"></script>
 </body>
 </html>
