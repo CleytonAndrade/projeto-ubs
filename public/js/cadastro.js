@@ -27,7 +27,7 @@
                 document.querySelector("#cidade").value = data.localidade;
                 document.querySelector("#estado").value = data.uf;
             })
-            .catch(() => {
+            .catch((err) => {
                 console.error("Erro ao buscar o CEP:", err);  
                 alert("❌ Erro ao buscar o CEP.");
             });
