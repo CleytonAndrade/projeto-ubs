@@ -88,12 +88,17 @@
         .then(async res => {
             const texto = await res.text();
             if (!res.ok) throw new Error(texto);
+            
             alert("✅ " + texto);
             document.querySelector("form").reset();
+        
+            // Redireciona após sucesso
+            window.location.href = "/pages/login.html"; 
         })
         .catch(err => {
             alert("❌ " + err.message);
         });
+        
         
     });
 })();
