@@ -35,7 +35,7 @@
   
     // Middlewares globais
     app.use(cors());
-    // app.use(helmet());
+    app.use(helmet());
     app.use(express.urlencoded({ extended: true })); 
     app.use(express.json());  
     app.use(express.static(path.join(__dirname, "public")));
@@ -60,7 +60,7 @@
             scriptSrc: ["'self'", "https://unpkg.com"],
             styleSrc: ["'self'", "https://fonts.googleapis.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com"],
-            connectSrc: ["'self'", "https://viacep.com.br"],  // Adicionando o ViaCEP
+            connectSrc: ["'self'", "https://viacep.com.br"],  
           },
         },
       })
@@ -69,22 +69,12 @@
     // Middleware CSRF com cookie opcional
     const csrfProtection = csrf({ cookie: false });
   
-    // Middleware de autenticação
-    const verificarSessao = (req, res, next) => {
-      if (!req.session.usuarioId) {
-        return res.status(401).send("Você precisa estar logado");
-      }
-      next();
-    };
   
     // Rotas
     app.get("/", (req, res) => {
       res.sendFile(path.join(__dirname, "index.html"));
     });
   
-    app.get("/painel", verificarSessao, csrfProtection, (req, res) => {
-      res.sendFile(path.join(__dirname, "painel.html"));
-    });
   
     // Rota de cadastro
     app.post("/cadastro", async (req, res) => {
@@ -167,7 +157,21 @@
         res.status(500).send("Erro interno no login");
       }
     });
-    
+
+    // Verifica usuário autenticado 
+    const verificarSessao = (req, res, next) => {
+      console.log("Verificando sessão:", req.session);
+      if (!req.session.usuarioId) {
+        return res.status(401).send("Você precisa estar logado");
+      }
+      next();
+    };  
+  
+    //Rota do painel 
+    app.get("/painel", verificarSessao, csrfProtection, (req, res) => {
+      res.sendFile(path.join(__dirname, "painel.html"));
+    });
+
   
     // Rota de logout
     app.post("/logout", (req, res) => {
