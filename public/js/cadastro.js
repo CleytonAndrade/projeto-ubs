@@ -11,7 +11,7 @@
         const cep = cepInput.value.replace(/\D/g, "");
 
         if (cep.length !== 8) return;
-        console.log("Dados enviados:", dados);
+        
 
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(res => res.json())
