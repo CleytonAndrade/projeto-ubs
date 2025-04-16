@@ -9,7 +9,8 @@
     // Auto preenchimento de endereço via ViaCEP
     cepInput.addEventListener("blur", () => {
         const cep = cepInput.value.replace(/\D/g, "");
-
+        console.log("CEP:", cep); 
+        
         if (cep.length !== 8) return;
 
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
