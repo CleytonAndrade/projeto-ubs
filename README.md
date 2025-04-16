@@ -45,6 +45,6 @@ O sistema está protegido com:
 │   ├── js/
 │   └── pages/
 ├── server.js
-├── .env
+├── index.html
 ├── package.json
 └── README.md
