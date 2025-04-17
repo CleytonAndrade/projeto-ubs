@@ -1,78 +1,102 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel do Usuário</title>
-    <link rel="shortcut icon" href="../assets/icons/portalsaude.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/style2.css">
-    <link rel="stylesheet" href="../css/painel.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel do Usuário</title>
+  <link rel="shortcut icon" href="../assets/icons/portalsaude.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style2.css">
+  <link rel="stylesheet" href="../css/painel.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Cadastro</h1>
-        <nav class="nav" >           
-            <a href="/">Página Inicial<span class="material-symbols-outlined">home</span></a>
-            <a href="/logout" id="logout">Sair</a>
-        </nav>
-    </header>
+  <header>
+    <h1>Cadastro</h1>
+    <nav class="nav">           
+      <a href="/">Página Inicial<span class="material-symbols-outlined">home</span></a>
+      <a href="/logout" id="logout">Sair</a>
+    </nav>
+  </header>
+  
+  <main id="main">
+    <div class="painel-container">
+        <h2>Informações do Usuário</h2>
+        <div id="user-info">
     
-    <main id="main">
-        <div class="painel-container">
-            <h2>Informações do Usuário</h2>
-            <div id="user-info">
-                <h3>Bem-vindo, <span id="user-name"></span>!</h3>
-                <p><strong>Nome:</strong> <span id="user-full-name"></span></p>
-                <p><strong>Usuário:</strong> <span id="user-username"></span></p>
-                <p><strong>Senha:</strong> <span id="user-senha"></span></p>
-                <p><strong>Email:</strong> <span id="user-email"></span></p>
-                <p><strong>Telefone:</strong> <span id="user-telefone"></span></p>
-                <p><strong>Endereço:</strong> <span id="user-endereco"></span></p>
-                <p><strong>CEP:</strong> <span id="user-cep"></span></p>
-                <p><strong>Data de Nascimento:</strong> <span id="user-nascimento"></span></p>
-            </div>
-            <div id="actions">
-                <button id="update-profile">Atualizar Perfil</button>
-            </div>
-            <div id="update-form" >
-                <h3>Atualizar Informações</h3>
-                <form id="profile-form">
-                    <label>Nome: <input type="text" name="nome" required></label><br>
-                    <label>Email: <input type="email" name="email" required></label><br>
-                    <label>Telefone: <input type="text" name="telefone" required></label><br>
-                    <label>Rua: <input type="text" name="rua" required></label><br>
-                    <label>Número: <input type="text" name="numero" required></label><br>
-                    <label>Bairro: <input type="text" name="bairro" required></label><br>
-                    <label>Cidade: <input type="text" name="cidade" required></label><br>
-                    <label>Estado: <input type="text" name="estado" required></label><br>
-                    <label>CEP: <input type="text" name="cep" required></label><br>
-                    <label>Data de Nascimento: <input type="date" name="nascimento" required></label><br>
-                    <button type="submit">Salvar Alterações</button>
-                </form>
-            </div>
-            
-            
+            <h3>Bem-vindo, <span id="user-name"></span>!</h3>
+    
+            <p>
+                <strong>Nome:</strong>
+                <span id="user-full-name" class="user-field"></span>
+                <button class="edit-btn" data-campo="nome">Editar</button>
+            </p>
+    
+            <p>
+                <strong>Usuário:</strong>
+                <span id="user-username" class="user-field"></span>
+                <button class="edit-btn" data-campo="username">Editar</button>
+            </p>
+    
+            <p>
+                <strong>Senha:</strong>
+                <span id="user-senha" class="user-field">********</span>
+                <button class="edit-btn" data-campo="senha">Editar</button>
+            </p>
+    
+            <p>
+                <strong>Email:</strong>
+                <span id="user-email" class="user-field"></span>
+                <button class="edit-btn" data-campo="email">Editar</button>
+            </p>
+    
+            <p>
+                <strong>Telefone:</strong>
+                <span id="user-telefone" class="user-field"></span>
+                <button class="edit-btn" data-campo="telefone">Editar</button>
+            </p>
+    
+            <p>
+                <strong>Endereço:</strong>
+                <span id="user-endereco" class="user-field"></span>
+                <button class="edit-btn" data-campo="endereco">Editar</button>
+            </p>
+    
+            <p>
+                <strong>CEP:</strong>
+                <span id="user-cep" class="user-field"></span>
+                <button class="edit-btn" data-campo="cep">Editar</button>
+            </p>
+    
+            <p>
+                <strong>Data de Nascimento:</strong>
+                <span id="user-nascimento" class="user-field"></span>
+                <button class="edit-btn" data-campo="nascimento">Editar</button>
+            </p>
+    
         </div>
-    </main>
+    </div>
+    
+  </main>
 
-    <footer>
-        <div class="linkrodape">
-            <a href="legal.html" target="_blank">Aviso Legal</a>
-            <a href="privacidade.html" target="_blank">Política de privacidade</a>
-            <a href="doacoes.html" target="_blank">Doações</a>
-            <a href="https://github.com/CleytonAndrade/projeto-ubs" target="_blank">GitHub do projeto</a>
-        </div>
-        <p>© 2025 por Cleyton Costa Andrade. Licenciado sob a <a href="https://opensource.org/licenses/MIT" target="_blank">Licença MIT</a>.</p>
-    </footer>
-    
-    <div id="mensagem-modal" class="modal">
-        <div class="modal-content">
-          <p id="mensagem-texto"></p>
-        </div>
-      </div>
-    <script src="../js/painel.js"></script>  
+  <footer>
+    <div class="linkrodape">
+      <a href="legal.html" target="_blank">Aviso Legal</a>
+      <a href="privacidade.html" target="_blank">Política de privacidade</a>
+      <a href="doacoes.html" target="_blank">Doações</a>
+      <a href="https://github.com/CleytonAndrade/projeto-ubs" target="_blank">GitHub do projeto</a>
+    </div>
+    <p>© 2025 por Cleyton Costa Andrade. Licenciado sob a <a href="https://opensource.org/licenses/MIT" target="_blank">Licença MIT</a>.</p>
+  </footer>
+
+  <!-- Modal de Mensagem -->
+  <div id="mensagem-modal" class="modal">
+    <div class="modal-content">
+      <p id="mensagem-texto"></p>
+    </div>
+  </div>
+
+  <script src="../js/painel.js"></script>  
+
 </body>
 </html>

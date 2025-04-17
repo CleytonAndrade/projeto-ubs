@@ -26,6 +26,61 @@ function preencherPainel(user) {
     document.getElementById("user-nascimento").innerText = user.nascimento
         ? new Date(user.nascimento + "T00:00:00-03:00").toLocaleDateString('pt-BR')
         : "Dados não disponíveis";
+    
+    // Adiciona os eventos de edição
+    adicionarEventosEdicao();
+}
+
+function adicionarEventosEdicao() {
+    const botoesEdicao = document.querySelectorAll(".edit-btn");
+
+    botoesEdicao.forEach(botao => {
+        botao.addEventListener("click", function () {
+            const campo = this.getAttribute("data-campo");
+            editarCampo(campo);
+        });
+    });
+}
+
+function editarCampo(campo) {
+    const campoElemento = document.getElementById(`user-${campo}`);
+    const valorAtual = campoElemento.innerText;
+
+    // Exibir um prompt para editar o valor
+    const novoValor = prompt(`Digite o novo valor para ${campo}:`, valorAtual);
+    if (novoValor && novoValor !== valorAtual) {
+        // Atualizar no painel
+        campoElemento.innerText = novoValor;
+
+        // Atualizar no backend
+        atualizarUsuario(campo, novoValor);
+    }
+}
+
+async function atualizarUsuario(campo, novoValor) {
+    try {
+        const resposta = await fetch("/atualizar-usuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                campo: campo,  // Nome do campo a ser atualizado (ex: 'nome', 'email', etc.)
+                valor: novoValor,  // Novo valor para o campo
+            }),
+        });
+
+        if (!resposta.ok) {
+            const errorMsg = await resposta.text();
+            throw new Error(errorMsg);
+        }
+
+        const responseData = await resposta.json();
+        mostrarMensagem(responseData.message);  // Exibe mensagem de sucesso
+    } catch (err) {
+        console.error("Erro ao atualizar o usuário:", err);
+        mostrarMensagem("Erro ao atualizar os dados.", false);  // Exibe mensagem de erro
+    }
 }
 
 document.getElementById("logout").addEventListener("click", async function (e) {
@@ -41,59 +96,6 @@ document.getElementById("logout").addEventListener("click", async function (e) {
     } catch (err) {
         console.error("Erro ao fazer logout:", err);
         mostrarMensagem("Erro ao fazer logout.", false);
-    }
-});
-
-// Função para mostrar ou esconder o formulário de atualização
-document.getElementById("update-profile").addEventListener("click", () => {
-    const formDiv = document.getElementById("update-form");
-
-    // Alterna a visibilidade do formulário
-    if (formDiv.style.display === "none" || formDiv.style.display === "") {
-        formDiv.style.display = "block";
-
-        // Preenche o formulário com os dados do usuário
-        if (!usuarioAtual) return mostrarMensagem("Erro: dados do usuário não carregados.", false);
-
-        const form = document.getElementById("profile-form");
-        form.nome.value = usuarioAtual.nome || "";
-        form.email.value = usuarioAtual.email || "";
-        form.telefone.value = usuarioAtual.telefone || "";
-        form.rua.value = usuarioAtual.rua || "";
-        form.numero.value = usuarioAtual.numero || "";
-        form.bairro.value = usuarioAtual.bairro || "";
-        form.cidade.value = usuarioAtual.cidade || "";
-        form.estado.value = usuarioAtual.estado || "";
-        form.cep.value = usuarioAtual.cep || "";
-        form.nascimento.value = usuarioAtual.nascimento ? usuarioAtual.nascimento.split("T")[0] : ""; // Remove a hora
-    } else {
-        formDiv.style.display = "none"; // Se já estiver visível, esconde
-    }
-});
-
-// Envia os dados do formulário para atualização
-document.getElementById("profile-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-
-    try {
-        const response = await fetch("/atualizar-usuario", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            mostrarMensagem("Dados atualizados com sucesso!");
-            setTimeout(() => window.location.reload(), 2000); // Recarrega os dados do painel
-        } else {
-            mostrarMensagem("Erro ao atualizar os dados.", false);
-        }
-    } catch (err) {
-        console.error("Erro na requisição:", err);
-        mostrarMensagem("Erro inesperado ao atualizar.", false);
     }
 });
 

@@ -223,37 +223,31 @@
       });
     });
 
-    //Rota de atualizar perfil
+    // Rota de atualizar perfil (atualização individual de campos)
     app.post("/atualizar-usuario", async (req, res) => {
       const usuarioId = req.session.usuarioId;
       if (!usuarioId) return res.status(401).send("Não autorizado");
-  
-      const {
-          nome, email, telefone,
-          rua, numero, bairro,
-          cidade, estado, cep,
-          nascimento
-      } = req.body;
-  
+
+      const { campo, valor } = req.body; // 'campo' é o nome do campo que você quer atualizar
+
+      // Verifique se o campo existe na lista de campos válidos
+      const camposValidos = ["nome", "email", "telefone", "rua", "numero", "bairro", "cidade", "estado", "cep", "nascimento"];
+      if (!camposValidos.includes(campo)) {
+        return res.status(400).send("Campo inválido");
+      }
+
       try {
-          await pool.query(`
-              UPDATE usuarios SET
-                  nome = ?, email = ?, telefone = ?,
-                  rua = ?, numero = ?, bairro = ?,
-                  cidade = ?, estado = ?, cep = ?, nascimento = ?
-              WHERE id = ?
-          `, [
-              nome, email, telefone,
-              rua, numero, bairro,
-              cidade, estado, cep, nascimento, usuarioId
-          ]);
-  
-          res.send({ message: "Atualizado com sucesso" });
+          // Atualiza o campo específico
+          const query = `UPDATE usuarios SET ${campo} = ? WHERE id = ?`;
+          await pool.query(query, [valor, usuarioId]);
+
+          res.send({ message: `Campo ${campo} atualizado com sucesso` });
       } catch (err) {
           console.error("Erro ao atualizar usuário:", err);
           res.status(500).send("Erro interno");
       }
     });
+
   
   
     // Rota de agendamento
