@@ -37,17 +37,19 @@ function adicionarEventosEdicao() {
     botoesEdicao.forEach(botao => {
         botao.addEventListener("click", function () {
             const campo = this.getAttribute("data-campo");
-            editarCampo(campo);
+            editarCampo(campo); // Passa o nome correto do campo para a função de edição
         });
     });
 }
 
 function editarCampo(campo) {
+    // A alteração no campo agora usa a chave `campo`, que será o nome correto do campo.
     const campoElemento = document.getElementById(`user-${campo}`);
     const valorAtual = campoElemento.innerText;
 
     // Exibir um prompt para editar o valor
     const novoValor = prompt(`Digite o novo valor para ${campo}:`, valorAtual);
+
     if (novoValor && novoValor !== valorAtual) {
         // Atualizar no painel
         campoElemento.innerText = novoValor;
@@ -140,7 +142,6 @@ document.getElementById("update-all").addEventListener("click", async function (
         }
     }
 });
-
 
 // Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {
