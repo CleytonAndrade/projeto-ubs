@@ -33,7 +33,6 @@
 
 /* Estilo básico para o modal */
 .modal {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -45,18 +44,18 @@
     align-items: center;
   }
   
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-  }
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+ }
   
-  button {
-    margin: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+ }
   
 
 /* Estilo para quando a mensagem de erro aparecer */
