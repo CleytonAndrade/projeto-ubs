@@ -272,8 +272,6 @@
     });
     
     
-    
-  
     // Rota de agendamento
     app.post("/agendar", async (req, res) => {
       const { nome, cpf, especialidade, data, hora, telefone, obs } = req.body;
