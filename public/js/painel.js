@@ -24,7 +24,7 @@ function preencherPainel(user) {
         : "Endereço não disponível";
     document.getElementById("user-cep").innerText = user.cep || "Dados não disponíveis";
     document.getElementById("user-nascimento").innerText = user.nascimento
-        ? new Date(user.nascimento).toLocaleDateString('pt-BR')
+        ? new Date(user.nascimento).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
         : "Dados não disponíveis";
 }
 

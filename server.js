@@ -189,15 +189,26 @@
   
           const user = rows[0]; // A primeira linha (única) corresponde ao usuário logado
   
+          // Verificar e formatar o endereço
+          const endereco = [
+              user.rua,
+              user.numero,
+              user.bairro,
+              user.cidade,
+              user.estado
+          ]
+          .filter(Boolean) // Remove campos vazios ou undefined
+          .join(', ') || "Endereço não disponível"; // Caso todos os campos estejam vazios, retorna uma mensagem padrão
+  
           // Retorna os dados completos do usuário
           res.json({
               id: user.id,
               nome: user.nome,
               usuario: user.usuario,
-              senha: user.senha, // Não é recomendado enviar a senha, mas você pode mascarar se necessário
+              senha: user.senha, 
               email: user.email,
               telefone: user.telefone,
-              endereco: `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`,
+              endereco: endereco,
               cep: user.cep,
               nascimento: user.nascimento
           });
@@ -206,6 +217,7 @@
           res.status(500).json({ message: 'Erro ao recuperar dados do usuário' });
       }
     });
+  
  
     // Rota de logout
     app.get("/logout", (req, res) => {
