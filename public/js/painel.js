@@ -1,10 +1,10 @@
-// Executa ao carregar a página
 window.onload = async function() {
     try {
         const response = await fetch("/usuario");  // Faz uma requisição para a rota /usuario
         if (!response.ok) throw new Error("Não foi possível carregar os dados do usuário.");
 
         const user = await response.json();
+        console.log("Dados do usuário recebidos:", user);  // Verifique os dados recebidos
 
         // Preencher os campos com os dados do usuário
         document.getElementById("user-name").innerText = user.nome;
@@ -20,4 +20,3 @@ window.onload = async function() {
         console.error("Erro ao carregar dados do usuário:", error);
     }
 };
-;
