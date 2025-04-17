@@ -28,67 +28,8 @@ function preencherPainel(user) {
         ? new Date(user.nascimento + "T00:00:00-03:00").toLocaleDateString('pt-BR')
         : "Dados não disponíveis";
     
-    // Adiciona os eventos de edição
-    adicionarEventosEdicao();
-}
-
-function adicionarEventosEdicao() {
-    const botoesEdicao = document.querySelectorAll(".edit-btn");
-
-    botoesEdicao.forEach(botao => {
-        botao.addEventListener("click", function () {
-            const campo = this.getAttribute("data-campo");
-
-            // Verifique se o campo enviado é válido
-            console.log("Campo enviado para atualização:", campo);  // Debug
-
-            editarCampo(campo); // Passa o nome correto do campo para a função de edição
-        });
-    });
-}
-
-function editarCampo(campo) {
-    const campoElemento = document.getElementById(`user-${campo}`);
-    
-    if (!campoElemento) {
-        alert(`O campo "${campo}" não existe na tela.`);
-        return;
-    }
-
-    const valorAtual = campoElemento.innerText;
-
-    const novoValor = prompt(`Digite o novo valor para ${campo}:`, valorAtual);
-
-    if (novoValor && novoValor !== valorAtual) {
-        campoElemento.innerText = novoValor;
-        atualizarUsuario(campo, novoValor);
-    }
-}
-
-async function atualizarUsuario(campo, novoValor) {
-    try {
-        const resposta = await fetch("/atualizar-usuario", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                campo: campo,  // Nome do campo a ser atualizado (ex: 'nome', 'email', etc.)
-                valor: novoValor,  // Novo valor para o campo
-            }),
-        });
-
-        if (!resposta.ok) {
-            const errorMsg = await resposta.text();
-            throw new Error(errorMsg);
-        }
-
-        const responseData = await resposta.json();
-        mostrarMensagem(responseData.message);  // Exibe mensagem de sucesso
-    } catch (err) {
-        console.error("Erro ao atualizar o usuário:", err);
-        mostrarMensagem("Erro ao atualizar os dados.", false);  // Exibe mensagem de erro
-    }
+    // Remover a chamada de função que adicionaria os eventos de edição
+    // Não há mais a necessidade de chamar a função de editar
 }
 
 if (botaoLogout) {

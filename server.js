@@ -236,12 +236,13 @@
         return res.status(400).json({ message: 'Dados inválidos' });
       }
     
-      // Proteção: impede atualização de campos não permitidos
+      // Lista de campos permitidos para atualização
       const camposPermitidos = [
         'nome', 'usuario', 'email', 'telefone', 'cep', 'rua',
         'numero', 'bairro', 'cidade', 'estado', 'nascimento'
       ];
     
+      // Verifica se o campo está na lista de campos permitidos
       if (!camposPermitidos.includes(campo)) {
         return res.status(400).json({ message: 'Campo inválido' });
       }
@@ -253,7 +254,12 @@
     
         const [result] = await pool.query(sql, values); // Usando o pool.query com prepared statement
     
-        // Atualiza o nome de usuário na sessão se ele mudou
+        // Verifica se a atualização foi bem-sucedida
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ message: 'Usuário não encontrado ou nenhum dado foi alterado.' });
+        }
+    
+        // Atualiza o nome de usuário na sessão se ele foi alterado
         if (campo === 'usuario') {
           req.session.usuario = valor;
         }
@@ -264,6 +270,7 @@
         res.status(500).json({ message: 'Erro ao atualizar os dados.' });
       }
     });
+    
     
     
   
