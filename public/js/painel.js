@@ -1,5 +1,6 @@
 let usuarioAtual = null;
 const botaoLogout = document.getElementById("logout");
+
 window.onload = async function () {
     try {
         const response = await fetch("/usuario");
@@ -37,6 +38,10 @@ function adicionarEventosEdicao() {
     botoesEdicao.forEach(botao => {
         botao.addEventListener("click", function () {
             const campo = this.getAttribute("data-campo");
+
+            // Verifique se o campo enviado é válido
+            console.log("Campo enviado para atualização:", campo);  // Debug
+
             editarCampo(campo); // Passa o nome correto do campo para a função de edição
         });
     });

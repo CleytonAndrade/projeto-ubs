@@ -247,10 +247,11 @@
       }
     
       try {
-        const sql = `UPDATE usuarios SET ${campo} = ? WHERE usuario = ?`;
-        const values = [valor, usuario];
+        // Usando uma consulta parametrizada para maior segurança
+        const sql = `UPDATE usuarios SET ?? = ? WHERE usuario = ?`;
+        const values = [campo, valor, usuario];
     
-        const [result] = await pool.query(sql, values); // Usando o pool.query
+        const [result] = await pool.query(sql, values); // Usando o pool.query com prepared statement
     
         // Atualiza o nome de usuário na sessão se ele mudou
         if (campo === 'usuario') {
@@ -260,9 +261,10 @@
         res.json({ message: `Campo ${campo} atualizado com sucesso.` });
       } catch (err) {
         console.error('Erro ao atualizar o campo:', err);
-        res.status(500).json({ message: 'Erro ao atualizar o dado' });
+        res.status(500).json({ message: 'Erro ao atualizar os dados.' });
       }
     });
+    
     
   
     // Rota de agendamento
