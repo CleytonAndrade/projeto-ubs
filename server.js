@@ -174,20 +174,18 @@
    
     // Rota para retornar os dados do usuário
     app.get('/usuario', (req, res) => {
-      const userId = 1; // Aqui você deve pegar o ID do usuário logado, dependendo da sua lógica
+      if (!req.session.usuarioId) {
+          return res.status(401).json({ message: 'Usuário não autenticado' });
+      }
   
-      connection.query('SELECT * FROM usuarios WHERE id = ?', [userId], (err, results) => {
-          if (err) {
-              console.error('Erro ao buscar dados do usuário:', err);
-              return res.status(500).json({ message: 'Erro no servidor ao buscar dados' });
-          }
+      const usuario = {
+          id: req.session.usuarioId,
+          nome: req.session.nome,
+          usuario: req.session.usuario,
+          // Você pode adicionar outros dados que deseja exibir no painel
+      };
   
-          if (results.length === 0) {
-              return res.status(404).json({ message: 'Usuário não encontrado' });
-          }
-  
-          res.json(results[0]); // Retorna os dados do primeiro usuário encontrado
-      });
+      res.json(usuario);
   });
   
 

@@ -1,16 +1,20 @@
 window.onload = async function() {
     try {
-        const response = await fetch("/usuario");  // Faz uma requisição para a rota /usuario
-        if (!response.ok) throw new Error("Não foi possível carregar os dados do usuário.");
+        // Faz uma requisição para pegar os dados do usuário logado
+        const response = await fetch("/usuario");
+
+        if (!response.ok) {
+            throw new Error("Usuário não autenticado ou erro ao carregar os dados.");
+        }
 
         const user = await response.json();
-        console.log("Dados do usuário recebidos:", user);  // Verifique os dados recebidos
+        console.log("Dados do usuário:", user); // Exibe os dados no console
 
-        // Preencher os campos com os dados do usuário
+        // Preencher os campos no painel
         document.getElementById("user-name").innerText = user.nome;
         document.getElementById("user-full-name").innerText = user.nome;
         document.getElementById("user-username").innerText = user.usuario;
-        document.getElementById("user-senha").innerText = "********";  // Senha mascarada
+        document.getElementById("user-senha").innerText = "********"; // Senha mascarada
         document.getElementById("user-email").innerText = user.email;
         document.getElementById("user-telefone").innerText = user.telefone;
         document.getElementById("user-endereco").innerText = `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`;
