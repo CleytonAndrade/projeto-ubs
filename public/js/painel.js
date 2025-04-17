@@ -13,15 +13,17 @@ window.onload = async function () {
 };
 
 function preencherPainel(user) {
-    document.getElementById("user-name").innerText = user.nome;
-    document.getElementById("user-full-name").innerText = user.nome;
-    document.getElementById("user-username").innerText = user.usuario;
+    document.getElementById("user-name").innerText = user.nome || "Dados não disponíveis";
+    document.getElementById("user-full-name").innerText = user.nome || "Dados não disponíveis";
+    document.getElementById("user-username").innerText = user.usuario || "Dados não disponíveis";
     document.getElementById("user-senha").innerText = "********"; // Senha mascarada
-    document.getElementById("user-email").innerText = user.email;
-    document.getElementById("user-telefone").innerText = user.telefone;
-    document.getElementById("user-endereco").innerText = `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`;
-    document.getElementById("user-cep").innerText = user.cep;
-    document.getElementById("user-nascimento").innerText = user.nascimento;
+    document.getElementById("user-email").innerText = user.email || "Dados não disponíveis";
+    document.getElementById("user-telefone").innerText = user.telefone || "Dados não disponíveis";
+    document.getElementById("user-endereco").innerText = user.rua && user.numero && user.bairro && user.cidade && user.estado
+        ? `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`
+        : "Dados não disponíveis";
+    document.getElementById("user-cep").innerText = user.cep || "Dados não disponíveis";
+    document.getElementById("user-nascimento").innerText = user.nascimento ? user.nascimento.split("T")[0] : "Dados não disponíveis";
 }
 
 document.getElementById("logout").addEventListener("click", async function (e) {
@@ -52,16 +54,16 @@ document.getElementById("update-profile").addEventListener("click", () => {
         if (!usuarioAtual) return mostrarMensagem("Erro: dados do usuário não carregados.", false);
 
         const form = document.getElementById("profile-form");
-        form.nome.value = usuarioAtual.nome;
-        form.email.value = usuarioAtual.email;
-        form.telefone.value = usuarioAtual.telefone;
-        form.rua.value = usuarioAtual.rua;
-        form.numero.value = usuarioAtual.numero;
-        form.bairro.value = usuarioAtual.bairro;
-        form.cidade.value = usuarioAtual.cidade;
-        form.estado.value = usuarioAtual.estado;
-        form.cep.value = usuarioAtual.cep;
-        form.nascimento.value = usuarioAtual.nascimento.split("T")[0]; // Remove a hora
+        form.nome.value = usuarioAtual.nome || "";
+        form.email.value = usuarioAtual.email || "";
+        form.telefone.value = usuarioAtual.telefone || "";
+        form.rua.value = usuarioAtual.rua || "";
+        form.numero.value = usuarioAtual.numero || "";
+        form.bairro.value = usuarioAtual.bairro || "";
+        form.cidade.value = usuarioAtual.cidade || "";
+        form.estado.value = usuarioAtual.estado || "";
+        form.cep.value = usuarioAtual.cep || "";
+        form.nascimento.value = usuarioAtual.nascimento ? usuarioAtual.nascimento.split("T")[0] : ""; // Remove a hora
     } else {
         formDiv.style.display = "none"; // Se já estiver visível, esconde
     }
