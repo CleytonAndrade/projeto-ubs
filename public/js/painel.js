@@ -16,7 +16,7 @@ function preencherPainel(user) {
     document.getElementById("user-name").innerText = user.nome;
     document.getElementById("user-full-name").innerText = user.nome;
     document.getElementById("user-username").innerText = user.usuario;
-    document.getElementById("user-senha").innerText = "********";
+    document.getElementById("user-senha").innerText = "********"; // Senha mascarada
     document.getElementById("user-email").innerText = user.email;
     document.getElementById("user-telefone").innerText = user.telefone;
     document.getElementById("user-endereco").innerText = `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`;
@@ -30,7 +30,7 @@ document.getElementById("logout").addEventListener("click", async function (e) {
     try {
         const res = await fetch("/logout", { method: "GET" });
         if (res.ok) {
-            window.location.href = "/";
+            window.location.href = "/"; // Redireciona para a home após logout
         } else {
             mostrarMensagem("Erro ao fazer logout.", false);
         }
@@ -40,24 +40,34 @@ document.getElementById("logout").addEventListener("click", async function (e) {
     }
 });
 
+// Função para mostrar ou esconder o formulário de atualização
 document.getElementById("update-profile").addEventListener("click", () => {
-    document.getElementById("update-form").style.display = "block";
+    const formDiv = document.getElementById("update-form");
 
-    if (!usuarioAtual) return mostrarMensagem("Erro: dados do usuário não carregados.", false);
+    // Alterna a visibilidade do formulário
+    if (formDiv.style.display === "none" || formDiv.style.display === "") {
+        formDiv.style.display = "block";
 
-    const form = document.getElementById("profile-form");
-    form.nome.value = usuarioAtual.nome;
-    form.email.value = usuarioAtual.email;
-    form.telefone.value = usuarioAtual.telefone;
-    form.rua.value = usuarioAtual.rua;
-    form.numero.value = usuarioAtual.numero;
-    form.bairro.value = usuarioAtual.bairro;
-    form.cidade.value = usuarioAtual.cidade;
-    form.estado.value = usuarioAtual.estado;
-    form.cep.value = usuarioAtual.cep;
-    form.nascimento.value = usuarioAtual.nascimento.split("T")[0];
+        // Preenche o formulário com os dados do usuário
+        if (!usuarioAtual) return mostrarMensagem("Erro: dados do usuário não carregados.", false);
+
+        const form = document.getElementById("profile-form");
+        form.nome.value = usuarioAtual.nome;
+        form.email.value = usuarioAtual.email;
+        form.telefone.value = usuarioAtual.telefone;
+        form.rua.value = usuarioAtual.rua;
+        form.numero.value = usuarioAtual.numero;
+        form.bairro.value = usuarioAtual.bairro;
+        form.cidade.value = usuarioAtual.cidade;
+        form.estado.value = usuarioAtual.estado;
+        form.cep.value = usuarioAtual.cep;
+        form.nascimento.value = usuarioAtual.nascimento.split("T")[0]; // Remove a hora
+    } else {
+        formDiv.style.display = "none"; // Se já estiver visível, esconde
+    }
 });
 
+// Envia os dados do formulário para atualização
 document.getElementById("profile-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -73,7 +83,7 @@ document.getElementById("profile-form").addEventListener("submit", async (e) => 
 
         if (response.ok) {
             mostrarMensagem("Dados atualizados com sucesso!");
-            setTimeout(() => window.location.reload(), 2000);
+            setTimeout(() => window.location.reload(), 2000); // Recarrega os dados do painel
         } else {
             mostrarMensagem("Erro ao atualizar os dados.", false);
         }
@@ -83,6 +93,7 @@ document.getElementById("profile-form").addEventListener("submit", async (e) => 
     }
 });
 
+// Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");
     const texto = document.getElementById("mensagem-texto");
@@ -96,4 +107,3 @@ function mostrarMensagem(msg, sucesso = true) {
         modal.style.display = "none";
     }, 3000);
 }
-
