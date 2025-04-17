@@ -223,9 +223,8 @@
       });
     });
 
-    // Rota de atualização de dados
-    
-    app.post('/atualizar-usuario', (req, res) => {
+    // Rota de atualização de dados 
+    app.post('/atualizar-usuario', async (req, res) => {
       if (!req.session.usuario) {
         return res.status(401).json({ message: 'Usuário não autenticado' });
       }
@@ -247,14 +246,11 @@
         return res.status(400).json({ message: 'Campo inválido' });
       }
     
-      const sql = `UPDATE usuarios SET ${campo} = ? WHERE usuario = ?`;
-      const values = [valor, usuario];
+      try {
+        const sql = `UPDATE usuarios SET ${campo} = ? WHERE usuario = ?`;
+        const values = [valor, usuario];
     
-      db.query(sql, values, (err, result) => {
-        if (err) {
-          console.error('Erro ao atualizar o campo:', err);
-          return res.status(500).json({ message: 'Erro ao atualizar o dado' });
-        }
+        const [result] = await pool.query(sql, values); // Usando o pool.query
     
         // Atualiza o nome de usuário na sessão se ele mudou
         if (campo === 'usuario') {
@@ -262,7 +258,10 @@
         }
     
         res.json({ message: `Campo ${campo} atualizado com sucesso.` });
-      });
+      } catch (err) {
+        console.error('Erro ao atualizar o campo:', err);
+        res.status(500).json({ message: 'Erro ao atualizar o dado' });
+      }
     });
     
   

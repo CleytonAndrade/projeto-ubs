@@ -1,5 +1,5 @@
 let usuarioAtual = null;
-
+const botaoLogout = document.getElementById("logout");
 window.onload = async function () {
     try {
         const response = await fetch("/usuario");
@@ -43,18 +43,19 @@ function adicionarEventosEdicao() {
 }
 
 function editarCampo(campo) {
-    // A alteração no campo agora usa a chave `campo`, que será o nome correto do campo.
     const campoElemento = document.getElementById(`user-${campo}`);
+    
+    if (!campoElemento) {
+        alert(`O campo "${campo}" não existe na tela.`);
+        return;
+    }
+
     const valorAtual = campoElemento.innerText;
 
-    // Exibir um prompt para editar o valor
     const novoValor = prompt(`Digite o novo valor para ${campo}:`, valorAtual);
 
     if (novoValor && novoValor !== valorAtual) {
-        // Atualizar no painel
         campoElemento.innerText = novoValor;
-
-        // Atualizar no backend
         atualizarUsuario(campo, novoValor);
     }
 }
@@ -85,59 +86,23 @@ async function atualizarUsuario(campo, novoValor) {
     }
 }
 
-document.getElementById("logout").addEventListener("click", async function (e) {
-    e.preventDefault();
+if (botaoLogout) {
+    botaoLogout.addEventListener("click", async function (e) {
+        e.preventDefault();
 
-    try {
-        const res = await fetch("/logout", { method: "GET" });
-        if (res.ok) {
-            window.location.href = "/"; // Redireciona para a home após logout
-        } else {
+        try {
+            const res = await fetch("/logout", { method: "GET" });
+            if (res.ok) {
+                window.location.href = "/";
+            } else {
+                mostrarMensagem("Erro ao fazer logout.", false);
+            }
+        } catch (err) {
+            console.error("Erro ao fazer logout:", err);
             mostrarMensagem("Erro ao fazer logout.", false);
         }
-    } catch (err) {
-        console.error("Erro ao fazer logout:", err);
-        mostrarMensagem("Erro ao fazer logout.", false);
-    }
-});
-
-//Atualizar dados editados 
-app.post('/atualizar-usuario', (req, res) => {
-    if (!req.session.usuario) {
-      return res.status(401).send('Usuário não autenticado');
-    }
-  
-    const usuario = req.session.usuario;
-    const {
-      nome, usuario: novoUsuario, email, telefone,
-      cep, rua, numero, bairro, cidade, estado, nascimento
-    } = req.body;
-  
-    console.log('Dados recebidos:', req.body); 
-  
-    const sql = `
-      UPDATE usuarios SET 
-        nome = ?, usuario = ?, email = ?, telefone = ?, cep = ?, rua = ?, 
-        numero = ?, bairro = ?, cidade = ?, estado = ?, nascimento = ?
-      WHERE usuario = ?
-    `;
-  
-    const values = [
-      nome, novoUsuario, email, telefone,
-      cep, rua, numero, bairro, cidade, estado, nascimento,
-      usuario
-    ];
-  
-    db.query(sql, values, (err, result) => {
-      if (err) {
-        console.error('Erro ao atualizar dados:', err);
-        return res.status(500).send('Erro ao atualizar dados');
-      }
-      req.session.usuario = novoUsuario; // Atualiza sessão se nome de usuário mudou
-      res.send('Dados atualizados com sucesso');
     });
-  });
-  
+}
 
 // Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {

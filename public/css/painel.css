@@ -32,7 +32,7 @@
 
 /* Ajustes no modal para mensagens de sucesso ou erro */
 .modal {
-    display: none ; 
+    display: flex ; 
     position: fixed;
     z-index: 999;
     left: 0;
@@ -47,7 +47,7 @@
 
 /* Estilo do modal de mensagem */
 #mensagem-modal {
-    display: flex; 
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
