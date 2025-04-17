@@ -87,6 +87,26 @@ main a:hover {
     text-decoration: underline;
 }
 
+/* Esconder senha */
+.senha-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.senha-wrapper input {
+    width: 100%;
+    padding-right: 40px; 
+}
+
+#toggleSenha {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    user-select: none;
+    color: #555;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     form p {

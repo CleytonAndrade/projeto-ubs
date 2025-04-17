@@ -36,4 +36,18 @@
             alert("Erro: " + err.message);
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputSenha = document.getElementById("password");
+        const btnToggle = document.getElementById("toggleSenha");
+    
+        if (btnToggle) {
+            btnToggle.addEventListener("click", () => {
+                const isHidden = inputSenha.type === "password";
+                inputSenha.type = isHidden ? "text" : "password";
+                btnToggle.textContent = isHidden ? "visibility_off" : "visibility";
+            });
+        }
+    });    
+
 })();
