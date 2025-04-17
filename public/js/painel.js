@@ -42,3 +42,44 @@ document.getElementById("logout").addEventListener("click", async function (e) {
         console.error("Erro ao fazer logout:", err);
     }
 });
+
+
+document.getElementById("update-profile").addEventListener("click", async () => {
+    document.getElementById("update-form").style.display = "block";
+
+    // Preenche o formulário com os dados atuais
+    const response = await fetch("/usuario");
+    const user = await response.json();
+
+    const form = document.getElementById("profile-form");
+    form.nome.value = user.nome;
+    form.email.value = user.email;
+    form.telefone.value = user.telefone;
+    form.rua.value = user.rua;
+    form.numero.value = user.numero;
+    form.bairro.value = user.bairro;
+    form.cidade.value = user.cidade;
+    form.estado.value = user.estado;
+    form.cep.value = user.cep;
+    form.nascimento.value = user.nascimento.split("T")[0]; // remove a hora
+});
+
+document.getElementById("profile-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    const response = await fetch("/atualizar-usuario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+        alert("Dados atualizados com sucesso!");
+        window.location.reload(); // recarrega os dados no painel
+    } else {
+        alert("Erro ao atualizar os dados.");
+    }
+});

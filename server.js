@@ -215,7 +215,39 @@
           }
           res.redirect("/"); // Redireciona para a página inicial após o logout
       });
-  });
+    });
+
+    //Rota de atualizar perfio 
+    app.post("/atualizar-usuario", async (req, res) => {
+      const usuarioId = req.session.usuarioId;
+      if (!usuarioId) return res.status(401).send("Não autorizado");
+  
+      const {
+          nome, email, telefone,
+          rua, numero, bairro,
+          cidade, estado, cep,
+          nascimento
+      } = req.body;
+  
+      try {
+          await pool.query(`
+              UPDATE usuarios SET
+                  nome = ?, email = ?, telefone = ?,
+                  rua = ?, numero = ?, bairro = ?,
+                  cidade = ?, estado = ?, cep = ?, nascimento = ?
+              WHERE id = ?
+          `, [
+              nome, email, telefone,
+              rua, numero, bairro,
+              cidade, estado, cep, nascimento, usuarioId
+          ]);
+  
+          res.send({ message: "Atualizado com sucesso" });
+      } catch (err) {
+          console.error("Erro ao atualizar usuário:", err);
+          res.status(500).send("Erro interno");
+      }
+    });
   
   
     // Rota de agendamento
