@@ -101,6 +101,7 @@ document.getElementById("logout").addEventListener("click", async function (e) {
     }
 });
 
+//Atualizar dados editados 
 document.getElementById("update-all").addEventListener("click", async function (e) {
     e.preventDefault();
 
@@ -108,7 +109,7 @@ document.getElementById("update-all").addEventListener("click", async function (
     const confirmar = confirm("Tem certeza que deseja atualizar todos os dados cadastrados?");
     
     if (confirmar) {
-        // Coletar os dados dos campos do usuário
+        // Coletar os dados atualizados dos campos
         const dadosAtualizados = {
             nome: document.getElementById("user-full-name").innerText,
             usuario: document.getElementById("user-username").innerText,
@@ -120,8 +121,8 @@ document.getElementById("update-all").addEventListener("click", async function (
             nascimento: document.getElementById("user-nascimento").innerText,
         };
 
-        // Enviar os dados para o servidor para atualização
         try {
+            // Enviar os dados atualizados para o servidor
             const resposta = await fetch(`/atualizar-usuario`, {
                 method: "POST",
                 headers: {
@@ -134,7 +135,7 @@ document.getElementById("update-all").addEventListener("click", async function (
                 throw new Error("Erro ao atualizar os dados.");
             }
 
-            // Sucesso
+            // Se a resposta for ok, exibe a mensagem de sucesso
             mostrarMensagem("Dados atualizados com sucesso!");
         } catch (err) {
             console.error("Erro ao atualizar os dados:", err);
@@ -142,6 +143,7 @@ document.getElementById("update-all").addEventListener("click", async function (
         }
     }
 });
+
 
 // Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {

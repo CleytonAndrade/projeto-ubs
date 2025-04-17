@@ -223,48 +223,52 @@
       });
     });
 
-// Rota de atualização de dados
-app.post("/atualizar-usuario", async (req, res) => {
-  const usuarioId = req.session.usuarioId;
-  if (!usuarioId) return res.status(401).send("Não autorizado");
+    // Rota de atualização de dados
+    app.post("/atualizar-usuario", async (req, res) => {
+      const usuarioId = req.session.usuarioId;
+      if (!usuarioId) return res.status(401).send("Não autorizado");
 
-  const { dados } = req.body; // Obtemos os dados completos para atualizar
+      const dadosAtualizados = req.body.dados; // Recebe os dados atualizados do corpo da requisição
 
-  // Verifique se todos os campos são válidos
-  const camposValidos = ["nome", "usuario", "senha", "email", "telefone", "endereco", "cep", "nascimento"];
-  
-  for (let campo in dados) {
-      if (!camposValidos.includes(campo)) {
-          return res.status(400).send(`Campo inválido: ${campo}`);
+      // Verifica se todos os campos foram preenchidos corretamente
+      if (!dadosAtualizados) {
+          return res.status(400).send("Dados inválidos.");
       }
-  }
 
-  try {
-      // Atualiza os dados do usuário
-      const query = `UPDATE usuarios SET nome = ?, usuario = ?, senha = ?, email = ?, telefone = ?, endereco = ?, cep = ?, nascimento = ? WHERE id = ?`;
-      const values = [
-          dados.nome, 
-          dados.usuario, 
-          dados.senha, 
-          dados.email, 
-          dados.telefone, 
-          dados.endereco, 
-          dados.cep, 
-          dados.nascimento,
-          usuarioId
+      const campos = [
+          'nome', 'usuario', 'senha', 'email', 'telefone', 'endereco', 'cep', 'nascimento'
       ];
-      
-      await pool.query(query, values);
 
-      res.send({ message: "Dados atualizados com sucesso!" });
-  } catch (err) {
-      console.error("Erro ao atualizar usuário:", err);
-      res.status(500).send("Erro interno");
-  }
-});
+      // Valida cada campo e cria uma lista de atualizações
+      const camposParaAtualizar = [];
+      const valores = [];
 
+      campos.forEach(campo => {
+          if (dadosAtualizados[campo] !== undefined) {
+              camposParaAtualizar.push(`${campo} = ?`);
+              valores.push(dadosAtualizados[campo]);
+          }
+      });
 
-  
+      // Se não houver campos para atualizar
+      if (camposParaAtualizar.length === 0) {
+          return res.status(400).send("Nenhum campo a ser atualizado.");
+      }
+
+      // Adiciona o ID do usuário à lista de valores
+      valores.push(usuarioId);
+
+      const query = `UPDATE usuarios SET ${camposParaAtualizar.join(', ')} WHERE id = ?`;
+
+      try {
+          await pool.query(query, valores);
+          res.send({ message: "Dados atualizados com sucesso" });
+      } catch (err) {
+          console.error("Erro ao atualizar usuário:", err);
+          res.status(500).send("Erro interno no servidor");
+      }
+    });
+
   
     // Rota de agendamento
     app.post("/agendar", async (req, res) => {
