@@ -19,13 +19,12 @@ function preencherPainel(user) {
     document.getElementById("user-senha").innerText = "********"; // Senha mascarada
     document.getElementById("user-email").innerText = user.email || "Dados não disponíveis";
     document.getElementById("user-telefone").innerText = user.telefone || "Dados não disponíveis";
-
-    // Atualizando a exibição do endereço
     document.getElementById("user-endereco").innerText = user.endereco || "Endereço não disponível";
-
     document.getElementById("user-cep").innerText = user.cep || "Dados não disponíveis";
+    
+    // Corrigindo a exibição da data para evitar o problema do fuso horário
     document.getElementById("user-nascimento").innerText = user.nascimento
-        ? new Date(user.nascimento).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+        ? new Date(user.nascimento + "T00:00:00-03:00").toLocaleDateString('pt-BR')
         : "Dados não disponíveis";
 }
 
