@@ -173,30 +173,41 @@
   
    
     // Rota para retornar os dados do usuário
-    app.get('/usuario', (req, res) => {
+    app.get('/usuario', async (req, res) => {
       if (!req.session.usuarioId) {
           return res.status(401).json({ message: 'Usuário não autenticado' });
       }
   
-      const usuario = {
-          id: req.session.usuarioId,
-          nome: req.session.nome,
-          usuario: req.session.usuario,
-          // Você pode adicionar outros dados que deseja exibir no painel
-      };
+      try {
+          // Recupera todos os dados do usuário logado a partir do banco de dados
+          const [rows] = await pool.query("SELECT * FROM usuarios WHERE id = ?", [req.session.usuarioId]);
   
-      res.json(usuario);
-  });
+          if (rows.length === 0) {
+              return res.status(404).json({ message: 'Usuário não encontrado' });
+          }
   
-
-    
-    // Rota de logout
-    app.post("/logout", (req, res) => {
-      req.session.destroy(err => {
-        if (err) return res.status(500).send("Erro ao sair");
-        res.send("Logout realizado com sucesso");
-      });
+          const user = rows[0]; // A primeira linha (única) corresponde ao usuário logado
+  
+          // Retorna os dados completos do usuário
+          res.json({
+              id: user.id,
+              nome: user.nome,
+              usuario: user.usuario,
+              senha: user.senha, // Não é recomendado enviar a senha, mas você pode mascarar se necessário
+              email: user.email,
+              telefone: user.telefone,
+              endereco: `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`,
+              cep: user.cep,
+              nascimento: user.nascimento
+          });
+      } catch (err) {
+          console.error("Erro ao recuperar dados do usuário:", err);
+          res.status(500).json({ message: 'Erro ao recuperar dados do usuário' });
+      }
     });
+ 
+    // Rota de logoff
+
   
     // Rota de agendamento
     app.post("/agendar", async (req, res) => {
