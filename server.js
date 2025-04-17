@@ -4,7 +4,6 @@
     const express = require("express");
     const path = require("path");
     const mysql = require("mysql2/promise");
-    const bodyParser = require("body-parser");
     const cors = require("cors");
     const bcrypt = require("bcrypt");
     const session = require("express-session");
@@ -167,12 +166,59 @@
       next();
     };  
   
-    //Rota do painel 
+    //Rota do painel  
     app.get("/painel", verificarSessao, csrfProtection, (req, res) => {
       res.sendFile("pages/painel.html", { root: path.join(__dirname, 'public') });
     });
   
-  
+   
+    // Rota para retornar os dados do usuário
+    app.get("/usuario", (req, res) => {
+      // Verifica se o usuário está autenticado 
+      if (!req.session.usuarioId) {
+          return res.status(401).json({ message: "Usuário não autenticado" });
+      }
+
+      const userId = req.session.usuarioId;
+
+      // Query para buscar dados do usuário no banco de dados
+      const query = `
+          SELECT nome, usuario, senha, email, telefone, rua, numero, bairro, cidade, estado, cep, nascimento
+          FROM usuarios
+          WHERE id = ?
+      `;
+
+      // Executa a consulta ao banco de dados
+      pool.query(query, [userId], (err, result) => {
+          if (err) {
+              console.error("Erro ao buscar dados do usuário:", err);
+              return res.status(500).json({ message: "Erro ao buscar dados do usuário" });
+          }
+
+          // Se o usuário for encontrado, retorna os dados
+          if (result.length > 0) {
+              const user = result[0];
+              res.json({
+                  nome: user.nome,
+                  usuario: user.usuario,
+                  senha: user.senha,  // Senha pode ser mascarada ou omitida por segurança
+                  email: user.email,
+                  telefone: user.telefone,
+                  rua: user.rua,
+                  numero: user.numero,
+                  bairro: user.bairro,
+                  cidade: user.cidade,
+                  estado: user.estado,
+                  cep: user.cep,
+                  nascimento: user.nascimento
+              });
+          } else {
+              res.status(404).json({ message: "Usuário não encontrado" });
+          }
+      });
+    });
+
+    
     // Rota de logout
     app.post("/logout", (req, res) => {
       req.session.destroy(err => {

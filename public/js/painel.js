@@ -1,25 +1,23 @@
-(function(){
-    document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const response = await fetch('/api/usuario');
-            if (!response.ok) {
-                throw new Error('Erro ao carregar dados do usuário');
-            }
-    
-            const usuario = await response.json();
-    
-            // Preencher os campos com os dados do usuário
-            document.getElementById('user-name').textContent = usuario.nome;
-            document.getElementById('user-full-name').textContent = usuario.nome;
-            document.getElementById('user-username').textContent = usuario.usuario;
-            document.getElementById('user-email').textContent = usuario.email;
-            document.getElementById('user-telefone').textContent = usuario.telefone;
-            document.getElementById('user-endereco').textContent = `${usuario.rua}, ${usuario.numero}, ${usuario.bairro}, ${usuario.cidade} - ${usuario.estado}`;
-            document.getElementById('user-nascimento').textContent = usuario.nascimento;
-    
-        } catch (error) {
-            console.error('Erro ao carregar os dados do painel:', error);
-            alert('Erro ao carregar os dados do painel');
-        }
-    });
-})();
+// Executa ao carregar a página
+window.onload = async function() {
+    try {
+        const response = await fetch("/usuario");  // Faz uma requisição para a rota /usuario
+        if (!response.ok) throw new Error("Não foi possível carregar os dados do usuário.");
+
+        const user = await response.json();
+
+        // Preencher os campos com os dados do usuário
+        document.getElementById("user-name").innerText = user.nome;
+        document.getElementById("user-full-name").innerText = user.nome;
+        document.getElementById("user-username").innerText = user.usuario;
+        document.getElementById("user-senha").innerText = "********";  // Senha mascarada
+        document.getElementById("user-email").innerText = user.email;
+        document.getElementById("user-telefone").innerText = user.telefone;
+        document.getElementById("user-endereco").innerText = `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`;
+        document.getElementById("user-cep").innerText = user.cep;
+        document.getElementById("user-nascimento").innerText = user.nascimento;
+    } catch (error) {
+        console.error("Erro ao carregar dados do usuário:", error);
+    }
+};
+;
