@@ -33,6 +33,7 @@
 
 /* Estilo básico para o modal */
 .modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
