@@ -9,7 +9,7 @@
 
 /* Estilo do corpo, definindo fonte, cor de fundo e alinhamento */
 body {
-    font-family: "Raleway", sans-serif;
+    font-family: var(--font-principal);
     line-height: 1.6;
     background-color: var(--cor-3); /* cor de fundo do corpo */
     color: var(--cor-texto); /* cor do texto principal */

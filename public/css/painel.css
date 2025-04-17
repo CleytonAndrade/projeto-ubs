@@ -1,5 +1,7 @@
-@charset "UTF-8";
+@import url("variaveis.css"); 
 
+
+/* Painel do usuário */
 .painel-container {
     background-color: var(--cor-4);
     border-radius: 8px;
@@ -73,6 +75,8 @@
         width: 100%;
     }
 }
+
+/* Estilo do modal */
 .modal {
     display: none; 
     position: fixed; 
@@ -152,7 +156,7 @@
 }
 
 #profile-form button {
-    background-color: #4CAF50;
+    background-color: var(--cor-5);
     color: white;
     padding: 12px 20px;
     font-size: 1.1em;
