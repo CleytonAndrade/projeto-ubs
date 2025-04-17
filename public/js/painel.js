@@ -102,48 +102,42 @@ document.getElementById("logout").addEventListener("click", async function (e) {
 });
 
 //Atualizar dados editados 
-document.getElementById("update-all").addEventListener("click", async function (e) {
-    e.preventDefault();
-
-    // Exibe um prompt de confirmação antes de enviar os dados
-    const confirmar = confirm("Tem certeza que deseja atualizar todos os dados cadastrados?");
-    
-    if (confirmar) {
-        // Coletar os dados atualizados dos campos
-        const dadosAtualizados = {
-            nome: document.getElementById("user-full-name").innerText,
-            usuario: document.getElementById("user-username").innerText,
-            senha: "********", // A senha será ignorada ou mascarada
-            email: document.getElementById("user-email").innerText,
-            telefone: document.getElementById("user-telefone").innerText,
-            endereco: document.getElementById("user-endereco").innerText,
-            cep: document.getElementById("user-cep").innerText,
-            nascimento: document.getElementById("user-nascimento").innerText,
-        };
-
-        try {
-            // Enviar os dados atualizados para o servidor
-            const resposta = await fetch(`/atualizar-usuario`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ dados: dadosAtualizados }),
-            });
-
-            if (!resposta.ok) {
-                throw new Error("Erro ao atualizar os dados.");
-            }
-
-            // Se a resposta for ok, exibe a mensagem de sucesso
-            mostrarMensagem("Dados atualizados com sucesso!");
-        } catch (err) {
-            console.error("Erro ao atualizar os dados:", err);
-            mostrarMensagem("Erro ao atualizar os dados.", false);
-        }
+app.post('/atualizar-usuario', (req, res) => {
+    if (!req.session.usuario) {
+      return res.status(401).send('Usuário não autenticado');
     }
-});
-
+  
+    const usuario = req.session.usuario;
+    const {
+      nome, usuario: novoUsuario, email, telefone,
+      cep, rua, numero, bairro, cidade, estado, nascimento
+    } = req.body;
+  
+    console.log('Dados recebidos:', req.body); 
+  
+    const sql = `
+      UPDATE usuarios SET 
+        nome = ?, usuario = ?, email = ?, telefone = ?, cep = ?, rua = ?, 
+        numero = ?, bairro = ?, cidade = ?, estado = ?, nascimento = ?
+      WHERE usuario = ?
+    `;
+  
+    const values = [
+      nome, novoUsuario, email, telefone,
+      cep, rua, numero, bairro, cidade, estado, nascimento,
+      usuario
+    ];
+  
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error('Erro ao atualizar dados:', err);
+        return res.status(500).send('Erro ao atualizar dados');
+      }
+      req.session.usuario = novoUsuario; // Atualiza sessão se nome de usuário mudou
+      res.send('Dados atualizados com sucesso');
+    });
+  });
+  
 
 // Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {
