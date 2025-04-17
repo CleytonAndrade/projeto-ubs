@@ -60,6 +60,7 @@
             styleSrc: ["'self'", "https://fonts.googleapis.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com"],
             connectSrc: ["'self'", "https://viacep.com.br"],  
+            styleSrc: ["'self'", "https://fonts.googleapis.com", "'nonce-...'" ],
           },
         },
       })

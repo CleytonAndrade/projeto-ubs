@@ -21,9 +21,11 @@ function preencherPainel(user) {
     document.getElementById("user-telefone").innerText = user.telefone || "Dados não disponíveis";
     document.getElementById("user-endereco").innerText = user.rua && user.numero && user.bairro && user.cidade && user.estado
         ? `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`
-        : "Dados não disponíveis";
+        : "Endereço não disponível";
     document.getElementById("user-cep").innerText = user.cep || "Dados não disponíveis";
-    document.getElementById("user-nascimento").innerText = user.nascimento ? user.nascimento.split("T")[0] : "Dados não disponíveis";
+    document.getElementById("user-nascimento").innerText = user.nascimento
+        ? new Date(user.nascimento).toLocaleDateString('pt-BR')
+        : "Dados não disponíveis";
 }
 
 document.getElementById("logout").addEventListener("click", async function (e) {
