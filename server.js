@@ -206,8 +206,17 @@
       }
     });
  
-    // Rota de logoff
-
+    // Rota de logout
+    app.get("/logout", (req, res) => {
+      req.session.destroy((err) => {
+          if (err) {
+              console.error("Erro ao encerrar a sessão:", err);
+              return res.status(500).send("Erro ao encerrar a sessão");
+          }
+          res.redirect("/"); // Redireciona para a página inicial após o logout
+      });
+  });
+  
   
     // Rota de agendamento
     app.post("/agendar", async (req, res) => {

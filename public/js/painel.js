@@ -24,3 +24,21 @@ window.onload = async function() {
         console.error("Erro ao carregar dados do usuário:", error);
     }
 };
+
+document.getElementById("logout").addEventListener("click", async function (e) {
+    e.preventDefault(); // evita o redirecionamento automático
+
+    try {
+        const res = await fetch("/logout", {
+            method: "GET"
+        });
+
+        if (res.ok) {
+            window.location.href = "/"; // Redireciona para a home após logout
+        } else {
+            alert("Erro ao fazer logout.");
+        }
+    } catch (err) {
+        console.error("Erro ao fazer logout:", err);
+    }
+});
