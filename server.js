@@ -59,12 +59,12 @@
             scriptSrc: ["'self'", "https://unpkg.com"],
             styleSrc: ["'self'", "https://fonts.googleapis.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com"],
-            connectSrc: ["'self'", "https://viacep.com.br"],  
-            styleSrc: ["'self'", "https://fonts.googleapis.com", "'nonce-...'" ],
+            connectSrc: ["'self'", "https://viacep.com.br"],
           },
         },
       })
     );
+    
   
     // Middleware CSRF com cookie opcional
     const csrfProtection = csrf({ cookie: false });
