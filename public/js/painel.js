@@ -99,6 +99,49 @@ document.getElementById("logout").addEventListener("click", async function (e) {
     }
 });
 
+document.getElementById("update-all").addEventListener("click", async function (e) {
+    e.preventDefault();
+
+    // Exibe um prompt de confirmação antes de enviar os dados
+    const confirmar = confirm("Tem certeza que deseja atualizar todos os dados cadastrados?");
+    
+    if (confirmar) {
+        // Coletar os dados dos campos do usuário
+        const dadosAtualizados = {
+            nome: document.getElementById("user-full-name").innerText,
+            usuario: document.getElementById("user-username").innerText,
+            senha: "********", // A senha será ignorada ou mascarada
+            email: document.getElementById("user-email").innerText,
+            telefone: document.getElementById("user-telefone").innerText,
+            endereco: document.getElementById("user-endereco").innerText,
+            cep: document.getElementById("user-cep").innerText,
+            nascimento: document.getElementById("user-nascimento").innerText,
+        };
+
+        // Enviar os dados para o servidor para atualização
+        try {
+            const resposta = await fetch(`/atualizar-usuario`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ dados: dadosAtualizados }),
+            });
+
+            if (!resposta.ok) {
+                throw new Error("Erro ao atualizar os dados.");
+            }
+
+            // Sucesso
+            mostrarMensagem("Dados atualizados com sucesso!");
+        } catch (err) {
+            console.error("Erro ao atualizar os dados:", err);
+            mostrarMensagem("Erro ao atualizar os dados.", false);
+        }
+    }
+});
+
+
 // Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");

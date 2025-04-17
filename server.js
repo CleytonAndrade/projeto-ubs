@@ -223,30 +223,46 @@
       });
     });
 
-    // Rota de atualizar perfil (atualização individual de campos)
-    app.post("/atualizar-usuario", async (req, res) => {
-      const usuarioId = req.session.usuarioId;
-      if (!usuarioId) return res.status(401).send("Não autorizado");
+// Rota de atualização de dados
+app.post("/atualizar-usuario", async (req, res) => {
+  const usuarioId = req.session.usuarioId;
+  if (!usuarioId) return res.status(401).send("Não autorizado");
 
-      const { campo, valor } = req.body; // 'campo' é o nome do campo que você quer atualizar
+  const { dados } = req.body; // Obtemos os dados completos para atualizar
 
-      // Verifique se o campo existe na lista de campos válidos
-      const camposValidos = ["nome", "email", "telefone", "rua", "numero", "bairro", "cidade", "estado", "cep", "nascimento"];
+  // Verifique se todos os campos são válidos
+  const camposValidos = ["nome", "usuario", "senha", "email", "telefone", "endereco", "cep", "nascimento"];
+  
+  for (let campo in dados) {
       if (!camposValidos.includes(campo)) {
-        return res.status(400).send("Campo inválido");
+          return res.status(400).send(`Campo inválido: ${campo}`);
       }
+  }
 
-      try {
-          // Atualiza o campo específico
-          const query = `UPDATE usuarios SET ${campo} = ? WHERE id = ?`;
-          await pool.query(query, [valor, usuarioId]);
+  try {
+      // Atualiza os dados do usuário
+      const query = `UPDATE usuarios SET nome = ?, usuario = ?, senha = ?, email = ?, telefone = ?, endereco = ?, cep = ?, nascimento = ? WHERE id = ?`;
+      const values = [
+          dados.nome, 
+          dados.usuario, 
+          dados.senha, 
+          dados.email, 
+          dados.telefone, 
+          dados.endereco, 
+          dados.cep, 
+          dados.nascimento,
+          usuarioId
+      ];
+      
+      await pool.query(query, values);
 
-          res.send({ message: `Campo ${campo} atualizado com sucesso` });
-      } catch (err) {
-          console.error("Erro ao atualizar usuário:", err);
-          res.status(500).send("Erro interno");
-      }
-    });
+      res.send({ message: "Dados atualizados com sucesso!" });
+  } catch (err) {
+      console.error("Erro ao atualizar usuário:", err);
+      res.status(500).send("Erro interno");
+  }
+});
+
 
   
   
