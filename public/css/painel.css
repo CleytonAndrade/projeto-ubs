@@ -30,43 +30,33 @@
     display: none;
 }
 
-/* Ajustes no modal para mensagens de sucesso ou erro */
-.modal {
-    display: flex ; 
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    justify-content: center;
-    align-items: center;
-}
 
-/* Estilo do modal de mensagem */
-#mensagem-modal {
-    display: none; 
+/* Estilo básico para o modal */
+.modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    display: none;
     justify-content: center;
     align-items: center;
-}
-
-#mensagem-texto {
+  }
+  
+  .modal-content {
     background-color: white;
     padding: 20px;
-    border-radius: 8px;
-    font-size: 1.2em;
-    color: green; /* Inicialmente para sucesso */
-    text-align: center; /* Centraliza o texto */
-    max-width: 400px; /* Limita a largura para ficar mais agradável */
-}
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  button {
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
 
 /* Estilo para quando a mensagem de erro aparecer */
 #mensagem-texto.error {

@@ -1,53 +1,95 @@
-let usuarioAtual = null;
-const botaoLogout = document.getElementById("logout");
+let campoAtual = null;
+let novoValorAtual = null;
 
-window.onload = async function () {
-    try {
-        const response = await fetch("/usuario");
-        if (!response.ok) throw new Error("Usuário não autenticado.");
-        usuarioAtual = await response.json();
+function adicionarEventosEdicao() {
+    const botoesEdicao = document.querySelectorAll(".edit-btn");
 
-        preencherPainel(usuarioAtual);
-    } catch (error) {
-        console.error("Erro ao carregar dados:", error);
-    }
-};
+    botoesEdicao.forEach(botao => {
+        botao.addEventListener("click", function () {
+            const campo = this.getAttribute("data-campo");
+            editarCampo(campo); // Passa o nome correto do campo para a função de edição
+        });
+    });
 
-function preencherPainel(user) {
-    document.getElementById("user-name").innerText = user.nome || "Dados não disponíveis";
-    document.getElementById("user-full-name").innerText = user.nome || "Dados não disponíveis";
-    document.getElementById("user-username").innerText = user.usuario || "Dados não disponíveis";
-    document.getElementById("user-senha").innerText = "********"; // Senha mascarada
-    document.getElementById("user-email").innerText = user.email || "Dados não disponíveis";
-    document.getElementById("user-telefone").innerText = user.telefone || "Dados não disponíveis";
-    document.getElementById("user-endereco").innerText = user.endereco || "Endereço não disponível";
-    document.getElementById("user-cep").innerText = user.cep || "Dados não disponíveis";
-    
-    // Corrigindo a exibição da data para evitar o problema do fuso horário
-    document.getElementById("user-nascimento").innerText = user.nascimento
-        ? new Date(user.nascimento + "T00:00:00-03:00").toLocaleDateString('pt-BR')
-        : "Dados não disponíveis";
-    
-    // Remover a chamada de função que adicionaria os eventos de edição
-    // Não há mais a necessidade de chamar a função de editar
+    const botoesConfirmacao = document.querySelectorAll(".confirm-btn");
+
+    botoesConfirmacao.forEach(botao => {
+        botao.addEventListener("click", function () {
+            const campo = this.getAttribute("data-campo");
+            const input = document.querySelector(`#user-${campo} .input-edicao`);
+            novoValorAtual = input.value;
+            campoAtual = campo;
+
+            // Exibe o modal de confirmação
+            mostrarModalConfirmacao();
+        });
+    });
 }
 
-if (botaoLogout) {
-    botaoLogout.addEventListener("click", async function (e) {
-        e.preventDefault();
+function editarCampo(campo) {
+    const campoElemento = document.getElementById(`user-${campo}-display`);
+    const input = document.querySelector(`#user-${campo} .input-edicao`);
+    const botaoConfirmar = document.querySelector(`#user-${campo} .confirm-btn`);
+    const botaoEditar = document.querySelector(`#user-${campo} .edit-btn`);
 
-        try {
-            const res = await fetch("/logout", { method: "GET" });
-            if (res.ok) {
-                window.location.href = "/";
-            } else {
-                mostrarMensagem("Erro ao fazer logout.", false);
-            }
-        } catch (err) {
-            console.error("Erro ao fazer logout:", err);
-            mostrarMensagem("Erro ao fazer logout.", false);
-        }
+    // Exibe o campo de input e o botão de confirmação
+    campoElemento.style.display = 'none';
+    botaoEditar.style.display = 'none';
+    botaoConfirmar.style.display = 'inline';
+    input.style.display = 'inline';
+
+    // Preenche o input com o valor atual
+    input.value = campoElemento.innerText;
+}
+
+function mostrarModalConfirmacao() {
+    const modal = document.getElementById("modal-confirmacao");
+    modal.style.display = "flex";
+
+    const confirmarBtn = document.getElementById("confirmar-edicao");
+    const cancelarBtn = document.getElementById("cancelar-edicao");
+
+    // Quando o usuário clica em "Sim", confirma a edição
+    confirmarBtn.addEventListener("click", () => {
+        atualizarUsuario(campoAtual, novoValorAtual);
+        modal.style.display = "none";  // Fecha o modal após a confirmação
     });
+
+    // Quando o usuário clica em "Não", cancela a edição
+    cancelarBtn.addEventListener("click", () => {
+        const input = document.querySelector(`#user-${campoAtual} .input-edicao`);
+        input.style.display = "none";
+        document.querySelector(`#user-${campoAtual} .confirm-btn`).style.display = "none";
+        document.querySelector(`#user-${campoAtual} .edit-btn`).style.display = "inline";
+        modal.style.display = "none";  // Fecha o modal após o cancelamento
+    });
+}
+
+async function atualizarUsuario(campo, novoValor) {
+    try {
+        const resposta = await fetch("/atualizar-usuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                campo: campo,  // Nome do campo a ser atualizado (ex: 'nome', 'email', etc.)
+                valor: novoValor,  // Novo valor para o campo
+            }),
+        });
+
+        if (!resposta.ok) {
+            const errorMsg = await resposta.text();
+            throw new Error(errorMsg);
+        }
+
+        const responseData = await resposta.json();
+        mostrarMensagem(responseData.message);  // Exibe mensagem de sucesso
+        document.querySelector(`#user-${campo}-display`).innerText = novoValor; // Atualiza a exibição
+    } catch (err) {
+        console.error("Erro ao atualizar o usuário:", err);
+        mostrarMensagem("Erro ao atualizar os dados.", false);  // Exibe mensagem de erro
+    }
 }
 
 // Função para mostrar mensagens de sucesso ou erro
