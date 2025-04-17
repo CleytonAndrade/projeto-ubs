@@ -19,9 +19,10 @@ function preencherPainel(user) {
     document.getElementById("user-senha").innerText = "********"; // Senha mascarada
     document.getElementById("user-email").innerText = user.email || "Dados não disponíveis";
     document.getElementById("user-telefone").innerText = user.telefone || "Dados não disponíveis";
-    document.getElementById("user-endereco").innerText = user.rua && user.numero && user.bairro && user.cidade && user.estado
-        ? `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`
-        : "Endereço não disponível";
+
+    // Atualizando a exibição do endereço
+    document.getElementById("user-endereco").innerText = user.endereco || "Endereço não disponível";
+
     document.getElementById("user-cep").innerText = user.cep || "Dados não disponíveis";
     document.getElementById("user-nascimento").innerText = user.nascimento
         ? new Date(user.nascimento).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
