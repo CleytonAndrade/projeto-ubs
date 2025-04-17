@@ -175,6 +175,7 @@
     // Rota para retornar os dados do usuário
     app.get("/usuario", (req, res) => {
       // Verifica se o usuário está autenticado 
+      console.log("ID do usuário na sessão:", req.session.usuarioId);
       if (!req.session.usuarioId) {
           return res.status(401).json({ message: "Usuário não autenticado" });
       }
