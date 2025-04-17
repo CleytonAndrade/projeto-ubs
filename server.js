@@ -173,51 +173,23 @@
   
    
     // Rota para retornar os dados do usuário
-    app.get("/usuario", (req, res) => {
-      // Verifica se o usuário está autenticado 
-      console.log("ID do usuário na sessão:", req.session.usuarioId);
-      if (!req.session.usuarioId) {
-          return res.status(401).json({ message: "Usuário não autenticado" });
-      }
-
-      const userId = req.session.usuarioId;
-
-      // Query para buscar dados do usuário no banco de dados
-      const query = `
-          SELECT nome, usuario, senha, email, telefone, rua, numero, bairro, cidade, estado, cep, nascimento
-          FROM usuarios
-          WHERE id = ?
-      `;
-
-      // Executa a consulta ao banco de dados
-      pool.query(query, [userId], (err, result) => {
+    app.get('/usuario', (req, res) => {
+      const userId = 1; // Aqui você deve pegar o ID do usuário logado, dependendo da sua lógica
+  
+      connection.query('SELECT * FROM usuarios WHERE id = ?', [userId], (err, results) => {
           if (err) {
-              console.error("Erro ao buscar dados do usuário:", err);
-              return res.status(500).json({ message: "Erro ao buscar dados do usuário" });
+              console.error('Erro ao buscar dados do usuário:', err);
+              return res.status(500).json({ message: 'Erro no servidor ao buscar dados' });
           }
-
-          // Se o usuário for encontrado, retorna os dados
-          if (result.length > 0) {
-              const user = result[0];
-              res.json({
-                  nome: user.nome,
-                  usuario: user.usuario,
-                  senha: user.senha,  // Senha pode ser mascarada ou omitida por segurança
-                  email: user.email,
-                  telefone: user.telefone,
-                  rua: user.rua,
-                  numero: user.numero,
-                  bairro: user.bairro,
-                  cidade: user.cidade,
-                  estado: user.estado,
-                  cep: user.cep,
-                  nascimento: user.nascimento
-              });
-          } else {
-              res.status(404).json({ message: "Usuário não encontrado" });
+  
+          if (results.length === 0) {
+              return res.status(404).json({ message: 'Usuário não encontrado' });
           }
+  
+          res.json(results[0]); // Retorna os dados do primeiro usuário encontrado
       });
-    });
+  });
+  
 
     
     // Rota de logout
