@@ -7,8 +7,6 @@
   const cors = require("cors");
   const bcrypt = require("bcrypt");
   const session = require("express-session");
-  const csrf = require("csurf");
-  const helmet = require("helmet");
   const app = express();
   const PORT = process.env.PORT || 3000;
 
@@ -47,9 +45,6 @@
       maxAge: 24 * 60 * 60 * 1000, // 1 dia
     },
   }));
-
-  // Middleware CSRF com cookie opcional
-  const csrfProtection = csrf({ cookie: false });
 
   // Rotas
   app.get("/", (req, res) => {
