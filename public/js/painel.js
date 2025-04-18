@@ -339,8 +339,6 @@ function editarCampo(campo) {
     }
 }
 
-
-
 // Adiciona eventos de edição aos campos
 adicionarEventosEdicao();
 
