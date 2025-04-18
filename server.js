@@ -270,8 +270,8 @@
                     const transporter = nodemailer.createTransport({
                         service: "gmail", // ou outro provedor de e-mail
                         auth: {
-                            user: process.env.EMAIL_USER, // Coloque o seu e-mail aqui
-                            pass: process.env.EMAIL_PASS, // Coloque a senha do seu e-mail
+                            user: process.env.EMAIL_USER,
+                            pass: process.env.EMAIL_PASS, 
                         },
                     });
 
