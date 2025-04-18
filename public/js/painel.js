@@ -4,13 +4,17 @@ let novoValorAtual = null;
 function adicionarEventosEdicao() {
     const botoesEdicao = document.querySelectorAll(".edit-btn");
     botoesEdicao.forEach(botao => {
-        botao.addEventListener("click", () => editarCampo(this.getAttribute("data-campo")));
+        botao.addEventListener("click", (event) => {
+            event.preventDefault(); // Previne o recarregamento da página
+            editarCampo(event.target.getAttribute("data-campo"));
+        });
     });
 
     const botoesConfirmacao = document.querySelectorAll(".confirm-btn");
     botoesConfirmacao.forEach(botao => {
-        botao.addEventListener("click", () => {
-            const campo = this.getAttribute("data-campo");
+        botao.addEventListener("click", (event) => {
+            event.preventDefault(); // Previne o recarregamento da página
+            const campo = event.target.getAttribute("data-campo");
             const input = document.querySelector(`#user-${campo} .input-edicao`);
             novoValorAtual = input.value;
             campoAtual = campo;
