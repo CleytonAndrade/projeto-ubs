@@ -30,7 +30,7 @@ function editarCampo(campo) {
     const botaoEditar = p.querySelector(".edit-btn");
     const botaoConfirmar = p.querySelector(".confirm-btn");
 
-    // Esconde o span e o botão de editar, e mostra o input e o botão de confirmar
+    // Esconde o texto e exibe o campo de input
     span.classList.add("esconder");
     input.classList.add("mostrar");
     botaoConfirmar.classList.add("mostrar");
@@ -41,14 +41,14 @@ function editarCampo(campo) {
 
 function mostrarModalConfirmacao() {
     const modal = document.getElementById("modal-confirmacao");
-    modal.style.display = "flex";
+    modal.classList.add("mostrar");  // Usando a classe para mostrar o modal
 
     const confirmarBtn = document.getElementById("confirmar-edicao");
     const cancelarBtn = document.getElementById("cancelar-edicao");
 
     confirmarBtn.onclick = () => {
         atualizarUsuario(campoAtual, novoValorAtual);
-        modal.style.display = "none";
+        modal.classList.remove("mostrar");  // Remover a classe para esconder o modal
     };
 
     cancelarBtn.onclick = () => {
@@ -58,12 +58,13 @@ function mostrarModalConfirmacao() {
         const botaoEditar = p.querySelector(".edit-btn");
         const botaoConfirmar = p.querySelector(".confirm-btn");
 
+        // Volta o campo para o estado inicial
         input.classList.remove("mostrar");
         botaoConfirmar.classList.remove("mostrar");
         botaoEditar.classList.remove("esconder");
         span.classList.remove("esconder");
 
-        modal.style.display = "none";
+        modal.classList.remove("mostrar");
     };
 }
 
@@ -108,10 +109,10 @@ function mostrarMensagem(msg, sucesso = true) {
 
     texto.textContent = msg;
     texto.style.color = sucesso ? "green" : "red";
-    modal.style.display = "flex";
+    modal.classList.add("mostrar");
 
     setTimeout(() => {
-        modal.style.display = "none";
+        modal.classList.remove("mostrar");
     }, 3000);
 }
 
