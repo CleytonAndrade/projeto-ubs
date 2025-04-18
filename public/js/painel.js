@@ -139,4 +139,20 @@ async function atualizarUsuario(campo, novoValor) {
 // Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");
-    const
+    const texto = document.getElementById("mensagem-texto");
+
+    if (texto) {
+        texto.textContent = msg;
+        texto.style.color = sucesso ? "green" : "red";
+    }
+
+    if (modal) {
+        modal.style.display = "flex";
+    }
+
+    setTimeout(() => {
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }, 3000);
+}
