@@ -1,44 +1,31 @@
 (function () {
-    document
-        .querySelector("#menu-burguer")
-        .addEventListener("click", clickMenu);
-    function clickMenu() {
-        const menu = document.querySelector("#menu");
-        menu.classList.toggle("ativo");
-    }
+  // Gerenciamento do menu de navegação
+  document.querySelector("#menu-burguer").addEventListener("click", () => {
+      const menu = document.querySelector("#menu");
+      menu.classList.toggle("ativo");
+  });
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const nome = localStorage.getItem("nome"); // Recupera o nome armazenado
-        if (nome) {
-            // Atualiza o texto de boas-vindas
-            document.getElementById(
-                "welcome-message"
-            ).innerText = `Bem-vindo, ${nome}!`;
-        }
-    });
+  // Verifica o estado do login ao carregar a página
+  document.addEventListener("DOMContentLoaded", () => {
+      const nome = localStorage.getItem("nome");
+      const welcome = document.getElementById("welcome-message");
+      const botaoLogout = document.getElementById("logout");
 
-    document.querySelector("#logout").addEventListener("click", () => {
-        localStorage.removeItem("nome");
-        window.location.href = "/";
-    });
+      if (nome) {
+          // Atualiza o texto de boas-vindas e exibe o botão de logout
+          if (welcome) welcome.textContent = `Bem-vindo, ${nome}!`;
+          if (botaoLogout) botaoLogout.classList.add("mostrar");
+      } else {
+          // Se não houver nome no localStorage, redireciona para a página de login
+          window.location.href = "/login";
+      }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const nome = localStorage.getItem("nome");
-        const welcome = document.getElementById("welcome-message");
-        const botaoLogout = document.getElementById("logout");
-
-        if (nome) {
-            if (welcome) welcome.textContent = `Bem-vindo, ${nome}!`;
-            if (botaoLogout) botaoLogout.classList.add("mostrar");
-        } else {
-            if (botaoLogout) botaoLogout.classList.remove("mostrar");
-        }
-
-        if (botaoLogout) {
-            botaoLogout.addEventListener("click", () => {
-                localStorage.removeItem("nome");
-                window.location.href = "/login";
-            });
-        }
-    });
+      // Ação do botão de logout
+      if (botaoLogout) {
+          botaoLogout.addEventListener("click", () => {
+              localStorage.removeItem("nome");
+              window.location.href = "/login";
+          });
+      }
+  });
 })();
