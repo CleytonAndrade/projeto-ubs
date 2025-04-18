@@ -27,7 +27,7 @@ function adicionarEventosEdicao() {
 }
 
 function editarCampo(campo) {
-    const campoElemento = document.getElementById(`user-${campo}-display`);
+    const campoElemento = document.getElementById(`user-${campo}`);
     const input = document.querySelector(`#user-${campo} .input-edicao`);
     const botaoConfirmar = document.querySelector(`#user-${campo} .confirm-btn`);
     const botaoEditar = document.querySelector(`#user-${campo} .edit-btn`);
@@ -85,7 +85,7 @@ async function atualizarUsuario(campo, novoValor) {
 
         const responseData = await resposta.json();
         mostrarMensagem(responseData.message);  // Exibe mensagem de sucesso
-        document.querySelector(`#user-${campo}-display`).innerText = novoValor; // Atualiza a exibição do dado
+        document.querySelector(`#user-${campo}`).innerText = novoValor; // Atualiza a exibição do dado
     } catch (err) {
         console.error("Erro ao atualizar o usuário:", err);
         mostrarMensagem("Erro ao atualizar os dados.", false);  // Exibe mensagem de erro
