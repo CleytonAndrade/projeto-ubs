@@ -289,6 +289,53 @@ function formatarValor(campo, valor) {
     if (campo === 'nascimento') return formatarData(valor);
     return valor;
 }
+// Função para adicionar os eventos de mostrar/ocultar senha
+function adicionarEventosMostrarOcultarSenha() {
+    const botaoMostrarSenha = document.getElementById("toggle-senha");
+
+    // Evento de clique no ícone de mostrar/ocultar senha
+    botaoMostrarSenha.addEventListener("click", () => {
+        const inputSenha = document.getElementById("user-senha-input");
+        const tipoAtual = inputSenha.type;
+
+        // Alterna o tipo de input entre "password" e "text"
+        if (tipoAtual === "password") {
+            inputSenha.type = "text";  // Exibe a senha
+            botaoMostrarSenha.textContent = "visibility_off"; // Muda o ícone para "olho fechado"
+        } else {
+            inputSenha.type = "password"; // Oculta a senha
+            botaoMostrarSenha.textContent = "visibility"; // Muda o ícone para "olho aberto"
+        }
+    });
+}
+
+// Função para editar o campo de senha
+function editarCampo(campo) {
+    const p = document.getElementById(`user-${campo}`);
+    const span = p.querySelector("span");
+    const input = p.querySelector(".input-edicao");
+    const botaoEditar = p.querySelector(".edit-btn");
+    const botaoConfirmar = p.querySelector(".confirm-btn");
+
+    // Alterna a visibilidade dos elementos: texto, input e botões
+    toggleVisibility(span, input, botaoEditar, botaoConfirmar);
+
+    // Preenche o input com o valor atual do campo, exceto para senha
+    if (campo === "senha") {
+        // Se for senha, mantém o campo de input em branco, pois o usuário deve digitar a nova senha
+        document.getElementById("user-senha-input").value = "";
+    } else {
+        input.value = span.textContent;
+    }
+
+    // Adiciona evento de mostrar/ocultar senha
+    if (campo === "senha") {
+        adicionarEventosMostrarOcultarSenha();
+    }
+}
+
+// Adiciona eventos de edição aos campos
+adicionarEventosEdicao();
 
 // Carrega os dados do usuário e adiciona eventos de edição ao carregar a página
 document.addEventListener("DOMContentLoaded", () => {
