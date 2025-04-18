@@ -295,7 +295,8 @@ function adicionarEventosMostrarOcultarSenha() {
 
     // Evento de clique no ícone de mostrar/ocultar senha
     botaoMostrarSenha.addEventListener("click", () => {
-        const inputSenha = document.getElementById("user-senha-input");
+        const inputSenha = document.querySelector('#user-senha input[type="password"]');
+
         const tipoAtual = inputSenha.type;
 
         // Alterna o tipo de input entre "password" e "text"
@@ -334,8 +335,6 @@ function editarCampo(campo) {
         input.value = span.textContent;
     }
 }
-
-
 
 // Adiciona eventos de edição aos campos
 adicionarEventosEdicao();
