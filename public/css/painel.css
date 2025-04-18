@@ -7,11 +7,12 @@
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 14px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .edit-btn:hover {
     background-color: var(--cor-2);
+    transform: scale(1.05);  /* Aumenta o botão quando o usuário passar o mouse */
 }
 
 /* Ajustes para o campo de edição (input) */
@@ -23,6 +24,12 @@
     border-radius: 4px;
     font-size: 14px;
     box-sizing: border-box; /* Garante que o padding não ultrapasse o tamanho */
+    transition: border-color 0.3s ease;
+}
+
+.edit-input:focus {
+    border-color: var(--cor-2); /* Altera a cor da borda ao focar no campo */
+    outline: none;  /* Remove o contorno padrão do navegador */
 }
 
 /* Remover ou esconder qualquer botão de edição em massa */
@@ -30,36 +37,45 @@
     display: none;
 }
 
-
 /* Estilo básico para o modal */
 .modal {
-    display: none;
+    display: none;  /* Remova a segunda ocorrência do display: none */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: none;
     justify-content: center;
     align-items: center;
-  }
-  
+}
+
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
- }
-  
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
 button {
-  margin: 10px;
-  padding: 10px 20px;
-  cursor: pointer;
- }
-  
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
 
 /* Estilo para quando a mensagem de erro aparecer */
 #mensagem-texto.error {
     color: red; /* Muda para vermelho em caso de erro */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#mensagem-texto.success {
+    color: green; /* Sucesso com a cor verde */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#mensagem-texto {
+    opacity: 1;
 }

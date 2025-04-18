@@ -1,50 +1,6 @@
 let campoAtual = null;
 let novoValorAtual = null;
 
-document.addEventListener("DOMContentLoaded", function() {
-    carregarDadosUsuario(); // Carrega os dados do usuário assim que a página for carregada
-    adicionarEventosEdicao(); // Garante que os eventos de edição sejam carregados
-});
-
-// Função para carregar os dados do usuário
-async function carregarDadosUsuario() {
-    try {
-        const resposta = await fetch("/usuario", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (!resposta.ok) {
-            throw new Error('Não foi possível carregar os dados do usuário');
-        }
-
-        const dadosUsuario = await resposta.json();
-
-        // Verifica se os elementos existem antes de tentar alterar
-        const nomeElement = document.querySelector("#user-nome-display");
-        const usuarioElement = document.querySelector("#user-usuario-display");
-        const emailElement = document.querySelector("#user-email-display");
-        const telefoneElement = document.querySelector("#user-telefone-display");
-        const enderecoElement = document.querySelector("#user-endereco-display");
-        const cepElement = document.querySelector("#user-cep-display");
-        const nascimentoElement = document.querySelector("#user-nascimento-display");
-
-        if (nomeElement) nomeElement.innerText = dadosUsuario.nome;
-        if (usuarioElement) usuarioElement.innerText = dadosUsuario.usuario;
-        if (emailElement) emailElement.innerText = dadosUsuario.email;
-        if (telefoneElement) telefoneElement.innerText = dadosUsuario.telefone;
-        if (enderecoElement) enderecoElement.innerText = dadosUsuario.endereco;
-        if (cepElement) cepElement.innerText = dadosUsuario.cep;
-        if (nascimentoElement) nascimentoElement.innerText = dadosUsuario.nascimento;
-
-    } catch (err) {
-        console.error("Erro ao carregar os dados do usuário:", err);
-        mostrarMensagem("Erro ao carregar os dados do usuário.", false); // Exibe uma mensagem de erro
-    }
-}
-
 function adicionarEventosEdicao() {
     const botoesEdicao = document.querySelectorAll(".edit-btn");
 
@@ -141,18 +97,39 @@ function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");
     const texto = document.getElementById("mensagem-texto");
 
-    if (texto) {
-        texto.textContent = msg;
-        texto.style.color = sucesso ? "green" : "red";
-    }
+    texto.textContent = msg;
+    texto.style.color = sucesso ? "green" : "red";
 
-    if (modal) {
-        modal.style.display = "flex";
-    }
+    modal.style.display = "flex";
 
     setTimeout(() => {
-        if (modal) {
-            modal.style.display = "none";
-        }
+        modal.style.display = "none";
     }, 3000);
 }
+
+// Função para carregar os dados do usuário e exibi-los na interface
+async function carregarDadosUsuario() {
+    try {
+        const resposta = await fetch("/dados-usuario");
+        const dados = await resposta.json();
+
+        // Atualiza os campos do usuário com os dados recebidos
+        document.getElementById("user-name").innerText = dados.nome;
+        document.getElementById("user-full-name").innerText = dados.nome;
+        document.getElementById("user-username").innerText = dados.usuario;
+        document.getElementById("user-email").innerText = dados.email;
+        document.getElementById("user-telefone").innerText = dados.telefone;
+        document.getElementById("user-endereco").innerText = dados.endereco;
+        document.getElementById("user-cep").innerText = dados.cep;
+        document.getElementById("user-nascimento").innerText = dados.dataNascimento;
+
+        // Chama a função de adicionar eventos após carregar os dados
+        adicionarEventosEdicao();
+    } catch (err) {
+        console.error("Erro ao carregar os dados do usuário:", err);
+        mostrarMensagem("Erro ao carregar os dados do usuário.", false);  // Exibe mensagem de erro
+    }
+}
+
+// Chama a função de carregar os dados quando a página for carregada
+document.addEventListener("DOMContentLoaded", carregarDadosUsuario);
