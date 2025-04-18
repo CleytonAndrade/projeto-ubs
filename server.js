@@ -93,7 +93,12 @@
     }
   });
 
+
   // Rota de login
+  app.get("/login", (req, res) => {
+    res.sendFile(__dirname + "/public/pages/login.html");
+  });
+
   app.post("/login", async (req, res) => {
     const { username, password } = req.body;
   

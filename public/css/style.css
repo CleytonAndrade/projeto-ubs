@@ -243,6 +243,14 @@ footer p {
     opacity: 1;
 }
 
+.botao-sair {
+    display: none;
+}
+
+.botao-sair.mostrar {
+    display: inline-block;
+}
+
 /* Estilo para telas grandes e desktop */
 @media screen and (min-width: 1024px) {
     .superior {
@@ -339,14 +347,5 @@ footer p {
         grid-template-columns: repeat(2, 200px);
         justify-content: center;
         
-    }
-    
-    .botao-sair {
-        display: none;
-    }
-    
-    .botao-sair.mostrar {
-        display: inline-block;
-    }
-    
+    }  
 }
