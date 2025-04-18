@@ -127,7 +127,7 @@
       // Responde com o nome do usuário e a URL de redirecionamento
       res.json({
         message: "Login bem-sucedido",
-        redirectUrl: "/dashboard", // A URL para redirecionamento após login
+        redirectUrl: "/", // A URL para redirecionamento após login
         nome: user.nome
       });
     } catch (err) {
@@ -136,8 +136,6 @@
     }
   });
   
-  
-
   // Rota de logout
   app.get("/logout", (req, res) => {
     req.session.destroy((err) => {
@@ -149,80 +147,6 @@
     });
   });
 
-  // Rota de atualização de dados
-  app.post('/atualizar-usuario', async (req, res) => {
-    if (!req.session.usuario) {
-      return res.status(401).json({ message: 'Usuário não autenticado' });
-    }
-  
-    const usuario = req.session.usuario;
-    const { campo, valor } = req.body;
-  
-    if (!campo || typeof valor === 'undefined') {
-      return res.status(400).json({ message: 'Dados inválidos' });
-    }
-  
-    const camposPermitidos = [
-      'nome', 'usuario', 'email', 'telefone', 'cep', 'rua',
-      'numero', 'bairro', 'cidade', 'estado', 'nascimento', 'endereco'
-    ];
-  
-    if (!camposPermitidos.includes(campo)) {
-      return res.status(400).json({ message: 'Campo inválido' });
-    }
-  
-    try {
-      if (campo === 'endereco') {
-        const { rua, numero, bairro, cidade, estado } = valor;
-        await pool.query(
-          'UPDATE usuarios SET rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ? WHERE usuario = ?',
-          [rua, numero, bairro, cidade, estado, usuario]
-        );
-        return res.json({ message: 'Endereço atualizado com sucesso.' });
-      }
-  
-      const sql = `UPDATE usuarios SET ?? = ? WHERE usuario = ?`;
-      const values = [campo, valor, usuario];
-  
-      const [result] = await pool.query(sql, values);
-  
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ message: 'Usuário não encontrado ou nenhum dado foi alterado.' });
-      }
-  
-      if (campo === 'usuario') {
-        req.session.usuario = valor;
-      }
-  
-      res.json({ message: `Campo ${campo} atualizado com sucesso.` });
-  
-    } catch (err) {
-      console.error('Erro ao atualizar o campo:', err);
-      res.status(500).json({ message: 'Erro ao atualizar os dados.' });
-    }
-  });
-
-  //Atualizar senha 
-  app.post("/atualizar-senha", async (req, res) => {
-    const { senha } = req.body;
-    const usuarioId = req.session.usuario?.id;
-
-    if (!usuarioId) return res.status(401).send("Não autorizado.");
-
-    if (!senha || senha.length < 6) {
-        return res.status(400).json({ message: "A senha deve ter ao menos 6 caracteres." });
-    }
-
-    try {
-        const senhaHash = await bcrypt.hash(senha, 10); // use bcrypt
-        await pool.query("UPDATE usuarios SET senha = ? WHERE id = ?", [senhaHash, usuarioId]);
-
-        res.json({ message: "Senha atualizada com sucesso." });
-    } catch (err) {
-        console.error("Erro ao atualizar senha:", err);
-        res.status(500).json({ message: "Erro interno ao atualizar senha." });
-    }
-  });
 
   // Rota de agendamento
   app.post("/agendar", async (req, res) => {
