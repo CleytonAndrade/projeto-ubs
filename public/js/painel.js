@@ -1,6 +1,42 @@
 let campoAtual = null;
 let novoValorAtual = null;
 
+document.addEventListener("DOMContentLoaded", function() {
+    carregarDadosUsuario(); // Carrega os dados do usuário assim que a página for carregada
+    adicionarEventosEdicao(); // Garante que os eventos de edição sejam carregados
+});
+
+// Função para carregar os dados do usuário
+async function carregarDadosUsuario() {
+    try {
+        const resposta = await fetch("/usuario", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!resposta.ok) {
+            throw new Error('Não foi possível carregar os dados do usuário');
+        }
+
+        const dadosUsuario = await resposta.json();
+
+        // Preenche os campos com os dados recebidos
+        document.querySelector("#user-nome-display").innerText = dadosUsuario.nome;
+        document.querySelector("#user-usuario-display").innerText = dadosUsuario.usuario;
+        document.querySelector("#user-email-display").innerText = dadosUsuario.email;
+        document.querySelector("#user-telefone-display").innerText = dadosUsuario.telefone;
+        document.querySelector("#user-endereco-display").innerText = dadosUsuario.endereco;
+        document.querySelector("#user-cep-display").innerText = dadosUsuario.cep;
+        document.querySelector("#user-nascimento-display").innerText = dadosUsuario.nascimento;
+
+    } catch (err) {
+        console.error("Erro ao carregar os dados do usuário:", err);
+        mostrarMensagem("Erro ao carregar os dados do usuário.", false); // Exibe uma mensagem de erro
+    }
+}
+
 function adicionarEventosEdicao() {
     const botoesEdicao = document.querySelectorAll(".edit-btn");
 
