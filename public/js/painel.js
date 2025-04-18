@@ -310,7 +310,7 @@ function adicionarEventosMostrarOcultarSenha() {
     });
 }
 
-// Função para editar o campo de senha
+// Alterando o código para garantir que o input de senha seja encontrado corretamente
 function editarCampo(campo) {
     const p = document.getElementById(`user-${campo}`);
     const span = p.querySelector("span");
@@ -318,23 +318,25 @@ function editarCampo(campo) {
     const botaoEditar = p.querySelector(".edit-btn");
     const botaoConfirmar = p.querySelector(".confirm-btn");
 
-    // Verificação de depuração
-    console.log("input de senha", document.getElementById("user-senha-input"));
+    console.log("input de senha", document.getElementById("user-senha-input"));  // Debug
 
     // Alterna a visibilidade dos elementos: texto, input e botões
     toggleVisibility(span, input, botaoEditar, botaoConfirmar);
 
-    // Preenche o input com o valor atual do campo, exceto para senha
+    // Verifique se o campo é senha e aplique a lógica específica
     if (campo === "senha") {
         const inputSenha = document.getElementById("user-senha-input");
         if (inputSenha) {
             inputSenha.value = "";  // Limpa o campo de senha
+        } else {
+            console.error("Não foi possível encontrar o input de senha.");
         }
-        adicionarEventosMostrarOcultarSenha();
+        adicionarEventosMostrarOcultarSenha();  // Permite alternar a visibilidade da senha
     } else {
         input.value = span.textContent;
     }
 }
+
 
 // Adiciona eventos de edição aos campos
 adicionarEventosEdicao();
