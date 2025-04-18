@@ -135,4 +135,7 @@ async function carregarDadosUsuario() {
 }
 
 // Chama a função de carregar os dados quando a página for carregada
-document.addEventListener("DOMContentLoaded", carregarDadosUsuario);
+document.addEventListener("DOMContentLoaded", () => {
+    carregarDadosUsuario();
+    adicionarEventosEdicao(); // <- chama os eventos após carregar
+});
