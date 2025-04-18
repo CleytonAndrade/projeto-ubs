@@ -63,6 +63,15 @@
 }
 
 
+.mostrar {
+  display: inline !important;
+}
+
+.esconder {
+  display: none !important;
+}
+
+
 button {
     margin: 10px;
     padding: 10px 20px;

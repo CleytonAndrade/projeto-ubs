@@ -7,11 +7,10 @@ function adicionarEventosEdicao() {
     botoesEdicao.forEach(botao => {
         botao.addEventListener("click", function () {
             const campo = this.getAttribute("data-campo");
-            editarCampo(campo); // Passa o nome correto do campo para a função de edição
+            editarCampo(campo);
         });
     });
 
-    // Escutando os botões de confirmação
     const botoesConfirmacao = document.querySelectorAll(".confirm-btn");
     botoesConfirmacao.forEach(botao => {
         botao.addEventListener("click", function () {
@@ -19,27 +18,24 @@ function adicionarEventosEdicao() {
             const input = document.querySelector(`#user-${campo} .input-edicao`);
             novoValorAtual = input.value;
             campoAtual = campo;
-
-            // Exibe o modal de confirmação
             mostrarModalConfirmacao();
         });
     });
 }
 
 function editarCampo(campo) {
-    const campoElemento = document.getElementById(`user-${campo}`);
-    const input = document.querySelector(`#user-${campo} .input-edicao`);
-    const botaoConfirmar = document.querySelector(`#user-${campo} .confirm-btn`);
-    const botaoEditar = document.querySelector(`#user-${campo} .edit-btn`);
+    const p = document.getElementById(`user-${campo}`);
+    const span = p.querySelector("span");
+    const input = p.querySelector(".input-edicao");
+    const botaoEditar = p.querySelector(".edit-btn");
+    const botaoConfirmar = p.querySelector(".confirm-btn");
 
-    // Exibe o campo de input e o botão de confirmação
-    campoElemento.style.display = 'none';
-    botaoEditar.style.display = 'none';
-    botaoConfirmar.style.display = 'inline';
-    input.style.display = 'inline';
+    span.classList.add("esconder");
+    input.classList.add("mostrar");
+    botaoConfirmar.classList.add("mostrar");
+    botaoEditar.classList.add("esconder");
 
-    // Preenche o input com o valor atual
-    input.value = campoElemento.innerText;
+    input.value = span.textContent;
 }
 
 function mostrarModalConfirmacao() {
@@ -49,20 +45,25 @@ function mostrarModalConfirmacao() {
     const confirmarBtn = document.getElementById("confirmar-edicao");
     const cancelarBtn = document.getElementById("cancelar-edicao");
 
-    // Quando o usuário clica em "Sim", confirma a edição
-    confirmarBtn.addEventListener("click", () => {
+    confirmarBtn.onclick = () => {
         atualizarUsuario(campoAtual, novoValorAtual);
-        modal.style.display = "none";  // Fecha o modal após a confirmação
-    });
+        modal.style.display = "none";
+    };
 
-    // Quando o usuário clica em "Não", cancela a edição
-    cancelarBtn.addEventListener("click", () => {
-        const input = document.querySelector(`#user-${campoAtual} .input-edicao`);
-        input.style.display = "none";
-        document.querySelector(`#user-${campoAtual} .confirm-btn`).style.display = "none";
-        document.querySelector(`#user-${campoAtual} .edit-btn`).style.display = "inline";
-        modal.style.display = "none";  // Fecha o modal após o cancelamento
-    });
+    cancelarBtn.onclick = () => {
+        const p = document.getElementById(`user-${campoAtual}`);
+        const span = p.querySelector("span");
+        const input = p.querySelector(".input-edicao");
+        const botaoEditar = p.querySelector(".edit-btn");
+        const botaoConfirmar = p.querySelector(".confirm-btn");
+
+        input.classList.remove("mostrar");
+        botaoConfirmar.classList.remove("mostrar");
+        botaoEditar.classList.remove("esconder");
+        span.classList.remove("esconder");
+
+        modal.style.display = "none";
+    };
 }
 
 async function atualizarUsuario(campo, novoValor) {
@@ -72,10 +73,7 @@ async function atualizarUsuario(campo, novoValor) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                campo: campo,  // Nome do campo a ser atualizado (ex: 'nome', 'email', etc.)
-                valor: novoValor,  // Novo valor para o campo
-            }),
+            body: JSON.stringify({ campo, valor: novoValor }),
         });
 
         if (!resposta.ok) {
@@ -84,22 +82,31 @@ async function atualizarUsuario(campo, novoValor) {
         }
 
         const responseData = await resposta.json();
-        mostrarMensagem(responseData.message);  // Exibe mensagem de sucesso
-        document.querySelector(`#user-${campo}`).innerText = novoValor; // Atualiza a exibição do dado
+        mostrarMensagem(responseData.message);
+
+        const p = document.getElementById(`user-${campo}`);
+        const span = p.querySelector("span");
+        const input = p.querySelector(".input-edicao");
+        const botaoEditar = p.querySelector(".edit-btn");
+        const botaoConfirmar = p.querySelector(".confirm-btn");
+
+        span.textContent = novoValor;
+        input.classList.remove("mostrar");
+        botaoConfirmar.classList.remove("mostrar");
+        botaoEditar.classList.remove("esconder");
+        span.classList.remove("esconder");
     } catch (err) {
         console.error("Erro ao atualizar o usuário:", err);
-        mostrarMensagem("Erro ao atualizar os dados.", false);  // Exibe mensagem de erro
+        mostrarMensagem("Erro ao atualizar os dados.", false);
     }
 }
 
-// Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");
     const texto = document.getElementById("mensagem-texto");
 
     texto.textContent = msg;
     texto.style.color = sucesso ? "green" : "red";
-
     modal.style.display = "flex";
 
     setTimeout(() => {
@@ -107,7 +114,6 @@ function mostrarMensagem(msg, sucesso = true) {
     }, 3000);
 }
 
-// Função para carregar os dados do usuário e exibi-los na interface
 async function carregarDadosUsuario() {
     try {
         const resposta = await fetch("/usuario");
@@ -118,15 +124,14 @@ async function carregarDadosUsuario() {
 
         const dadosUsuario = await resposta.json();
 
-        // Preencher os campos do perfil do usuário
         document.getElementById("user-name").textContent = dadosUsuario.nome;
-        document.getElementById("user-full-name").textContent = dadosUsuario.nome;
-        document.getElementById("user-username").textContent = dadosUsuario.usuario;
-        document.getElementById("user-email").textContent = dadosUsuario.email;
-        document.getElementById("user-telefone").textContent = dadosUsuario.telefone;
-        document.getElementById("user-endereco").textContent = `${dadosUsuario.rua}, ${dadosUsuario.numero}, ${dadosUsuario.bairro}, ${dadosUsuario.cidade}, ${dadosUsuario.estado}`;
-        document.getElementById("user-cep").textContent = dadosUsuario.cep;
-        document.getElementById("user-nascimento").textContent = dadosUsuario.nascimento;
+        document.getElementById("user-full-name-display").textContent = dadosUsuario.nome;
+        document.getElementById("user-username-display").textContent = dadosUsuario.usuario;
+        document.getElementById("user-email-display").textContent = dadosUsuario.email;
+        document.getElementById("user-telefone-display").textContent = dadosUsuario.telefone;
+        document.getElementById("user-endereco-display").textContent = `${dadosUsuario.rua}, ${dadosUsuario.numero}, ${dadosUsuario.bairro}, ${dadosUsuario.cidade}, ${dadosUsuario.estado}`;
+        document.getElementById("user-cep-display").textContent = dadosUsuario.cep;
+        document.getElementById("user-nascimento-display").textContent = dadosUsuario.nascimento;
 
     } catch (err) {
         console.error("Erro ao carregar os dados do usuário:", err);
@@ -134,8 +139,7 @@ async function carregarDadosUsuario() {
     }
 }
 
-// Chama a função de carregar os dados quando a página for carregada
 document.addEventListener("DOMContentLoaded", () => {
     carregarDadosUsuario();
-    adicionarEventosEdicao(); // <- chama os eventos após carregar
+    adicionarEventosEdicao();
 });
