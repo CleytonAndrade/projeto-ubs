@@ -9,6 +9,8 @@
     const session = require("express-session");
     const app = express();
     const PORT = process.env.PORT || 3000;
+    const nodemailer = require("nodemailer");
+    const crypto = require("crypto");
 
     // Verifica se as variáveis de ambiente essenciais estão definidas
     const requiredEnv = [
@@ -225,8 +227,12 @@
             );
         }
     });
-    
+
     // Recuperação de senha
+    const nodemailer = require("nodemailer");
+    const crypto = require("crypto");
+
+    // Rota de recuperação de senha
     app.post("/enviar-recuperacao", (req, res) => {
         const email = req.body.email;
 
@@ -245,14 +251,58 @@
                 return res.status(404).send("E-mail não encontrado.");
             }
 
-            // Aqui você pode gerar um token e enviar o link por e-mail
-            console.log(`Enviar link de recuperação para: ${email}`);
+            const user = results[0];
+            const token = crypto.randomBytes(20).toString("hex"); // Gera um token único
 
-            res.send(`
-              <h2>Verifique seu e-mail</h2>
-              <p>Se o e-mail <strong>${email}</strong> estiver cadastrado, você receberá um link para redefinir sua senha.</p>
-              <a href="/">Voltar à página inicial</a>
-          `);
+            // Armazenar o token no banco de dados (adicionar uma coluna de token de recuperação na tabela de usuários)
+            const tokenExpiration = Date.now() + 3600000; // O token expira em 1 hora
+            const updateQuery =
+                "UPDATE usuarios SET recovery_token = ?, recovery_token_expiry = ? WHERE id = ?";
+
+            pool.query(
+                updateQuery,
+                [token, tokenExpiration, user.id],
+                (err) => {
+                    if (err) {
+                        console.error("Erro ao salvar o token:", err);
+                        return res
+                            .status(500)
+                            .send("Erro interno ao gerar o token.");
+                    }
+
+                    // Configuração do Nodemailer
+                    const transporter = nodemailer.createTransport({
+                        service: "gmail", // ou outro provedor de e-mail
+                        auth: {
+                            user: process.env.EMAIL_USER, // Coloque o seu e-mail aqui
+                            pass: process.env.EMAIL_PASS, // Coloque a senha do seu e-mail
+                        },
+                    });
+
+                    const mailOptions = {
+                        from: process.env.EMAIL_USER,
+                        to: email,
+                        subject: "Recuperação de Senha",
+                        text: `Olá ${user.nome},\n\nClique no link abaixo para redefinir sua senha:\n\n${process.env.BASE_URL}/resetar-senha/${token}\n\nEste link expira em 1 hora.\n\nAtenciosamente,\nSua equipe`,
+                    };
+
+                    // Enviar o e-mail
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            console.error("Erro ao enviar o e-mail:", error);
+                            return res
+                                .status(500)
+                                .send("Erro ao enviar e-mail de recuperação.");
+                        }
+
+                        res.send(`
+                        <h2>Verifique seu e-mail</h2>
+                        <p>Se o e-mail <strong>${email}</strong> estiver cadastrado, você receberá um link para redefinir sua senha.</p>
+                        <a href="/">Voltar à página inicial</a>
+                    `);
+                    });
+                }
+            );
         });
     });
 
