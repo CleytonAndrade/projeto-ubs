@@ -195,36 +195,38 @@
     });
 
     // Rota de agendamento
-    app.post("/agendar", (req, res) => {
+    app.post("/agendar", async (req, res) => {
         const { nome, cpf, especialidade, data, hora, telefone, obs } =
             req.body;
 
         const sql = `
-        INSERT INTO agendamentos (nome, cpf, especialidade, data, hora, telefone, obs)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
+            INSERT INTO agendamentos (nome, cpf, especialidade, data, hora, telefone, obs)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
 
-        db.query(
-            sql,
-            [nome, cpf, especialidade, data, hora, telefone, obs],
-            (err, result) => {
-                if (err) {
-                    console.error("Erro ao salvar agendamento:", err);
-                    return res
-                        .status(500)
-                        .send("Erro ao agendar. Tente novamente mais tarde.");
-                }
-
-                // Redireciona de volta para a página ou mostra confirmação
-                res.send(`
+        try {
+            await pool.query(sql, [
+                nome,
+                cpf,
+                especialidade,
+                data,
+                hora,
+                telefone,
+                obs,
+            ]);
+            res.send(`
                 <h2>Agendamento realizado com sucesso!</h2>
                 <p><a href="/pages/ubs.html">Voltar para a página da UBS</a></p>
             `);
-            }
-        );
+        } catch (err) {
+            console.error("Erro ao salvar agendamento:", err);
+            res.status(500).send(
+                "Erro ao agendar. Tente novamente mais tarde."
+            );
+        }
     });
-
-    // Recuperação se senha
+    
+    // Recuperação de senha
     app.post("/enviar-recuperacao", (req, res) => {
         const email = req.body.email;
 
@@ -233,7 +235,7 @@
         }
 
         const query = "SELECT * FROM usuarios WHERE email = ?";
-        db.query(query, [email], (err, results) => {
+        pool.query(query, [email], (err, results) => {
             if (err) {
                 console.error("Erro ao buscar e-mail:", err);
                 return res.status(500).send("Erro interno do servidor.");
@@ -247,10 +249,10 @@
             console.log(`Enviar link de recuperação para: ${email}`);
 
             res.send(`
-            <h2>Verifique seu e-mail</h2>
-            <p>Se o e-mail <strong>${email}</strong> estiver cadastrado, você receberá um link para redefinir sua senha.</p>
-            <a href="/">Voltar à página inicial</a>
-        `);
+              <h2>Verifique seu e-mail</h2>
+              <p>Se o e-mail <strong>${email}</strong> estiver cadastrado, você receberá um link para redefinir sua senha.</p>
+              <a href="/">Voltar à página inicial</a>
+          `);
         });
     });
 
