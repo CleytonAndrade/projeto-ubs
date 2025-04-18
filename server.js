@@ -211,42 +211,7 @@
         res.status(500).json({ message: 'Erro ao recuperar dados do usuário' });
       }
     }); 
-
-    // Rota para retornar os dados do usuário
-    // app.get('/dados-usuario', async (req, res) => {
-    //   if (!req.session.usuarioId) {
-    //       return res.status(401).json({ message: 'Usuário não autenticado' });
-    //   }
-
-    //   try {
-    //       // Recupera os dados do usuário no banco de dados
-    //       const [rows] = await pool.query("SELECT * FROM usuarios WHERE id = ?", [req.session.usuarioId]);
-
-    //       if (rows.length === 0) {
-    //           return res.status(404).json({ message: 'Usuário não encontrado' });
-    //       }
-
-    //       const user = rows[0]; // A primeira linha (única) corresponde ao usuário logado
-
-    //       // Ajustando a data de nascimento para o formato correto
-    //       const nascimento = user.nascimento ? new Date(user.nascimento).toISOString().split('T')[0] : null;
-
-    //       // Retorna os dados completos do usuário
-    //       res.json({
-    //           id: user.id,
-    //           nome: user.nome,
-    //           usuario: user.usuario,
-    //           email: user.email,
-    //           telefone: user.telefone,
-    //           endereco: `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`,
-    //           cep: user.cep,
-    //           nascimento: nascimento
-    //       });
-    //   } catch (err) {
-    //       console.error("Erro ao recuperar dados do usuário:", err);
-    //       res.status(500).json({ message: 'Erro ao recuperar dados do usuário' });
-    //   }
-    // });
+;
 
     // Rota de logout
     app.get("/logout", (req, res) => {
@@ -259,54 +224,63 @@
       });
     });
 
-    // Rota de atualização de dados 
+    // Rota de atualização de dados
     app.post('/atualizar-usuario', async (req, res) => {
       if (!req.session.usuario) {
         return res.status(401).json({ message: 'Usuário não autenticado' });
       }
-    
+
       const usuario = req.session.usuario;
       const { campo, valor } = req.body;
-    
+
       if (!campo || typeof valor === 'undefined') {
         return res.status(400).json({ message: 'Dados inválidos' });
       }
-    
+
       // Lista de campos permitidos para atualização
       const camposPermitidos = [
         'nome', 'usuario', 'email', 'telefone', 'cep', 'rua',
         'numero', 'bairro', 'cidade', 'estado', 'nascimento'
       ];
-    
+
       // Verifica se o campo está na lista de campos permitidos
       if (!camposPermitidos.includes(campo)) {
         return res.status(400).json({ message: 'Campo inválido' });
       }
-    
+
       try {
+        // Se o campo for 'endereco', você precisa dividir o valor em componentes individuais
+        if (campo === 'endereco') {
+          const { rua, numero, bairro, cidade, estado } = valor;
+          // Atualiza cada componente do endereço individualmente
+          await pool.query('UPDATE usuarios SET rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ? WHERE usuario = ?', 
+            [rua, numero, bairro, cidade, estado, usuario]);
+          return res.json({ message: 'Endereço atualizado com sucesso.' });
+        }
+
         // Usando uma consulta parametrizada para maior segurança
         const sql = `UPDATE usuarios SET ?? = ? WHERE usuario = ?`;
         const values = [campo, valor, usuario];
-    
+
         const [result] = await pool.query(sql, values); // Usando o pool.query com prepared statement
-    
+
         // Verifica se a atualização foi bem-sucedida
         if (result.affectedRows === 0) {
           return res.status(404).json({ message: 'Usuário não encontrado ou nenhum dado foi alterado.' });
         }
-    
+
         // Atualiza o nome de usuário na sessão se ele foi alterado
         if (campo === 'usuario') {
           req.session.usuario = valor;
         }
-    
+
         res.json({ message: `Campo ${campo} atualizado com sucesso.` });
       } catch (err) {
         console.error('Erro ao atualizar o campo:', err);
         res.status(500).json({ message: 'Erro ao atualizar os dados.' });
       }
     });
-    
+
     
     // Rota de agendamento
     app.post("/agendar", async (req, res) => {
