@@ -16,7 +16,7 @@
 }
 
 /* Ajustes para o campo de edição (input) */
-.edit-input {
+.input-edicao {
     width: calc(100% - 12px); /* Ajuste para o padding */
     padding: 6px 10px; /* Padding mais confortável */
     margin: 5px 0;
@@ -27,7 +27,7 @@
     transition: border-color 0.3s ease;
 }
 
-.edit-input:focus {
+.input-edicao:focus {
     border-color: var(--cor-2); /* Altera a cor da borda ao focar no campo */
     outline: none;  /* Remove o contorno padrão do navegador */
 }
@@ -37,7 +37,6 @@
     display: none;
 }
 
-
 /* Esconde inputs e botões de confirmação por padrão */
 .input-edicao,
 .confirm-btn {
@@ -45,8 +44,8 @@
 }
 
 /* Modal escondido por padrão */
-.modal {
-    display: none;
+#modal-confirmacao {
+    display: none; /* Inicialmente o modal está escondido */
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
@@ -55,6 +54,7 @@
     align-items: center;
 }
 
+/* Estilo para o conteúdo do modal de confirmação */
 .modal-content {
     background-color: white;
     padding: 20px;
@@ -62,16 +62,17 @@
     text-align: center;
 }
 
-
+/* Mostrar elemento */
 .mostrar {
-  display: inline !important;
+    display: inline-block !important; /* Força a exibição */
 }
 
+/* Esconder elemento */
 .esconder {
-  display: none !important;
+    display: none !important; /* Força a ocultação */
 }
 
-
+/* Estilo dos botões padrão */
 button {
     margin: 10px;
     padding: 10px 20px;

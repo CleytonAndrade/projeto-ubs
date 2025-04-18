@@ -30,6 +30,7 @@ function editarCampo(campo) {
     const botaoEditar = p.querySelector(".edit-btn");
     const botaoConfirmar = p.querySelector(".confirm-btn");
 
+    // Esconde o span e o botão de editar, e mostra o input e o botão de confirmar
     span.classList.add("esconder");
     input.classList.add("mostrar");
     botaoConfirmar.classList.add("mostrar");
