@@ -258,6 +258,7 @@ footer p {
     padding: 8px 16px;
     font-size: 16px;
     border-radius: 5px;
+    margin: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: var(--font-principal);
@@ -318,6 +319,9 @@ footer p {
         display: none; /* Esconde o ícone de hambúrguer em telas grandes */
     }
 
+    .botao-sair {
+        margin: 0;
+    }
     /* As dicas ficam em linha (flex) em telas grandes */
     .dicas {
         flex-direction: row;
@@ -344,6 +348,9 @@ footer p {
         flex-direction: row-reverse; 
     }
 
+    .botao-sair {
+        margin: 0;
+    }
 
     .menu {
         display: grid; 
