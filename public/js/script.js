@@ -11,13 +11,15 @@
       const welcome = document.getElementById("welcome-message");
       const botaoLogout = document.getElementById("logout");
 
+      // Se estiver logado, mostra o nome e o botão de logout
       if (nome) {
-          // Atualiza o texto de boas-vindas e exibe o botão de logout
           if (welcome) welcome.textContent = `Bem-vindo, ${nome}!`;
           if (botaoLogout) botaoLogout.classList.add("mostrar");
       } else {
-          // Se não houver nome no localStorage, redireciona para a página de login
-          window.location.href = "/login";
+          // Se não estiver logado e não estiver na página de login, redireciona para o login
+          if (window.location.pathname !== "/login") {
+              window.location.href = "/login";
+          }
       }
 
       // Ação do botão de logout

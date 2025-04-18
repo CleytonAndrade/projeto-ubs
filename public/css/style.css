@@ -267,7 +267,7 @@ footer p {
 }
 
 .botao-sair:hover {
-    background-color: var(--cor-houver);
+    background-color: red;
     color: var(--cor-texto);
     outline: 1px solid var(--cor-houver);
     outline-offset: 3px;
