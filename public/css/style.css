@@ -340,4 +340,12 @@ footer p {
         justify-content: center;
         
     }
+    .botao-sair {
+        display: none;
+    }
+    
+    .botao-sair.mostrar {
+        display: inline-block;
+    }
+    
 }

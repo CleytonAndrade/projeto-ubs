@@ -18,4 +18,22 @@
         window.location.href = "/"
     });
 
+    document.addEventListener("DOMContentLoaded", () => {
+      const nome = localStorage.getItem("nome");
+      const welcome = document.getElementById("welcome-message");
+      const botaoLogout = document.getElementById("logout");
+  
+      if (nome) {
+          if (welcome) welcome.textContent = `Bem-vindo, ${nome}!`;
+          if (botaoLogout) botaoLogout.classList.add("mostrar");
+      }
+  
+      if (botaoLogout) {
+          botaoLogout.addEventListener("click", () => {
+              localStorage.removeItem("nome");
+              window.location.href = "/login"; // redireciona após logout
+          });
+      }
+  });
+  
 })();
