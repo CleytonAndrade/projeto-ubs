@@ -278,7 +278,29 @@
         res.status(500).json({ message: 'Erro ao atualizar os dados.' });
       }
     });
-    
+
+    //Atualizar senha 
+    app.post("/atualizar-senha", async (req, res) => {
+      const { senha } = req.body;
+      const usuarioId = req.session.usuario?.id;
+  
+      if (!usuarioId) return res.status(401).send("Não autorizado.");
+  
+      if (!senha || senha.length < 6) {
+          return res.status(400).json({ message: "A senha deve ter ao menos 6 caracteres." });
+      }
+  
+      try {
+          const senhaHash = await bcrypt.hash(senha, 10); // use bcrypt
+          await conexao.query("UPDATE usuarios SET senha = ? WHERE id = ?", [senhaHash, usuarioId]);
+  
+          res.json({ message: "Senha atualizada com sucesso." });
+      } catch (err) {
+          console.error("Erro ao atualizar senha:", err);
+          res.status(500).json({ message: "Erro interno ao atualizar senha." });
+      }
+    });
+  
 
     
     // Rota de agendamento

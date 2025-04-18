@@ -5,7 +5,7 @@ function adicionarEventosEdicao() {
     const botoesEdicao = document.querySelectorAll(".edit-btn");
     botoesEdicao.forEach(botao => {
         botao.addEventListener("click", (event) => {
-            event.preventDefault(); // Previne o recarregamento da página
+            event.preventDefault();
             editarCampo(event.target.getAttribute("data-campo"));
         });
     });
@@ -13,15 +13,51 @@ function adicionarEventosEdicao() {
     const botoesConfirmacao = document.querySelectorAll(".confirm-btn");
     botoesConfirmacao.forEach(botao => {
         botao.addEventListener("click", (event) => {
-            event.preventDefault(); // Previne o recarregamento da página
-            const campo = event.target.getAttribute("data-campo");
-            const input = document.querySelector(`#user-${campo} .input-edicao`);
-            novoValorAtual = input.value;
-            campoAtual = campo;
+            event.preventDefault();
+            const campoOriginal = event.target.getAttribute("data-campo");
+            const input = document.querySelector(`#user-${campoOriginal} .input-edicao`);
+            const valorDigitado = input.value;
+
+            const mapeamento = {
+                'full-name': 'nome',
+                'username': 'usuario',
+                'senha': null,
+                'email': 'email',
+                'telefone': 'telefone',
+                'endereco': 'endereco',
+                'cep': 'cep',
+                'nascimento': 'nascimento'
+            };
+
+            const campoMapeado = mapeamento[campoOriginal];
+
+            if (campoOriginal === 'senha') {
+                const senha = input.value;
+            
+                if (senha.length < 6) {
+                    mostrarMensagem("A senha deve ter no mínimo 6 caracteres.", false);
+                    return;
+                }
+            
+                campoAtual = 'senha';
+                novoValorAtual = senha;
+                mostrarModalConfirmacao();
+                return;
+            }
+            
+            if (!campoMapeado) {
+                mostrarMensagem("Este campo não pode ser alterado por aqui.", false);
+                return;
+            }
+            
+
+            novoValorAtual = valorDigitado;
+            campoAtual = campoMapeado;
             mostrarModalConfirmacao();
         });
     });
 }
+
 
 function editarCampo(campo) {
     const p = document.getElementById(`user-${campo}`);
@@ -31,7 +67,12 @@ function editarCampo(campo) {
     const botaoConfirmar = p.querySelector(".confirm-btn");
 
     toggleVisibility(span, input, botaoEditar, botaoConfirmar);
-    input.value = span.textContent;
+
+    if (campo !== "senha") {
+        input.value = span.textContent;
+    } else {
+        input.value = "";
+    }
 }
 
 function toggleVisibility(span, input, botaoEditar, botaoConfirmar) {
@@ -46,9 +87,14 @@ function mostrarModalConfirmacao() {
     modal.classList.add("mostrar");
 
     document.getElementById("confirmar-edicao").onclick = () => {
-        atualizarUsuario(campoAtual, novoValorAtual);
+        if (campoAtual === 'senha') {
+            atualizarSenha(novoValorAtual);
+        } else {
+            atualizarUsuario(campoAtual, novoValorAtual);
+        }
         modal.classList.remove("mostrar");
     };
+    
 
     document.getElementById("cancelar-edicao").onclick = () => {
         const p = document.getElementById(`user-${campoAtual}`);
@@ -102,6 +148,28 @@ async function atualizarUsuario(campo, novoValor) {
     }
 }
 
+async function atualizarSenha(novaSenha) {
+    try {
+        const resposta = await fetch("/atualizar-senha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ senha: novaSenha })
+        });
+
+        if (!resposta.ok) {
+            const erroText = await resposta.text();
+            throw new Error(`Erro: ${erroText}`);
+        }
+
+        const dados = await resposta.json();
+        mostrarMensagem(dados.message || "Senha atualizada com sucesso.");
+    } catch (err) {
+        console.error("Erro ao atualizar a senha:", err);
+        mostrarMensagem("Erro ao atualizar a senha.", false);
+    }
+}
 
 
 function atualizarCampoNoPainel(campo, novoValor) {
@@ -145,6 +213,7 @@ function preencherDadosUsuario(dadosUsuario) {
     document.getElementById("user-name").textContent = dadosUsuario.nome;
     document.getElementById("user-full-name-display").textContent = dadosUsuario.nome;
     document.getElementById("user-username-display").textContent = dadosUsuario.usuario;
+    document.getElementById("user-senha-display").textContent = "********";
     document.getElementById("user-email-display").textContent = dadosUsuario.email;
     document.getElementById("user-telefone-display").textContent = dadosUsuario.telefone;
     document.getElementById("user-endereco-display").textContent = `${dadosUsuario.rua}, ${dadosUsuario.numero}, ${dadosUsuario.bairro}, ${dadosUsuario.cidade}, ${dadosUsuario.estado}`;
