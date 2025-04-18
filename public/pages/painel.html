@@ -21,63 +21,77 @@
   
   <main id="main">
     <div class="painel-container">
-        <h2>Informações do Usuário</h2>
-        <div id="user-info">
-    
-            <h3>Bem-vindo, <span id="user-name"></span>!</h3>
+      <h2>Informações do Usuário</h2>
+      <div id="user-info">
 
-            <p>
-              <strong>Nome:</strong>
-              <span id="user-full-name" class="user-field"></span>
-              <button class="edit-btn" data-campo="full-name">Editar</button>
-            </p>
-    
-            <p>
-                <strong>Usuário:</strong>
-                <span id="user-username" class="user-field"></span>
-                <button class="edit-btn" data-campo="username">Editar</button>
-            </p>
-    
-            <p>
-                <strong>Senha:</strong>
-                <span id="user-senha" class="user-field">********</span>
-                <button class="edit-btn" data-campo="senha">Editar</button>
-            </p>
-    
-            <p>
-              <strong>Email:</strong>
-              <span id="user-email" class="user-field"></span>
-              <button class="edit-btn" data-campo="email">Editar</button>
-            </p>
-    
-            <p>
-                <strong>Telefone:</strong>
-                <span id="user-telefone" class="user-field"></span>
-                <button class="edit-btn" data-campo="telefone">Editar</button>
-            </p>
-    
-            <p>
-                <strong>Endereço:</strong>
-                <span id="user-endereco" class="user-field"></span>
-                <button class="edit-btn" data-campo="endereco">Editar</button>
-            </p>
-    
-            <p>
-                <strong>CEP:</strong>
-                <span id="user-cep" class="user-field"></span>
-                <button class="edit-btn" data-campo="cep">Editar</button>
-            </p>
-    
-            <p>
-                <strong>Data de Nascimento:</strong>
-                <span id="user-nascimento" class="user-field"></span>
-                <button class="edit-btn" data-campo="nascimento">Editar</button>
-            </p>
- 
-        </div>
-        
+        <h3>Bem-vindo, <span id="user-name"></span>!</h3>
+
+        <p id="user-full-name">
+          <strong>Nome:</strong>
+          <span id="user-full-name-display" class="user-field"></span>
+          <input class="input-edicao" type="text" style="display: none;">
+          <button class="confirm-btn" data-campo="full-name" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="full-name">Editar</button>
+        </p>
+
+        <p id="user-username">
+          <strong>Usuário:</strong>
+          <span id="user-username-display" class="user-field"></span>
+          <input class="input-edicao" type="text" style="display: none;">
+          <button class="confirm-btn" data-campo="username" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="username">Editar</button>
+        </p>
+
+        <p id="user-senha">
+          <strong>Senha:</strong>
+          <span id="user-senha-display" class="user-field">********</span>
+          <input class="input-edicao" type="password" style="display: none;">
+          <button class="confirm-btn" data-campo="senha" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="senha">Editar</button>
+        </p>
+
+        <p id="user-email">
+          <strong>Email:</strong>
+          <span id="user-email-display" class="user-field"></span>
+          <input class="input-edicao" type="email" style="display: none;">
+          <button class="confirm-btn" data-campo="email" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="email">Editar</button>
+        </p>
+
+        <p id="user-telefone">
+          <strong>Telefone:</strong>
+          <span id="user-telefone-display" class="user-field"></span>
+          <input class="input-edicao" type="text" style="display: none;">
+          <button class="confirm-btn" data-campo="telefone" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="telefone">Editar</button>
+        </p>
+
+        <p id="user-endereco">
+          <strong>Endereço:</strong>
+          <span id="user-endereco-display" class="user-field"></span>
+          <input class="input-edicao" type="text" style="display: none;">
+          <button class="confirm-btn" data-campo="endereco" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="endereco">Editar</button>
+        </p>
+
+        <p id="user-cep">
+          <strong>CEP:</strong>
+          <span id="user-cep-display" class="user-field"></span>
+          <input class="input-edicao" type="text" style="display: none;">
+          <button class="confirm-btn" data-campo="cep" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="cep">Editar</button>
+        </p>
+
+        <p id="user-nascimento">
+          <strong>Data de Nascimento:</strong>
+          <span id="user-nascimento-display" class="user-field"></span>
+          <input class="input-edicao" type="date" style="display: none;">
+          <button class="confirm-btn" data-campo="nascimento" style="display: none;">Confirmar</button>
+          <button class="edit-btn" data-campo="nascimento">Editar</button>
+        </p>
+
+      </div>
     </div>
-    
   </main>
 
   <footer>
@@ -90,6 +104,7 @@
     <p>© 2025 por Cleyton Costa Andrade. Licenciado sob a <a href="https://opensource.org/licenses/MIT" target="_blank">Licença MIT</a>.</p>
   </footer>
 
+  <!-- Modais -->
   <div id="modal-confirmacao" class="modal">
     <div class="modal-content">
       <p>Deseja confirmar a alteração?</p>
@@ -97,14 +112,13 @@
       <button id="cancelar-edicao">Não</button>
     </div>
   </div>
+
   <div id="mensagem-modal" class="modal">
     <div class="modal-content">
       <span id="mensagem-texto"></span>
     </div>
   </div>
-    
 
   <script src="../js/painel.js"></script>  
-
 </body>
 </html>
