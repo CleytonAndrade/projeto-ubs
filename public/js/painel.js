@@ -1,158 +1,265 @@
 let campoAtual = null;
 let novoValorAtual = null;
 
-document.addEventListener("DOMContentLoaded", function() {
-    carregarDadosUsuario(); // Carrega os dados do usuário assim que a página for carregada
-    adicionarEventosEdicao(); // Garante que os eventos de edição sejam carregados
-});
-
-// Função para carregar os dados do usuário
-async function carregarDadosUsuario() {
-    try {
-        const resposta = await fetch("/usuario", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (!resposta.ok) {
-            throw new Error('Não foi possível carregar os dados do usuário');
-        }
-
-        const dadosUsuario = await resposta.json();
-
-        // Verifica se os elementos existem antes de tentar alterar
-        const nomeElement = document.querySelector("#user-nome-display");
-        const usuarioElement = document.querySelector("#user-usuario-display");
-        const emailElement = document.querySelector("#user-email-display");
-        const telefoneElement = document.querySelector("#user-telefone-display");
-        const enderecoElement = document.querySelector("#user-endereco-display");
-        const cepElement = document.querySelector("#user-cep-display");
-        const nascimentoElement = document.querySelector("#user-nascimento-display");
-
-        if (nomeElement) nomeElement.innerText = dadosUsuario.nome;
-        if (usuarioElement) usuarioElement.innerText = dadosUsuario.usuario;
-        if (emailElement) emailElement.innerText = dadosUsuario.email;
-        if (telefoneElement) telefoneElement.innerText = dadosUsuario.telefone;
-        if (enderecoElement) enderecoElement.innerText = dadosUsuario.endereco;
-        if (cepElement) cepElement.innerText = dadosUsuario.cep;
-        if (nascimentoElement) nascimentoElement.innerText = dadosUsuario.nascimento;
-
-    } catch (err) {
-        console.error("Erro ao carregar os dados do usuário:", err);
-        mostrarMensagem("Erro ao carregar os dados do usuário.", false); // Exibe uma mensagem de erro
-    }
-}
-
 function adicionarEventosEdicao() {
     const botoesEdicao = document.querySelectorAll(".edit-btn");
-
     botoesEdicao.forEach(botao => {
-        botao.addEventListener("click", function () {
-            const campo = this.getAttribute("data-campo");
-            editarCampo(campo); // Passa o nome correto do campo para a função de edição
+        botao.addEventListener("click", (event) => {
+            event.preventDefault();
+            editarCampo(event.target.getAttribute("data-campo"));
         });
     });
 
-    // Escutando os botões de confirmação
     const botoesConfirmacao = document.querySelectorAll(".confirm-btn");
     botoesConfirmacao.forEach(botao => {
-        botao.addEventListener("click", function () {
-            const campo = this.getAttribute("data-campo");
-            const input = document.querySelector(`#user-${campo} .input-edicao`);
-            novoValorAtual = input.value;
-            campoAtual = campo;
+        botao.addEventListener("click", (event) => {
+            event.preventDefault();
+            const campoOriginal = event.target.getAttribute("data-campo");
+            const input = document.querySelector(`#user-${campoOriginal} .input-edicao`);
+            const valorDigitado = input.value;
 
-            // Exibe o modal de confirmação
+            const mapeamento = {
+                'full-name': 'nome',
+                'username': 'usuario',
+                'senha': null,
+                'email': 'email',
+                'telefone': 'telefone',
+                'endereco': 'endereco',
+                'cep': 'cep',
+                'nascimento': 'nascimento'
+            };
+
+            const campoMapeado = mapeamento[campoOriginal];
+
+            if (campoOriginal === 'senha') {
+                const senha = input.value;
+            
+                if (senha.length < 6) {
+                    mostrarMensagem("A senha deve ter no mínimo 6 caracteres.", false);
+                    return;
+                }
+            
+                campoAtual = 'senha';
+                novoValorAtual = senha;
+                mostrarModalConfirmacao();
+                return;
+            }
+            
+            if (!campoMapeado) {
+                mostrarMensagem("Este campo não pode ser alterado por aqui.", false);
+                return;
+            }
+            
+
+            novoValorAtual = valorDigitado;
+            campoAtual = campoMapeado;
             mostrarModalConfirmacao();
         });
     });
 }
 
+
 function editarCampo(campo) {
-    const campoElemento = document.getElementById(`user-${campo}-display`);
-    const input = document.querySelector(`#user-${campo} .input-edicao`);
-    const botaoConfirmar = document.querySelector(`#user-${campo} .confirm-btn`);
-    const botaoEditar = document.querySelector(`#user-${campo} .edit-btn`);
+    const p = document.getElementById(`user-${campo}`);
+    const span = p.querySelector("span");
+    const input = p.querySelector(".input-edicao");
+    const botaoEditar = p.querySelector(".edit-btn");
+    const botaoConfirmar = p.querySelector(".confirm-btn");
 
-    // Exibe o campo de input e o botão de confirmação
-    campoElemento.style.display = 'none';
-    botaoEditar.style.display = 'none';
-    botaoConfirmar.style.display = 'inline';
-    input.style.display = 'inline';
+    toggleVisibility(span, input, botaoEditar, botaoConfirmar);
 
-    // Preenche o input com o valor atual
-    input.value = campoElemento.innerText;
+    if (campo !== "senha") {
+        input.value = span.textContent;
+    } else {
+        input.value = "";
+    }
+}
+
+function toggleVisibility(span, input, botaoEditar, botaoConfirmar) {
+    span.classList.toggle("esconder");
+    input.classList.toggle("mostrar");
+    botaoConfirmar.classList.toggle("mostrar");
+    botaoEditar.classList.toggle("esconder");
 }
 
 function mostrarModalConfirmacao() {
     const modal = document.getElementById("modal-confirmacao");
-    modal.style.display = "flex";
+    modal.classList.add("mostrar");
 
-    const confirmarBtn = document.getElementById("confirmar-edicao");
-    const cancelarBtn = document.getElementById("cancelar-edicao");
+    document.getElementById("confirmar-edicao").onclick = () => {
+        if (campoAtual === 'senha') {
+            atualizarSenha(novoValorAtual);
+        } else {
+            atualizarUsuario(campoAtual, novoValorAtual);
+        }
+        modal.classList.remove("mostrar");
+    };
+    
 
-    // Quando o usuário clica em "Sim", confirma a edição
-    confirmarBtn.addEventListener("click", () => {
-        atualizarUsuario(campoAtual, novoValorAtual);
-        modal.style.display = "none";  // Fecha o modal após a confirmação
-    });
+    document.getElementById("cancelar-edicao").onclick = () => {
+        const p = document.getElementById(`user-${campoAtual}`);
+        const span = p.querySelector("span");
+        const input = p.querySelector(".input-edicao");
+        const botaoEditar = p.querySelector(".edit-btn");
+        const botaoConfirmar = p.querySelector(".confirm-btn");
 
-    // Quando o usuário clica em "Não", cancela a edição
-    cancelarBtn.addEventListener("click", () => {
-        const input = document.querySelector(`#user-${campoAtual} .input-edicao`);
-        input.style.display = "none";
-        document.querySelector(`#user-${campoAtual} .confirm-btn`).style.display = "none";
-        document.querySelector(`#user-${campoAtual} .edit-btn`).style.display = "inline";
-        modal.style.display = "none";  // Fecha o modal após o cancelamento
-    });
+        toggleVisibility(span, input, botaoEditar, botaoConfirmar);
+        modal.classList.remove("mostrar");
+    };
 }
 
 async function atualizarUsuario(campo, novoValor) {
+    console.log("Campo:", campo);
+    console.log("Valor:", novoValor);
+
     try {
+        // Se o campo for 'telefone', 'cep' ou 'nascimento', formatar o valor antes de enviar
+        if (campo === 'telefone') {
+            novoValor = formatarTelefone(novoValor); // Formata o telefone
+        }
+        if (campo === 'cep') {
+            novoValor = formatarCEP(novoValor); // Formata o CEP
+        }
+        if (campo === 'nascimento') {
+            novoValor = formatarData(novoValor); // Formata a data de nascimento
+        }
+
+        // Se o campo for 'endereco' e o novoValor for um objeto
+        if (campo === 'endereco' && typeof novoValor === 'object') {
+            // Enviar um objeto com os componentes de endereço
+            novoValor = { 
+                rua: novoValor.rua,
+                numero: novoValor.numero,
+                bairro: novoValor.bairro,
+                cidade: novoValor.cidade,
+                estado: novoValor.estado
+            };
+        }
+
         const resposta = await fetch("/atualizar-usuario", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                campo: campo,  // Nome do campo a ser atualizado (ex: 'nome', 'email', etc.)
-                valor: novoValor,  // Novo valor para o campo
-            }),
+            body: JSON.stringify({ campo, valor: novoValor }),
         });
 
         if (!resposta.ok) {
-            const errorMsg = await resposta.text();
-            throw new Error(errorMsg);
+            const erroText = await resposta.text();
+            throw new Error(`Erro: ${erroText}`);
         }
 
         const responseData = await resposta.json();
-        mostrarMensagem(responseData.message);  // Exibe mensagem de sucesso
-        document.querySelector(`#user-${campo}-display`).innerText = novoValor; // Atualiza a exibição do dado
+        mostrarMensagem(responseData.message);
+        atualizarCampoNoPainel(campo, novoValor);
+
     } catch (err) {
         console.error("Erro ao atualizar o usuário:", err);
-        mostrarMensagem("Erro ao atualizar os dados.", false);  // Exibe mensagem de erro
+        mostrarMensagem("Erro ao atualizar os dados.", false);
     }
 }
 
-// Função para mostrar mensagens de sucesso ou erro
+
+async function atualizarSenha(novaSenha) {
+    try {
+        const resposta = await fetch("/atualizar-senha", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ senha: novaSenha })
+        });
+
+        if (!resposta.ok) {
+            const erroText = await resposta.text();
+            throw new Error(`Erro: ${erroText}`);
+        }
+
+        const dados = await resposta.json();
+        mostrarMensagem(dados.message || "Senha atualizada com sucesso.");
+    } catch (err) {
+        console.error("Erro ao atualizar a senha:", err);
+        mostrarMensagem("Erro ao atualizar a senha.", false);
+    }
+}
+
+
+function atualizarCampoNoPainel(campo, novoValor) {
+    const p = document.getElementById(`user-${campo}`);
+    const span = p.querySelector("span");
+    const input = p.querySelector(".input-edicao");
+    const botaoEditar = p.querySelector(".edit-btn");
+    const botaoConfirmar = p.querySelector(".confirm-btn");
+
+    // Se o campo for telefone, CEP ou data, formatar o valor antes de atualizar
+    if (campo === 'telefone') {
+        novoValor = formatarTelefone(novoValor);
+    }
+    if (campo === 'cep') {
+        novoValor = formatarCEP(novoValor);
+    }
+    if (campo === 'nascimento') {
+        novoValor = formatarData(novoValor);
+    }
+
+    span.textContent = novoValor;
+    toggleVisibility(span, input, botaoEditar, botaoConfirmar);
+}
+
 function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");
     const texto = document.getElementById("mensagem-texto");
 
-    if (texto) {
-        texto.textContent = msg;
-        texto.style.color = sucesso ? "green" : "red";
-    }
+    texto.textContent = msg;
+    texto.style.color = sucesso ? "green" : "red";
+    modal.classList.add("mostrar");
 
-    if (modal) {
-        modal.style.display = "flex";
-    }
-
-    setTimeout(() => {
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }, 3000);
+    setTimeout(() => modal.classList.remove("mostrar"), 3000);
 }
+
+async function carregarDadosUsuario() {
+    try {
+        const resposta = await fetch("/usuario");
+
+        if (!resposta.ok) throw new Error("Erro ao carregar os dados do usuário");
+
+        const dadosUsuario = await resposta.json();
+        preencherDadosUsuario(dadosUsuario);
+
+    } catch (err) {
+        console.error("Erro ao carregar os dados do usuário:", err);
+        mostrarMensagem("Erro ao carregar os dados.", false);
+    }
+}
+
+function preencherDadosUsuario(dadosUsuario) {
+    document.getElementById("user-name").textContent = dadosUsuario.nome;
+    document.getElementById("user-full-name-display").textContent = dadosUsuario.nome;
+    document.getElementById("user-username-display").textContent = dadosUsuario.usuario;
+    document.getElementById("user-senha-display").textContent = "********";
+    document.getElementById("user-email-display").textContent = dadosUsuario.email;
+    document.getElementById("user-telefone-display").textContent = formatarTelefone(dadosUsuario.telefone);
+    document.getElementById("user-endereco-display").textContent = `${dadosUsuario.rua}, ${dadosUsuario.numero}, ${dadosUsuario.bairro}, ${dadosUsuario.cidade}, ${dadosUsuario.estado}`;
+    document.getElementById("user-cep-display").textContent = formatarCEP(dadosUsuario.cep);
+    document.getElementById("user-nascimento-display").textContent = formatarData(dadosUsuario.nascimento);
+}
+
+function formatarData(data) {
+    const novaData = new Date(data);
+    return novaData.toLocaleDateString('pt-BR');
+  }
+  
+  function formatarCEP(cep) {
+    return cep.replace(/(\d{5})(\d{3})/, "$1-$2");
+  }
+  
+  function formatarTelefone(telefone) {
+    return telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+  }
+  
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    carregarDadosUsuario();
+    adicionarEventosEdicao();
+});
