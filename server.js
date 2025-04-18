@@ -103,39 +103,40 @@
     const { username, password } = req.body;
   
     if (!username || !password) {
-      return res.status(400).send("Usuário ou senha não preenchidos");
+      return res.status(400).json({ message: "Por favor, preencha todos os campos." });
     }
   
     try {
-      // Verifica se o usuário existe no banco de dados
       const [users] = await pool.query("SELECT * FROM usuarios WHERE usuario = ?", [username]);
       if (users.length === 0) {
-        return res.status(401).send("Usuário não encontrado");
+        return res.status(401).json({ message: "Usuário não encontrado." });
       }
   
       const user = users[0];
-      
-      // Verifica se a senha está correta
       const senhaConfere = await bcrypt.compare(password, user.senha);
+  
       if (!senhaConfere) {
-        return res.status(401).send("Senha incorreta");
+        return res.status(401).json({ message: "Senha incorreta." });
       }
   
-      // Cria a sessão para o usuário
+      // Armazena o nome e outras informações do usuário na sessão
       req.session.usuarioId = user.id;
       req.session.nome = user.nome;
       req.session.usuario = user.usuario;
   
-      // Resposta de sucesso para o front-end processar
-      res.status(200).send({
+      // Responde com o nome do usuário e a URL de redirecionamento
+      res.json({
         message: "Login bem-sucedido",
-        redirectUrl: "/", // Sem painel
+        redirectUrl: "/dashboard", // A URL para redirecionamento após login
+        nome: user.nome
       });
     } catch (err) {
       console.error("Erro no login:", err);
-      res.status(500).send("Erro interno no login");
+      res.status(500).json({ message: "Erro interno no login" });
     }
   });
+  
+  
 
   // Rota de logout
   app.get("/logout", (req, res) => {
