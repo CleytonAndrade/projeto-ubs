@@ -64,6 +64,13 @@ function mostrarModalConfirmacao() {
 
 async function atualizarUsuario(campo, novoValor) {
     try {
+        // Verifique se o campo é 'endereco' e se o valor é um objeto com os componentes
+        if (campo === 'endereco' && typeof novoValor === 'object') {
+            const { rua, numero, bairro, cidade, estado } = novoValor;
+            // Envie o objeto como parte do corpo
+            novoValor = { rua, numero, bairro, cidade, estado };
+        }
+
         const resposta = await fetch("/atualizar-usuario", {
             method: "POST",
             headers: {
@@ -72,7 +79,10 @@ async function atualizarUsuario(campo, novoValor) {
             body: JSON.stringify({ campo, valor: novoValor }),
         });
 
-        if (!resposta.ok) throw new Error(await resposta.text());
+        if (!resposta.ok) {
+            const erroText = await resposta.text();
+            throw new Error(`Erro: ${erroText}`);
+        }
 
         const responseData = await resposta.json();
         mostrarMensagem(responseData.message);
@@ -83,6 +93,7 @@ async function atualizarUsuario(campo, novoValor) {
         mostrarMensagem("Erro ao atualizar os dados.", false);
     }
 }
+
 
 function atualizarCampoNoPainel(campo, novoValor) {
     const p = document.getElementById(`user-${campo}`);
