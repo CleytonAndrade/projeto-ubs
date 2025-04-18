@@ -110,24 +110,27 @@ function mostrarMensagem(msg, sucesso = true) {
 // Função para carregar os dados do usuário e exibi-los na interface
 async function carregarDadosUsuario() {
     try {
-        const resposta = await fetch("/dados-usuario");
-        const dados = await resposta.json();
+        const resposta = await fetch("/usuario");
 
-        // Atualiza os campos do usuário com os dados recebidos
-        document.getElementById("user-name").innerText = dados.nome;
-        document.getElementById("user-full-name").innerText = dados.nome;
-        document.getElementById("user-username").innerText = dados.usuario;
-        document.getElementById("user-email").innerText = dados.email;
-        document.getElementById("user-telefone").innerText = dados.telefone;
-        document.getElementById("user-endereco").innerText = dados.endereco;
-        document.getElementById("user-cep").innerText = dados.cep;
-        document.getElementById("user-nascimento").innerText = dados.dataNascimento;
+        if (!resposta.ok) {
+            throw new Error("Erro ao carregar os dados do usuário");
+        }
 
-        // Chama a função de adicionar eventos após carregar os dados
-        adicionarEventosEdicao();
+        const dadosUsuario = await resposta.json();
+
+        // Preencher os campos do perfil do usuário
+        document.getElementById("user-name").textContent = dadosUsuario.nome;
+        document.getElementById("user-full-name").textContent = dadosUsuario.nome;
+        document.getElementById("user-username").textContent = dadosUsuario.usuario;
+        document.getElementById("user-email").textContent = dadosUsuario.email;
+        document.getElementById("user-telefone").textContent = dadosUsuario.telefone;
+        document.getElementById("user-endereco").textContent = `${dadosUsuario.rua}, ${dadosUsuario.numero}, ${dadosUsuario.bairro}, ${dadosUsuario.cidade}, ${dadosUsuario.estado}`;
+        document.getElementById("user-cep").textContent = dadosUsuario.cep;
+        document.getElementById("user-nascimento").textContent = dadosUsuario.nascimento;
+
     } catch (err) {
         console.error("Erro ao carregar os dados do usuário:", err);
-        mostrarMensagem("Erro ao carregar os dados do usuário.", false);  // Exibe mensagem de erro
+        mostrarMensagem("Erro ao carregar os dados.", false);
     }
 }
 

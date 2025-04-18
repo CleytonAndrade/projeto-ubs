@@ -172,49 +172,82 @@
     });
   
    
-// Rota para retornar os dados do usuário
-app.get('/usuario', async (req, res) => {
-  if (!req.session.usuarioId) {
-    return res.status(401).json({ message: 'Usuário não autenticado' });
-  }
+    // Rota para retornar os dados do usuário
+    app.get('/usuario', async (req, res) => {
+      if (!req.session.usuarioId) {
+        return res.status(401).json({ message: 'Usuário não autenticado' });
+      }
 
-  try {
-    // Recupera todos os dados do usuário logado a partir do banco de dados
-    const [rows] = await pool.query("SELECT * FROM usuarios WHERE id = ?", [req.session.usuarioId]);
+      try {
+        // Recupera todos os dados do usuário logado a partir do banco de dados
+        const [rows] = await pool.query("SELECT * FROM usuarios WHERE id = ?", [req.session.usuarioId]);
 
-    if (rows.length === 0) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
-    }
+        if (rows.length === 0) {
+          return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
 
-    const user = rows[0];
+        const user = rows[0];
 
-    // Ajustando a data de nascimento para o formato yyyy-mm-dd
-    const nascimento = user.nascimento ? new Date(user.nascimento).toISOString().split('T')[0] : null;
+        // Ajustando a data de nascimento para o formato yyyy-mm-dd
+        const nascimento = user.nascimento ? new Date(user.nascimento).toISOString().split('T')[0] : null;
 
-    // Retorna os dados completos, com os campos separados
-    res.json({
-      id: user.id,
-      nome: user.nome,
-      usuario: user.usuario,
-      email: user.email,
-      telefone: user.telefone,
-      cep: user.cep,
-      rua: user.rua,
-      numero: user.numero,
-      bairro: user.bairro,
-      cidade: user.cidade,
-      estado: user.estado,
-      nascimento: nascimento
-    });
-  } catch (err) {
-    console.error("Erro ao recuperar dados do usuário:", err);
-    res.status(500).json({ message: 'Erro ao recuperar dados do usuário' });
-  }
-});
+        // Retorna os dados completos, com os campos separados
+        res.json({
+          id: user.id,
+          nome: user.nome,
+          usuario: user.usuario,
+          email: user.email,
+          telefone: user.telefone,
+          cep: user.cep,
+          rua: user.rua,
+          numero: user.numero,
+          bairro: user.bairro,
+          cidade: user.cidade,
+          estado: user.estado,
+          nascimento: nascimento
+        });
+      } catch (err) {
+        console.error("Erro ao recuperar dados do usuário:", err);
+        res.status(500).json({ message: 'Erro ao recuperar dados do usuário' });
+      }
+    }); 
 
-  
-  
- 
+    // Rota para retornar os dados do usuário
+    // app.get('/dados-usuario', async (req, res) => {
+    //   if (!req.session.usuarioId) {
+    //       return res.status(401).json({ message: 'Usuário não autenticado' });
+    //   }
+
+    //   try {
+    //       // Recupera os dados do usuário no banco de dados
+    //       const [rows] = await pool.query("SELECT * FROM usuarios WHERE id = ?", [req.session.usuarioId]);
+
+    //       if (rows.length === 0) {
+    //           return res.status(404).json({ message: 'Usuário não encontrado' });
+    //       }
+
+    //       const user = rows[0]; // A primeira linha (única) corresponde ao usuário logado
+
+    //       // Ajustando a data de nascimento para o formato correto
+    //       const nascimento = user.nascimento ? new Date(user.nascimento).toISOString().split('T')[0] : null;
+
+    //       // Retorna os dados completos do usuário
+    //       res.json({
+    //           id: user.id,
+    //           nome: user.nome,
+    //           usuario: user.usuario,
+    //           email: user.email,
+    //           telefone: user.telefone,
+    //           endereco: `${user.rua}, ${user.numero}, ${user.bairro}, ${user.cidade}, ${user.estado}`,
+    //           cep: user.cep,
+    //           nascimento: nascimento
+    //       });
+    //   } catch (err) {
+    //       console.error("Erro ao recuperar dados do usuário:", err);
+    //       res.status(500).json({ message: 'Erro ao recuperar dados do usuário' });
+    //   }
+    // });
+
     // Rota de logout
     app.get("/logout", (req, res) => {
       req.session.destroy((err) => {
