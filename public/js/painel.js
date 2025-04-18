@@ -63,6 +63,9 @@ function mostrarModalConfirmacao() {
 }
 
 async function atualizarUsuario(campo, novoValor) {
+        console.log("Campo:", campo);
+        console.log("Valor:", novoValor);
+
     try {
         // Se o campo for 'endereco' e o novoValor for um objeto
         if (campo === 'endereco' && typeof novoValor === 'object') {
