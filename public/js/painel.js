@@ -22,14 +22,22 @@ async function carregarDadosUsuario() {
 
         const dadosUsuario = await resposta.json();
 
-        // Preenche os campos com os dados recebidos
-        document.querySelector("#user-nome-display").innerText = dadosUsuario.nome;
-        document.querySelector("#user-usuario-display").innerText = dadosUsuario.usuario;
-        document.querySelector("#user-email-display").innerText = dadosUsuario.email;
-        document.querySelector("#user-telefone-display").innerText = dadosUsuario.telefone;
-        document.querySelector("#user-endereco-display").innerText = dadosUsuario.endereco;
-        document.querySelector("#user-cep-display").innerText = dadosUsuario.cep;
-        document.querySelector("#user-nascimento-display").innerText = dadosUsuario.nascimento;
+        // Verifica se os elementos existem antes de tentar alterar
+        const nomeElement = document.querySelector("#user-nome-display");
+        const usuarioElement = document.querySelector("#user-usuario-display");
+        const emailElement = document.querySelector("#user-email-display");
+        const telefoneElement = document.querySelector("#user-telefone-display");
+        const enderecoElement = document.querySelector("#user-endereco-display");
+        const cepElement = document.querySelector("#user-cep-display");
+        const nascimentoElement = document.querySelector("#user-nascimento-display");
+
+        if (nomeElement) nomeElement.innerText = dadosUsuario.nome;
+        if (usuarioElement) usuarioElement.innerText = dadosUsuario.usuario;
+        if (emailElement) emailElement.innerText = dadosUsuario.email;
+        if (telefoneElement) telefoneElement.innerText = dadosUsuario.telefone;
+        if (enderecoElement) enderecoElement.innerText = dadosUsuario.endereco;
+        if (cepElement) cepElement.innerText = dadosUsuario.cep;
+        if (nascimentoElement) nascimentoElement.innerText = dadosUsuario.nascimento;
 
     } catch (err) {
         console.error("Erro ao carregar os dados do usuário:", err);
@@ -131,14 +139,4 @@ async function atualizarUsuario(campo, novoValor) {
 // Função para mostrar mensagens de sucesso ou erro
 function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");
-    const texto = document.getElementById("mensagem-texto");
-
-    texto.textContent = msg;
-    texto.style.color = sucesso ? "green" : "red";
-
-    modal.style.display = "flex";
-
-    setTimeout(() => {
-        modal.style.display = "none";
-    }, 3000);
-}
+    const
