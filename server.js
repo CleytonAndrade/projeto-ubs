@@ -229,57 +229,56 @@
       if (!req.session.usuario) {
         return res.status(401).json({ message: 'Usuário não autenticado' });
       }
-
+    
       const usuario = req.session.usuario;
       const { campo, valor } = req.body;
-
+    
       if (!campo || typeof valor === 'undefined') {
         return res.status(400).json({ message: 'Dados inválidos' });
       }
-
-      // Lista de campos permitidos para atualização
+    
+      // ✅ MOVER esta parte PARA CIMA antes de usar!
       const camposPermitidos = [
         'nome', 'usuario', 'email', 'telefone', 'cep', 'rua',
-        'numero', 'bairro', 'cidade', 'estado', 'nascimento'
+        'numero', 'bairro', 'cidade', 'estado', 'nascimento', 'endereco'
       ];
-
+    
       // Verifica se o campo está na lista de campos permitidos
       if (!camposPermitidos.includes(campo)) {
         return res.status(400).json({ message: 'Campo inválido' });
       }
-
+    
       try {
-        // Se o campo for 'endereco', você precisa dividir o valor em componentes individuais
         if (campo === 'endereco') {
           const { rua, numero, bairro, cidade, estado } = valor;
-          // Atualiza cada componente do endereço individualmente
-          await pool.query('UPDATE usuarios SET rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ? WHERE usuario = ?', 
-            [rua, numero, bairro, cidade, estado, usuario]);
+          await pool.query(
+            'UPDATE usuarios SET rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ? WHERE usuario = ?',
+            [rua, numero, bairro, cidade, estado, usuario]
+          );
           return res.json({ message: 'Endereço atualizado com sucesso.' });
         }
-
-        // Usando uma consulta parametrizada para maior segurança
+    
         const sql = `UPDATE usuarios SET ?? = ? WHERE usuario = ?`;
         const values = [campo, valor, usuario];
-
-        const [result] = await pool.query(sql, values); // Usando o pool.query com prepared statement
-
-        // Verifica se a atualização foi bem-sucedida
+    
+        const [result] = await pool.query(sql, values);
+    
         if (result.affectedRows === 0) {
           return res.status(404).json({ message: 'Usuário não encontrado ou nenhum dado foi alterado.' });
         }
-
-        // Atualiza o nome de usuário na sessão se ele foi alterado
+    
         if (campo === 'usuario') {
           req.session.usuario = valor;
         }
-
+    
         res.json({ message: `Campo ${campo} atualizado com sucesso.` });
+    
       } catch (err) {
         console.error('Erro ao atualizar o campo:', err);
         res.status(500).json({ message: 'Erro ao atualizar os dados.' });
       }
     });
+    
 
     
     // Rota de agendamento
