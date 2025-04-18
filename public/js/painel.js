@@ -155,8 +155,17 @@ async function atualizarUsuario(campo, novoValor) {
             throw new Error(`Erro: ${erroText}`);
         }
 
-        const responseData = await resposta.json();
-        mostrarMensagem(responseData.message); // Exibe mensagem de sucesso
+        const textoResposta = await resposta.text();
+
+        let responseData;
+        try {
+            responseData = JSON.parse(textoResposta);
+            mostrarMensagem(responseData.message); // Exibe mensagem de sucesso
+            atualizarCampoNoPainel(campo, novoValor); // Atualiza o campo no painel
+        } catch (e) {
+            throw new Error(`Resposta inesperada do servidor: ${textoResposta}`);
+        }
+         // Exibe mensagem de sucesso
         atualizarCampoNoPainel(campo, novoValor); // Atualiza o campo no painel
 
     } catch (err) {
