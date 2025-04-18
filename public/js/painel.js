@@ -317,22 +317,25 @@ function editarCampo(campo) {
     const botaoEditar = p.querySelector(".edit-btn");
     const botaoConfirmar = p.querySelector(".confirm-btn");
 
+    // Verificação de depuração
+    console.log("input de senha", document.getElementById("user-senha-input"));
+
     // Alterna a visibilidade dos elementos: texto, input e botões
     toggleVisibility(span, input, botaoEditar, botaoConfirmar);
 
     // Preenche o input com o valor atual do campo, exceto para senha
     if (campo === "senha") {
-        // Se for senha, mantém o campo de input em branco, pois o usuário deve digitar a nova senha
-        document.getElementById("user-senha-input").value = "";
+        const inputSenha = document.getElementById("user-senha-input");
+        if (inputSenha) {
+            inputSenha.value = "";  // Limpa o campo de senha
+        }
+        adicionarEventosMostrarOcultarSenha();
     } else {
         input.value = span.textContent;
     }
-
-    // Adiciona evento de mostrar/ocultar senha
-    if (campo === "senha") {
-        adicionarEventosMostrarOcultarSenha();
-    }
 }
+
+
 
 // Adiciona eventos de edição aos campos
 adicionarEventosEdicao();
