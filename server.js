@@ -228,10 +228,6 @@
         }
     });
 
-    // Recuperação de senha
-    const nodemailer = require("nodemailer");
-    const crypto = require("crypto");
-
     // Rota de recuperação de senha
     app.post("/enviar-recuperacao", (req, res) => {
         const email = req.body.email;
