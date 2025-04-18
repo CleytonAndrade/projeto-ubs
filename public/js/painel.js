@@ -64,11 +64,16 @@ function mostrarModalConfirmacao() {
 
 async function atualizarUsuario(campo, novoValor) {
     try {
-        // Verifique se o campo é 'endereco' e se o valor é um objeto com os componentes
+        // Se o campo for 'endereco' e o novoValor for um objeto
         if (campo === 'endereco' && typeof novoValor === 'object') {
-            const { rua, numero, bairro, cidade, estado } = novoValor;
-            // Envie o objeto como parte do corpo
-            novoValor = { rua, numero, bairro, cidade, estado };
+            // Enviar um objeto com os componentes de endereço
+            novoValor = { 
+                rua: novoValor.rua,
+                numero: novoValor.numero,
+                bairro: novoValor.bairro,
+                cidade: novoValor.cidade,
+                estado: novoValor.estado
+            };
         }
 
         const resposta = await fetch("/atualizar-usuario", {
@@ -93,6 +98,7 @@ async function atualizarUsuario(campo, novoValor) {
         mostrarMensagem("Erro ao atualizar os dados.", false);
     }
 }
+
 
 
 function atualizarCampoNoPainel(campo, novoValor) {
