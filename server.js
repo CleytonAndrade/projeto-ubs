@@ -230,78 +230,84 @@
 
     // Rota de recuperação de senha
     app.post("/enviar-recuperacao", (req, res) => {
-        const email = req.body.email;
-
-        if (!email) {
-            return res.status(400).send("E-mail não fornecido.");
-        }
-
-        const query = "SELECT * FROM usuarios WHERE email = ?";
-        pool.query(query, [email], (err, results) => {
-            if (err) {
-                console.error("Erro ao buscar e-mail:", err);
-                return res.status(500).send("Erro interno do servidor.");
-            }
-
-            if (results.length === 0) {
-                return res.status(404).send("E-mail não encontrado.");
-            }
-
-            const user = results[0];
-            const token = crypto.randomBytes(20).toString("hex"); // Gera um token único
-
-            // Armazenar o token no banco de dados (adicionar uma coluna de token de recuperação na tabela de usuários)
-            const tokenExpiration = Date.now() + 3600000; // O token expira em 1 hora
-            const updateQuery =
-                "UPDATE usuarios SET recovery_token = ?, recovery_token_expiry = ? WHERE id = ?";
-
-            pool.query(
-                updateQuery,
-                [token, tokenExpiration, user.id],
-                (err) => {
-                    if (err) {
-                        console.error("Erro ao salvar o token:", err);
-                        return res
-                            .status(500)
-                            .send("Erro interno ao gerar o token.");
-                    }
-
-                    // Configuração do Nodemailer
-                    const transporter = nodemailer.createTransport({
-                        service: "gmail", // ou outro provedor de e-mail
-                        auth: {
-                            user: process.env.EMAIL_USER,
-                            pass: process.env.EMAIL_PASS, 
-                        },
-                    });
-
-                    const mailOptions = {
-                        from: process.env.EMAIL_USER,
-                        to: email,
-                        subject: "Recuperação de Senha",
-                        text: `Olá ${user.nome},\n\nClique no link abaixo para redefinir sua senha:\n\n${process.env.BASE_URL}/resetar-senha/${token}\n\nEste link expira em 1 hora.\n\nAtenciosamente,\nSua equipe`,
-                    };
-
-                    // Enviar o e-mail
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            console.error("Erro ao enviar o e-mail:", error);
-                            return res
-                                .status(500)
-                                .send("Erro ao enviar e-mail de recuperação.");
-                        }
-
-                        res.send(`
-                        <h2>Verifique seu e-mail</h2>
-                        <p>Se o e-mail <strong>${email}</strong> estiver cadastrado, você receberá um link para redefinir sua senha.</p>
-                        <a href="/">Voltar à página inicial</a>
-                    `);
-                    });
-                }
-            );
-        });
-    });
-
+      const email = req.body.email;
+  
+      if (!email) {
+          return res.status(400).send("E-mail não fornecido.");
+      }
+  
+      const query = "SELECT * FROM usuarios WHERE email = ?";
+      pool.query(query, [email], (err, results) => {
+          if (err) {
+              console.error("Erro ao buscar e-mail:", err);
+              return res.status(500).send("Erro interno do servidor.");
+          }
+  
+          if (results.length === 0) {
+              return res.status(404).send("E-mail não encontrado.");
+          }
+  
+          const user = results[0];
+          const token = crypto.randomBytes(20).toString("hex"); // Gera um token único
+  
+          // Log para verificar o token gerado
+          console.log("Token gerado:", token); // Verifique o token gerado
+  
+          // Armazenar o token no banco de dados (adicionar uma coluna de token de recuperação na tabela de usuários)
+          const tokenExpiration = Date.now() + 3600000; // O token expira em 1 hora
+          const updateQuery =
+              "UPDATE usuarios SET recovery_token = ?, recovery_token_expiry = ? WHERE id = ?";
+  
+          pool.query(
+              updateQuery,
+              [token, tokenExpiration, user.id],
+              (err) => {
+                  if (err) {
+                      console.error("Erro ao salvar o token:", err);
+                      return res
+                          .status(500)
+                          .send("Erro interno ao gerar o token.");
+                  }
+  
+                  // Log para verificar os dados de autenticação de e-mail
+                  console.log("Dados de autenticação do e-mail:", process.env.EMAIL_USER, process.env.EMAIL_PASS); // Verifique se as credenciais estão corretas
+  
+                  // Configuração do Nodemailer
+                  const transporter = nodemailer.createTransport({
+                      service: "gmail", // ou outro provedor de e-mail
+                      auth: {
+                          user: process.env.EMAIL_USER,
+                          pass: process.env.EMAIL_PASS, 
+                      },
+                  });
+  
+                  const mailOptions = {
+                      from: process.env.EMAIL_USER,
+                      to: email,
+                      subject: "Recuperação de Senha",
+                      text: `Olá ${user.nome},\n\nClique no link abaixo para redefinir sua senha:\n\n${process.env.BASE_URL}/resetar-senha/${token}\n\nEste link expira em 1 hora.\n\nAtenciosamente,\nSua equipe`,
+                  };
+  
+                  // Enviar o e-mail
+                  transporter.sendMail(mailOptions, (error, info) => {
+                      if (error) {
+                          console.error("Erro ao enviar o e-mail:", error);
+                          return res
+                              .status(500)
+                              .send("Erro ao enviar e-mail de recuperação.");
+                      }
+  
+                      res.send(`
+                          <h2>Verifique seu e-mail</h2>
+                          <p>Se o e-mail <strong>${email}</strong> estiver cadastrado, você receberá um link para redefinir sua senha.</p>
+                          <a href="/">Voltar à página inicial</a>
+                      `);
+                  });
+              }
+          );
+      });
+  });
+  
     // Middleware global de erro
     app.use((err, req, res, next) => {
         console.error("Erro inesperado:", err);
