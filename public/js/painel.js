@@ -3,11 +3,17 @@ let campoAtual = null;
 let novoValorAtual = null;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para adicionar eventos de edição aos botões.
  * Envolvem os botões de edição e confirmação.
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 function adicionarEventosEdicao() {
     // Adiciona eventos aos botões de edição
@@ -16,6 +22,10 @@ function adicionarEventosEdicao() {
         botao.addEventListener("click", (event) => {
             event.preventDefault();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            // Inicia o processo de edição para o campo correspondente
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
             // Inicia o processo de edição para o campo correspondente
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
@@ -24,6 +34,10 @@ function adicionarEventosEdicao() {
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    // Adiciona eventos aos botões de confirmação
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
     // Adiciona eventos aos botões de confirmação
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
@@ -32,6 +46,10 @@ function adicionarEventosEdicao() {
         botao.addEventListener("click", (event) => {
             event.preventDefault();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            // Obtém o campo e o valor do input após confirmação
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
             // Obtém o campo e o valor do input após confirmação
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
@@ -40,6 +58,10 @@ function adicionarEventosEdicao() {
             const valorDigitado = input.value;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            // Mapeia o campo original para o correspondente no banco de dados
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
             // Mapeia o campo original para o correspondente no banco de dados
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
@@ -57,6 +79,7 @@ function adicionarEventosEdicao() {
             const campoMapeado = mapeamento[campoOriginal];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (campoOriginal === 'senha') {
                 const senha = input.value;
             
@@ -72,6 +95,8 @@ function adicionarEventosEdicao() {
             }
             
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
             // Se o campo for "senha", realiza validação específica
             if (campoOriginal === 'senha') {
                 if (valorDigitado.length < 6) {
@@ -85,14 +110,22 @@ function adicionarEventosEdicao() {
             }
 
             // Verifica se o campo é editável
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
             if (!campoMapeado) {
                 mostrarMensagem("Este campo não pode ser alterado por aqui.", false);
                 return;
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             
 
+=======
+
+            // Armazena o novo valor e campo para o processo de confirmação
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
 
             // Armazena o novo valor e campo para o processo de confirmação
@@ -105,13 +138,19 @@ function adicionarEventosEdicao() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para ativar o modo de edição em um campo específico.
  * Alterna entre exibir o campo de edição e o valor exibido.
  * @param {string} campo - O campo a ser editado.
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 function editarCampo(campo) {
     const p = document.getElementById(`user-${campo}`);
@@ -120,6 +159,7 @@ function editarCampo(campo) {
     const botaoEditar = p.querySelector(".edit-btn");
     const botaoConfirmar = p.querySelector(".confirm-btn");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     toggleVisibility(span, input, botaoEditar, botaoConfirmar);
 
@@ -144,6 +184,15 @@ function toggleVisibility(span, input, botaoEditar, botaoConfirmar) {
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 }
 
+=======
+    // Alterna a visibilidade dos elementos: texto, input e botões
+    toggleVisibility(span, input, botaoEditar, botaoConfirmar);
+
+    // Preenche o input com o valor atual do campo, exceto para senha
+    input.value = campo !== "senha" ? span.textContent : "";
+}
+
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para alternar a visibilidade dos elementos de texto, input e botões.
  * @param {Element} span - O elemento de texto do campo.
@@ -166,6 +215,10 @@ function mostrarModalConfirmacao() {
     modal.classList.add("mostrar");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    // Ao confirmar, chama a função de atualização de dados
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
     // Ao confirmar, chama a função de atualização de dados
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
@@ -177,6 +230,7 @@ function mostrarModalConfirmacao() {
         }
         modal.classList.remove("mostrar");
     };
+<<<<<<< HEAD
 <<<<<<< HEAD
     
 
@@ -195,6 +249,18 @@ function mostrarModalConfirmacao() {
 =======
         // Restaura a visibilidade dos elementos para o estado original
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
+
+    // Ao cancelar, restaura o estado inicial sem alterações
+    document.getElementById("cancelar-edicao").onclick = () => {
+        const p = document.getElementById(`user-${campoAtual}`);
+        const span = p.querySelector("span");
+        const input = p.querySelector(".input-edicao");
+        const botaoEditar = p.querySelector(".edit-btn");
+        const botaoConfirmar = p.querySelector(".confirm-btn");
+
+        // Restaura a visibilidade dos elementos para o estado original
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
         toggleVisibility(span, input, botaoEditar, botaoConfirmar);
         modal.classList.remove("mostrar");
     };
@@ -211,6 +277,7 @@ async function atualizarUsuario(campo, novoValor) {
         console.log("Valor:", novoValor);
 
     try {
+<<<<<<< HEAD
 <<<<<<< HEAD
         // Se o campo for 'endereco' e o novoValor for um objeto
         if (campo === 'endereco' && typeof novoValor === 'object') {
@@ -238,6 +305,15 @@ async function atualizarUsuario(campo, novoValor) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
+        // Formata o valor antes de enviar, conforme o tipo do campo
+        novoValor = formatarValor(campo, novoValor);
+
+        // Envia a solicitação para atualizar o campo no servidor
+        const resposta = await fetch("/atualizar-usuario", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
             body: JSON.stringify({ campo, valor: novoValor }),
         });
 
@@ -249,8 +325,13 @@ async function atualizarUsuario(campo, novoValor) {
 
         const responseData = await resposta.json();
 <<<<<<< HEAD
+<<<<<<< HEAD
         mostrarMensagem(responseData.message);
         atualizarCampoNoPainel(campo, novoValor);
+=======
+        mostrarMensagem(responseData.message); // Exibe mensagem de sucesso
+        atualizarCampoNoPainel(campo, novoValor); // Atualiza o campo no painel
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
         mostrarMensagem(responseData.message); // Exibe mensagem de sucesso
         atualizarCampoNoPainel(campo, novoValor); // Atualiza o campo no painel
@@ -263,22 +344,33 @@ async function atualizarUsuario(campo, novoValor) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para atualizar a senha do usuário.
  * Envia a nova senha para o servidor.
  * @param {string} novaSenha - A nova senha do usuário.
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 async function atualizarSenha(novaSenha) {
     try {
         const resposta = await fetch("/atualizar-senha", {
             method: "POST",
 <<<<<<< HEAD
+<<<<<<< HEAD
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ senha: novaSenha })
+=======
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ senha: novaSenha }),
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 =======
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ senha: novaSenha }),
@@ -299,13 +391,19 @@ async function atualizarSenha(novaSenha) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para atualizar o valor exibido no painel após a atualização.
  * @param {string} campo - O campo a ser atualizado.
  * @param {string} novoValor - O novo valor a ser exibido.
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 function atualizarCampoNoPainel(campo, novoValor) {
     const p = document.getElementById(`user-${campo}`);
@@ -315,23 +413,35 @@ function atualizarCampoNoPainel(campo, novoValor) {
     const botaoConfirmar = p.querySelector(".confirm-btn");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
     // Formata o valor, caso seja necessário
     novoValor = formatarValor(campo, novoValor);
 
     // Atualiza o valor exibido no painel
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
     span.textContent = novoValor;
     toggleVisibility(span, input, botaoEditar, botaoConfirmar);
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para exibir mensagens de sucesso ou erro.
  * @param {string} msg - A mensagem a ser exibida.
  * @param {boolean} sucesso - Indica se a mensagem é de sucesso ou erro.
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 function mostrarMensagem(msg, sucesso = true) {
     const modal = document.getElementById("mensagem-modal");
@@ -342,6 +452,7 @@ function mostrarMensagem(msg, sucesso = true) {
     modal.classList.add("mostrar");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     setTimeout(() => modal.classList.remove("mostrar"), 3000);
 }
 
@@ -349,10 +460,18 @@ function mostrarMensagem(msg, sucesso = true) {
     setTimeout(() => modal.classList.remove("mostrar"), 3000); // Oculta a mensagem após 3 segundos
 }
 
+=======
+    setTimeout(() => modal.classList.remove("mostrar"), 3000); // Oculta a mensagem após 3 segundos
+}
+
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para carregar os dados do usuário ao iniciar a página.
  * Obtém os dados do usuário do servidor.
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 async function carregarDadosUsuario() {
     try {
@@ -370,11 +489,17 @@ async function carregarDadosUsuario() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 /**
  * Função para preencher os dados do usuário nos campos do painel.
  * @param {Object} dadosUsuario - O objeto contendo os dados do usuário.
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 function preencherDadosUsuario(dadosUsuario) {
     document.getElementById("user-name").textContent = dadosUsuario.nome;
@@ -383,6 +508,7 @@ function preencherDadosUsuario(dadosUsuario) {
     document.getElementById("user-senha-display").textContent = "********";
     document.getElementById("user-email-display").textContent = dadosUsuario.email;
 <<<<<<< HEAD
+<<<<<<< HEAD
     document.getElementById("user-telefone-display").textContent = dadosUsuario.telefone;
     document.getElementById("user-endereco-display").textContent = `${dadosUsuario.rua}, ${dadosUsuario.numero}, ${dadosUsuario.bairro}, ${dadosUsuario.cidade}, ${dadosUsuario.estado}`;
     document.getElementById("user-cep-display").textContent = dadosUsuario.cep;
@@ -390,6 +516,8 @@ function preencherDadosUsuario(dadosUsuario) {
 }
 
 =======
+=======
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
     document.getElementById("user-telefone-display").textContent = formatarTelefone(dadosUsuario.telefone);
     document.getElementById("user-endereco-display").textContent = `${dadosUsuario.rua}, ${dadosUsuario.numero}, ${dadosUsuario.bairro}, ${dadosUsuario.cidade}, ${dadosUsuario.estado}`;
     document.getElementById("user-cep-display").textContent = formatarCEP(dadosUsuario.cep);
@@ -477,6 +605,9 @@ function editarCampo(campo) {
 adicionarEventosEdicao();
 
 // Carrega os dados do usuário e adiciona eventos de edição ao carregar a página
+<<<<<<< HEAD
+>>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
+=======
 >>>>>>> parent of 0459571 (fix: refactor user data loading and editing logic for improved functionality and error handling)
 document.addEventListener("DOMContentLoaded", () => {
     carregarDadosUsuario();
