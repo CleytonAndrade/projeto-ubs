@@ -1,0 +1,72 @@
+@import url("variaveis.css");
+
+body {
+    font-family: var(--font-principal);
+    background-color: var(--cor-3);
+    color: var(--cor-texto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: var(--cor-4);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="email"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    outline-color: var(--cor-2);
+}
+
+button {
+    padding: 10px;
+    background-color: var(--cor-1);
+    color: var(--cor-texto2);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--cor-2);
+}
+
+.voltar {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--cor-1);
+    text-decoration: none;
+}
+
+.voltar:hover {
+    text-decoration: underline;
+}

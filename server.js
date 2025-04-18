@@ -9,6 +9,7 @@
   const session = require("express-session");
   const app = express();
   const PORT = process.env.PORT || 3000;
+  const path = require('path');
 
   // Verifica se as variáveis de ambiente essenciais estão definidas
   const requiredEnv = ["DB_HOST", "DB_USER", "DB_PASS", "DB_NAME", "SESSION_SECRET"];
@@ -148,6 +149,12 @@
   });
 
 
+
+  // Rota para página de recuperação de senha
+  app.get('/recuperar-senha', (req, res) => {
+      res.sendFile(path.join(__dirname, 'public/pages/recuperar-senha.html'));
+  });
+  
   // Rota de agendamento
   app.post("/agendar", async (req, res) => {
     const { nome, cpf, especialidade, data, hora, telefone, obs } = req.body;
