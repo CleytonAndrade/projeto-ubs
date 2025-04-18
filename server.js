@@ -185,6 +185,36 @@
     }
   });
 
+  // Recuperação se senha 
+  app.post("/enviar-recuperacao", (req, res) => {
+    const email = req.body.email;
+
+    if (!email) {
+        return res.status(400).send("E-mail não fornecido.");
+    }
+
+    const query = "SELECT * FROM usuarios WHERE email = ?";
+    db.query(query, [email], (err, results) => {
+        if (err) {
+            console.error("Erro ao buscar e-mail:", err);
+            return res.status(500).send("Erro interno do servidor.");
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send("E-mail não encontrado.");
+        }
+
+        // Aqui você pode gerar um token e enviar o link por e-mail
+        console.log(`Enviar link de recuperação para: ${email}`);
+
+        res.send(`
+            <h2>Verifique seu e-mail</h2>
+            <p>Se o e-mail <strong>${email}</strong> estiver cadastrado, você receberá um link para redefinir sua senha.</p>
+            <a href="/">Voltar à página inicial</a>
+        `);
+    });
+});
+
   // Middleware global de erro
   app.use((err, req, res, next) => {
     console.error("Erro inesperado:", err);
